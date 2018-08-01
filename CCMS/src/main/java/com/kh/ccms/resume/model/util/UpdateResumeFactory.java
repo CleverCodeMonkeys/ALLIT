@@ -2,8 +2,6 @@ package com.kh.ccms.resume.model.util;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import com.kh.ccms.common.vo.DegreeValue;
 import com.kh.ccms.resume.model.service.ResumeServiceImple;
 import com.kh.ccms.resume.model.vo.Academy;
@@ -14,7 +12,6 @@ import com.kh.ccms.resume.model.vo.Degree;
 import com.kh.ccms.resume.model.vo.HighSchool;
 import com.kh.ccms.resume.model.vo.HopeCondition;
 import com.kh.ccms.resume.model.vo.Introduction;
-import com.kh.ccms.resume.model.vo.Portpolio;
 import com.kh.ccms.resume.model.vo.Resume;
 
 public class UpdateResumeFactory 
@@ -27,16 +24,12 @@ public class UpdateResumeFactory
 	private String memberId;
 	private ResumeComplete resumeComplete;
 	
-	// New
-	private MultipartFile file;
-	
 	public UpdateResumeFactory(HttpServletRequest req, ResumeServiceImple service,
-			int resumeId, String memberId, MultipartFile file){
+			int resumeId, String memberId){
 		this.req = req;
 		this.service = service;
 		this.resumeId = resumeId;
 		this.memberId = memberId;
-		this.file = file;
 	}
 	
 	public int updateIntoFactory() throws Exception
@@ -69,58 +62,10 @@ public class UpdateResumeFactory
 		if(awardValue) updateAward();
 		if(langValue) updateLang();
 		if(introdValue) updateIntroduction();
-		if(portValue) updatePort();
 				
 		return result;
 	}
 	
-	private void updatePort() {
-		String[] url = req.getParameterValues(ScriptResumeValue.PORTPOLIO_URL);
-		
-		int beforePortSize = resumeComplete.getPortpolioList() == null ? 0 : resumeComplete.getPortpolioList().size();
-		
-		if(url != null){
-			boolean more = beforePortSize > url.length ? true : false;
-			
-			for(int i = 0; i < url.length; i++){
-				Portpolio port = new Portpolio(resumeId, ERROR_EXCEPTION, url[i], null);
-				
-				if(more){
-					port.setPortId(resumeComplete.getPortpolioList().get(i).getPortId());
-					UpdateOrDeletePortpolio(port);
-				}else{
-					if(i < beforePortSize){
-						port.setPortId(resumeComplete.getPortpolioList().get(i).getPortId());
-						UpdateOrDeletePortpolio(port);
-					}else{
-						service.insertItem(port, ScriptResumeValue.INSERT, ScriptResumeValue.PORTPOLIO);
-					}
-				}
-			}
-			
-			if(more){
-				for(int i = url.length; i < beforePortSize; i++){
-					service.deleteItem(resumeComplete.getPortpolioList().get(i).getPortId(), 
-							ScriptResumeValue.DELETE, ScriptResumeValue.PORTPOLIO);
-				}
-			}
-			
-		}else{
-			for(int i = 0; i < beforePortSize; i++){
-				service.deleteItem(resumeComplete.getPortpolioList().get(i).getPortId(), 
-						ScriptResumeValue.DELETE, ScriptResumeValue.PORTPOLIO);
-			}
-		}
-		
-	}
-	
-	private void UpdateOrDeletePortpolio(Portpolio port){
-		if(port.getUrl().trim().equals(""))
-			service.deleteItem(port.getPortId(), ScriptResumeValue.DELETE, ScriptResumeValue.PORTPOLIO);
-		else
-			service.updateItem(port, ScriptResumeValue.UPDATE, ScriptResumeValue.PORTPOLIO);
-	}
-
 	private void updateIntroduction() throws Exception
 	{
 		String[] introductionTitle = req.getParameterValues(ScriptResumeValue.INTRODUCTION_TITLE);
@@ -162,7 +107,7 @@ public class UpdateResumeFactory
 	}
 	
 	private void updateOrDeleteIntroduction(Introduction introd){
-		if(!introd.getTitle().trim().equals("") || !introd.getContent().trim().equals(""))
+		if(introd.getTitle() != "" || introd.getContent().trim() != "" )
 			service.updateItem(introd, ScriptResumeValue.UPDATE, ScriptResumeValue.INTRODUCTION);
 		else 
 			service.deleteItem(introd.getIntroId(), ScriptResumeValue.DELETE, ScriptResumeValue.INTRODUCTION);
@@ -187,7 +132,7 @@ public class UpdateResumeFactory
 						setTestName(testName[i]).
 						setScore(score[i]).build();
 				
-				if(getDate[i] != null && !getDate[i].equals(""))
+				if(getDate[i] != null && getDate[i] != "")
 					lang.setGetDate(java.sql.Date.valueOf(getDate[i]));
 							
 				lang.setId(resumeId);
@@ -222,8 +167,8 @@ public class UpdateResumeFactory
 	}
 	
 	private void updateOrDeleteLanguage(CertificateLanguage lang){
-		if(!(lang.getLanguageName().trim().equals("") && lang.getTestName().trim().equals("") &&
-				lang.getGetDate() == null && lang.getScore().trim().equals("")))
+		if(lang.getLanguageName() != "" && lang.getTestName() != "" &&
+				lang.getGetDate() != null && lang.getScore() != "")
 		service.updateItem(lang, ScriptResumeValue.UPDATE, ScriptResumeValue.LANG);
 		else service.deleteItem(lang.getLangId(), ScriptResumeValue.DELETE, ScriptResumeValue.LANG);
 	}
@@ -247,7 +192,7 @@ public class UpdateResumeFactory
 						setAwardOrgan(awardOrgan[i]).
 						setTitle(awardTitle[i]).build();
 				
-				if(getAward[i] != null && !getAward[i].equals(""))
+				if(getAward[i] != null && getAward[i] != "")
 					award.setAwardDate(java.sql.Date.valueOf(getAward[i]));
 							
 				award.setId(resumeId);
@@ -278,8 +223,8 @@ public class UpdateResumeFactory
 	}
 	
 	private void updateOrDeleteAward(Award award){
-		if(!(award.getAwardContent().trim().equals("") && award.getAwardOrganization().trim().equals("") &&
-				award.getAwardDate() == null))
+		if(award.getAwardContent().trim() != "" && award.getAwardOrganization() != "" &&
+				award.getAwardDate() != null)
 			service.updateItem(award, ScriptResumeValue.UPDATE, ScriptResumeValue.AWARD);
 		else service.deleteItem(award.getAwardId(), ScriptResumeValue.DELETE, ScriptResumeValue.AWARD);
 	}
@@ -301,7 +246,7 @@ public class UpdateResumeFactory
 						setCertificationName(certName[i]).
 						build();
 				
-				if(certDate[i] != null && !certDate[i].equals(""))
+				if(certDate[i] != null && certDate[i] != "")
 					cert.setCertificateDate(java.sql.Date.valueOf(certDate[i]));
 								
 				cert.setId(resumeId);
@@ -334,8 +279,8 @@ public class UpdateResumeFactory
 	}
 	
 	private void updateOrDeleteCertificate(Certificate cert){
-		if(!(cert.getCertificateDate() == null && cert.getCertificateFrom().trim().equals("") 
-				&& cert.getCertificateName().trim().equals("")))
+		if(cert.getCertificateDate() != null && cert.getCertificateFrom() != "" 
+				&& cert.getCertificateName() != "")
 			service.updateItem(cert, ScriptResumeValue.UPDATE, ScriptResumeValue.CERTIFICATE);
 		else service.deleteItem(cert.getCertificateId(), ScriptResumeValue.DELETE, ScriptResumeValue.CERTIFICATE);
 	}
@@ -361,10 +306,10 @@ public class UpdateResumeFactory
 						setEducationTitle(educationTitle[i]).
 						build();
 				
-				if(enrollDate[i] != null && !enrollDate[i].equals(""))
+				if(enrollDate[i] != null && enrollDate[i] != "")
 					academy.setStartDate(java.sql.Date.valueOf(enrollDate[i]));
 				
-				if(endDate[i] != null && !endDate[i].equals(""))
+				if(endDate[i] != null && endDate[i] != "")
 					academy.setEndDate(java.sql.Date.valueOf(endDate[i]));
 								
 				academy.setId(resumeId);
@@ -400,9 +345,9 @@ public class UpdateResumeFactory
 	}
 
 	private void updateOrDeleteEdu(Academy academy){
-		if(!(academy.getContent().trim().equals("") && academy.getAcademyName().equals("") &&
-				academy.getEducationTitle().equals("") && academy.getStartDate() == null && 
-				academy.getEndDate() == null))
+		if(academy.getContent().trim() != "" && academy.getAcademyName() != "" &&
+				academy.getEducationTitle() != "" && academy.getStartDate() != null && 
+				academy.getEndDate() != null)
 			service.updateItem(academy, ScriptResumeValue.UPDATE, ScriptResumeValue.ACADEMY);
 		else service.deleteItem(academy.getAcademyId(), ScriptResumeValue.DELETE, ScriptResumeValue.ACADEMY);
 	}
@@ -411,7 +356,7 @@ public class UpdateResumeFactory
 		if(array == null) return null;
 		double[] dArray = new double[array.length];
 		for(int i = 0; i < array.length; i++){
-			if(array[i] != null || !array[i].equals("")){
+			if(array[i] != null || array[i] != ""){
 				try{
 					dArray[i] = Double.parseDouble(array[i]);
 				}catch(Exception e){
@@ -457,10 +402,10 @@ public class UpdateResumeFactory
 						// Parent Key Violate
 						degree.setId(resumeId);
 						
-						if(enrollDate[i] != null && !enrollDate[i].equals(""))
+						if(enrollDate[i] != null && enrollDate[i] != "")
 							degree.setEnrollDate(java.sql.Date.valueOf(enrollDate[i]));
 						
-						if(graduDate[i] != null && !graduDate[i].equals(""))
+						if(graduDate[i] != null && graduDate[i] != "")
 							degree.setGraduDate(java.sql.Date.valueOf(graduDate[i]));
 						
 						// If before Size more Bigger than Now
@@ -492,9 +437,9 @@ public class UpdateResumeFactory
 	}
 	
 	private void updateOrDeleteDegree(Degree degree){
-		if(!(degree.getSchoolName().trim().equals("") && degree.getMajor().trim().equals("") && degree.getSchoolType().trim().equals("") &&
-				degree.getEnrollDate() == null || degree.getGraduDate() == null || degree.getScore() == -1 ||
-				degree.getTotalScore() == -1))
+		if(degree.getSchoolName() != "" || degree.getMajor() != "" || degree.getSchoolType() != "" ||
+				degree.getEnrollDate() != null || degree.getGraduDate() != null || degree.getScore() != -1 ||
+				degree.getTotalScore() != -1)
 			service.updateItem(degree, ScriptResumeValue.UPDATE, ScriptResumeValue.DEGREE);
 		else service.deleteItem(degree.getDegreeId(), ScriptResumeValue.DELETE, ScriptResumeValue.DEGREE);	
 	}
@@ -505,12 +450,12 @@ public class UpdateResumeFactory
 		String graduDate = req.getParameter(ScriptResumeValue.SCHOOL_GRADU_DATE);
 		
 		HighSchool highSchool = new HighSchool();
-		if(highSchoolName.equals("") && enrollDate.equals("") && graduDate.equals("")){}
+		if(highSchoolName == "" && enrollDate ==  "" && graduDate == ""){}
 		else{
 			highSchool.setSchoolName(highSchoolName);
 			
-			if(!enrollDate.equals("")) highSchool.setEnrollDate(java.sql.Date.valueOf(enrollDate));
-			if(!graduDate.equals(""))highSchool.setGraduDate(java.sql.Date.valueOf(graduDate));			
+			if(enrollDate != "") highSchool.setEnrollDate(java.sql.Date.valueOf(enrollDate));
+			if(graduDate != "")highSchool.setGraduDate(java.sql.Date.valueOf(graduDate));			
 			highSchool.setId(resumeId);
 			highSchool.setHighSchoolId(resumeComplete.getHighSchool().getHighSchoolId());
 			service.updateHighSchool(highSchool);
@@ -533,7 +478,7 @@ public class UpdateResumeFactory
 		hope.setId(resumeId);
 		hope.setConditionId(resumeComplete.getHopeCondition().getConditionId());
 		
-		if(hope.getJob().equals("") && hope.getLocation().equals("") && hope.getSalary() == 0)
+		if(hope.getJob() == "" && hope.getLocation() == "" && hope.getSalary() == 0)
 			System.out.println("희망 사항 적힌게 없음.");
 		else service.updateHopeCondition(hope);
 	}
@@ -548,32 +493,11 @@ public class UpdateResumeFactory
 				setBirthday(req.getParameter(ScriptResumeValue.BIRTH)).
 				setGender(req.getParameter(ScriptResumeValue.GENDER)).
 				setName(req.getParameter(ScriptResumeValue.NAME)).
-				/*setPhoto(req.getParameter(ScriptResumeValue.PHOTO)).*/
+				setPhoto(req.getParameter(ScriptResumeValue.PHOTO)).
 				setEmail(req.getParameter(ScriptResumeValue.EMAIL)).
 				setTel(req.getParameter(ScriptResumeValue.TEL)).build();
 		
-		//Portpolio Handler
-		String resumePhoto = req.getParameter(ScriptResumeValue.PHOTO);
-		String detect = req.getParameter(ScriptResumeValue.PHOTO_DETECT);
-		int value = Integer.parseInt(detect);
-		if(value == 0){ // Not Change
-			System.out.println("변화 감지 없음.");
-			resume.setPhoto(resumePhoto);
-		}else{
-			// Change Value.
-			Resume re = service.selectOneResume(resumeId);
-			if(re != null){
-				String fileName = re.getPhoto();
-				ResumePictureMethod method = new ResumePictureMethod();
-				
-				//Remove File
-				if(!method.removePicture(memberId, req, fileName)) System.out.println("can not Find File Name");
-							
-				String renameFile = method.SavePicture(memberId, file, req);
-				resume.setPhoto(renameFile != null ? renameFile : ScriptResumeValue.DEFAULT_IMAGE);				
-			}
-		}
-		
+		System.out.println(resume.toString());
 		if((resume.getTitle() != null) && (!resume.getTitle().equals("")))
 		{
 			//Test

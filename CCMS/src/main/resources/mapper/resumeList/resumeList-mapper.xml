@@ -25,10 +25,6 @@
 		SELECT * FROM RESUME WHERE MEMBER_ID = #{memberId} ORDER BY UPDATE_DATE DESC
 	</select>
 	
-	<select id ="selectOneResume" resultMap = "ResumeMap_mine" parameterType="_int">
-		SELECT * FROM RESUME WHERE ID = #{id}
-	</select>
-	
 	<!-- <select id="selectResumeTotalLists" resultType="_int" parameterType="string">
 		SELECT COUNT(*) FROM RESUME WHERE MEMBER_ID = #{memberId}
 	</select> -->

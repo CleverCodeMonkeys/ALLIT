@@ -55,8 +55,7 @@ public class RecruitFilter
 		}
 		
 		public RecruitBuilder setSal(String rcSal){
-			if(!rcSal.equals(""))
-				this.rcSal = rcSal;
+			this.rcSal = rcSal;
 			return this;
 		}
 		
@@ -73,8 +72,7 @@ public class RecruitFilter
 		}
 		
 		public RecruitBuilder setAge(String rcAge){
-			if(!rcAge.equals(""))
-				this.rcAge = rcAge;
+			this.rcAge = rcAge;
 			return this;
 		}
 		

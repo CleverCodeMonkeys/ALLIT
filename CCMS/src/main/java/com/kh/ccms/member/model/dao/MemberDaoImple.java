@@ -67,10 +67,4 @@ public class MemberDaoImple implements MemberDao
 		return sqlSession.update("member.changePass", member);
 	}
 
-	@Override
-	public int updatePwd(Member m) {
-		// TODO Auto-generated method stub
-		return sqlSession.update("member.updatePwd", m);
-	}
-
 }

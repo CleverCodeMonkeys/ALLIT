@@ -2,26 +2,16 @@
     pageEncoding="UTF-8"%>
 
 <div class = "w3-row" style="margin-top: 30px; font-family: penB; padding-bottom: 5%;">
-	<div class ="w3-col m3 w3-center">
-		<%-- <label class="inp">
+	<div class ="w3-col m2 w3-center">
+		<label class="inp">
 	           <input type="text" placeholder="&nbsp;" name = "schoolType"
 	            class="cInput" value ="${resume.degreeList[0].schoolType}">
 	           <span class="label">학교타입</span>
 	           <span class="border"></span>
-	    </label>  --%>
-	    <div include="form-input-select()">
-		    <select name="schoolType" class ="selectType">
-			    <option value="">학교타입</option>
-			
-			    <!-- normal options -->
-			    <option value="대학교(4년) 졸업" ${resume.degreeList[0].schoolType == '대학교(4년) 졸업' ? 'selected="selected"' : ''}>대학교(4년) 졸업</option>
-			    <option value="대학(2,3년) 졸업" ${resume.degreeList[0].schoolType == '대학(2,3년) 졸업' ? 'selected="selected"' : ''}>대학(2,3년) 졸업</option>
-			    <option value="대학원 졸업" ${resume.degreeList[0].schoolType == '대학원 졸업' ? 'selected="selected"' : ''}>대학원 졸업</option>	
-	  		</select>
-  		</div>
+	    </label>
 	</div>
 	
-	<div class ="w3-col m3 w3-center">
+	<div class ="w3-col m4 w3-center">
 		<label class="inp">
 	           <input type="text" placeholder="&nbsp;" name = "universityName" 
 	           class="cInput" value = "${resume.degreeList[0].schoolName}">
@@ -77,7 +67,3 @@
 	    </label>
 	</div>	
 </div>
-
-<script>
-	
-</script>

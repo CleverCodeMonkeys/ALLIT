@@ -8,8 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.kh.ccms.member.model.vo.Member;
-
 public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 	private Logger logger = LoggerFactory.getLogger(LoginCheckInterceptor.class);
 
@@ -19,9 +17,9 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 		
 		HttpSession session = request.getSession();
 		
-		Member m = (Member)session.getAttribute("m");
+//		Member m = (Member)session.getAttribute("m");
 		
-		if(m == null){
+//		if(m == null){
 			logger.info(
 			 "비로그인 상태에서 ["+request.getRequestURI()+"]로 접근!!");
 			
@@ -32,10 +30,10 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter {
 			.forward(request, response);
 			
 			return false;
-		}
+//		}
 		
-		return true;
-		//return super.preHandle(request, response, handler);
+		// 기본값은 return true;
+//		return super.preHandle(request, response, handler);
 	}
 	
 	

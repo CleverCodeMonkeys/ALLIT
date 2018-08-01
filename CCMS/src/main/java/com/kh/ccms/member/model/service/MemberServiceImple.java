@@ -60,10 +60,4 @@ public class MemberServiceImple implements MemberService
 		return mDao.changePass(member);
 	}
 
-	@Override
-	public int updatePwd(Member m) {
-		// TODO Auto-generated method stub
-		return mDao.updatePwd(m);
-	}
-
 }

@@ -6,7 +6,6 @@ public class Recruit implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1111L;
 	
-	int rId;
 	String name;
 	String gender;
 	int birthyear;
@@ -19,17 +18,14 @@ public class Recruit implements java.io.Serializable {
 	Date regist_date;
 	Date update_date;
 	String language;
-	String scrab;
 	
 	public Recruit() {
 		super();
 	}
 
-	public Recruit(int rId, String name, String gender, int birthyear, int age, String title, String last_edu,
-			String location, String salary, String job, Date regist_date, Date update_date, String language,
-			String scrab) {
+	public Recruit(String name, String gender, int birthyear, int age, String title, String last_edu, String location,
+			String salary, String job, Date regist_date, Date update_date, String language) {
 		super();
-		this.rId = rId;
 		this.name = name;
 		this.gender = gender;
 		this.birthyear = birthyear;
@@ -42,15 +38,6 @@ public class Recruit implements java.io.Serializable {
 		this.regist_date = regist_date;
 		this.update_date = update_date;
 		this.language = language;
-		this.scrab = scrab;
-	}
-
-	public int getrId() {
-		return rId;
-	}
-
-	public void setrId(int rId) {
-		this.rId = rId;
 	}
 
 	public String getName() {
@@ -149,20 +136,11 @@ public class Recruit implements java.io.Serializable {
 		this.language = language;
 	}
 
-	public String getScrab() {
-		return scrab;
-	}
-
-	public void setScrab(String scrab) {
-		this.scrab = scrab;
-	}
-
 	@Override
 	public String toString() {
-		return "Recruit [rId=" + rId + ", name=" + name + ", gender=" + gender + ", birthyear=" + birthyear + ", age="
-				+ age + ", title=" + title + ", last_edu=" + last_edu + ", location=" + location + ", salary=" + salary
-				+ ", job=" + job + ", regist_date=" + regist_date + ", update_date=" + update_date + ", language="
-				+ language + ", scrab=" + scrab + "]";
+		return "Recruit [name=" + name + ", gender=" + gender + ", birthyear=" + birthyear + ", age=" + age + ", title="
+				+ title + ", last_edu=" + last_edu + ", location=" + location + ", salary=" + salary + ", job=" + job
+				+ ", regist_date=" + regist_date + ", update_date=" + update_date + ", language=" + language + "]";
 	}
 
 }

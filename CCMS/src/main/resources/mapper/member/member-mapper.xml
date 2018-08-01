@@ -46,9 +46,4 @@
 	<update id="changePass" parameterType="member"> 
 		UPDATE IT_MEMBER SET PASSWORD = #{password} WHERE E_MAIL = #{eMail} 
 	</update>
-	
-	<!-- jh -->
-	<update id="updatePwd" parameterType="member">
-	 	UPDATE IT_MEMBER SET PASSWORD = #{password} WHERE ID = #{id} 
-	 </update>
 </mapper>
