@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="certificate">
+	<resultMap type="certificate" id="certMap">
+		<result column="ID" property="id"/>
+		<result column="CERTIFICATE_ID" property="certificateId"/>
+		<result column="CERT_NAME" property="certificateName"/>
+		<result column="CERT_FROM" property="certificateFrom"/>
+		<result column="CERT_DATE" property="certificateDate"/>
+	</resultMap>
+	
+	<insert id="insertCert" parameterType="certificate">
+		INSERT INTO CERTIFICATE VALUES (
+			#{id}, CERT_SEQ.NEXTVAL, #{certificateName} ,
+			#{certificateFrom}, #{certificateDate, jdbcType=DATE}
+		)
+	</insert>
+	
+	<select id="selectCertList" resultMap="certMap" parameterType="_int">
+		SELECT * FROM CERTIFICATE WHERE ID = #{id}
+	</select>
+	
+	<select id="selectOneCert" resultMap="certMap" parameterType="_int">
+		SELECT * FROM CERTIFICATE WHERE CERTIFICATE_ID = #{certificateId}
+	</select>
+	
+	<select id="selectCountCert" resultType="_int" parameterType="_int">
+		SELECT COUNT(*) FROM CERTIFICATE WHERE ID = #{id}
+	</select>
+	
+	<delete id="deleteCert" parameterType="_int">
+		DELETE FROM CERTIFICATE WHERE CERTIFICATE_ID = #{certificateId}
+	</delete>
+	
+	<update id="updateCert" parameterType="certificate">
+		UPDATE CERTIFICATE SET CERT_NAME = #{certificateName},
+		CERT_FROM = #{certificateFrom},
+		CERT_DATE = #{certificateDate, jdbcType=DATE} WHERE CERTIFICATE_ID = #{certificateId}
+	</update>
+</mapper>

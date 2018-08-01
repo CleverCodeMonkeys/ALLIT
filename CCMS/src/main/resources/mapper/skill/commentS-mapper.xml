@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="commentS">
+
+	<resultMap type="commentS" id="commentSMap">
+		<result column="BOARD_ID" property="board_id"/>
+		<result column="COMMENT_ID" property="comment_id"/>
+		<result column="COMMENT_CONTENT" property="comment_content"/>
+		<result column="WRITER_ID" property="writer_id"/>
+		<result column="WRITER_DATE" property="writer_date"/>
+	</resultMap>
+	
+	<select id="commentSList" resultMap="commentSMap">
+		SELECT * FROM SKI_COMMENT WHERE BOARD_ID = #{board_id} ORDER BY WRITER_DATE ASC
+	</select>
+	
+	<insert id="commentSInsert" parameterType="commentS">
+		INSERT INTO SKI_COMMENT VALUES (#{board_id}, SEQ_COMMENT_S.NEXTVAL, #{comment_content}, #{writer_id}, DEFAULT)
+	</insert>
+	
+	<update id="commentSUpdate" parameterType="commentS">
+		UPDATE SKI_COMMENT SET COMMENT_CONTENT = #{comment_content} WHERE COMMENT_ID = #{comment_id}
+	</update>
+	
+	<delete id="commentSDelete" parameterType="commentS">
+		DELETE FROM SKI_COMMENT WHERE COMMENT_ID = #{comment_id}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="skill">
+
+	<resultMap type="skill" id="skillMap">
+		<result column="BOARD_ID" property="board_id"/>
+		<result column="TITLE" property="title"/>
+		<result column="TYPE" property="type"/>
+		<result column="CONTENT" property="content"/>
+		<result column="WRITER" property="writer"/>
+		<result column="WRITE_DATE" property="writer_date"/>
+		<result column="SEE" property="see"/>
+		<result column="COMMENT_COUNT" property="comment_count"/>
+	</resultMap>
+	
+	<select id="selectSkillList" resultMap="skillMap">
+		SELECT * FROM SKI_BOARD ORDER BY BOARD_ID DESC
+	</select>
+	
+	<select id="selectSkillTotalContents" resultType="_int">
+		SELECT COUNT(*) FROM SKI_BOARD
+	</select>
+	
+	<select id="selectSkillOneView" parameterType="skill" resultMap="skillMap">
+		SELECT * FROM SKI_BOARD WHERE BOARD_ID = #{board_id}
+	</select>
+	
+	<insert id="skillInsert" parameterType="skill">
+		INSERT INTO SKI_BOARD VALUES (SEQ_BOARD_SKI.NEXTVAL, #{title}, #{type}, #{content}, #{writer}, DEFAULT, DEFAULT, DEFAULT)
+	</insert>
+	
+	<update id="increaseSkillSee" parameterType="_int">
+		UPDATE SKI_BOARD SET SEE = SEE + 1 WHERE BOARD_ID = #{board_id}
+	</update>
+	
+	<select id="skillUpdateForm" parameterType="skill" resultMap="skillMap">
+		SELECT * FROM SKI_BOARD WHERE BOARD_ID = #{board_id}
+	</select>
+	
+	<update id="skillUpdateEnd" parameterType="skill"> 
+		UPDATE SKI_BOARD SET TITLE = #{title}, CONTENT = #{content} WHERE BOARD_ID = #{board_id}
+	</update>
+	
+	<delete id="skillDelete" parameterType="skill">
+		DELETE FROM SKI_BOARD WHERE BOARD_ID = #{board_id}
+	</delete>
+	
+	<select id="selectSkillSearch" parameterType="map" resultMap="skillMap">
+		SELECT * FROM SKI_BOARD
+		WHERE 
+		<!-- supported Class monitor -->
+			<if test="searchSelect eq 'TITLE'">
+				TITLE
+			</if>
+			<if test="searchSelect eq 'WRITER'">
+				WRITER
+			</if>
+			<if test="searchSelect eq 'CONTENT'">
+				CONTENT
+			</if>
+		LIKE '%'||#{searchSki}||'%' ORDER BY BOARD_ID DESC
+	</select>
+	
+	<select id="selectSkillTotalContentsSer" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM SKI_BOARD WHERE TITLE LIKE '%'||#{searchSki}||'%'
+	</select>
+	
+	<select id="selectCommentSCount" resultType="_int">
+		SELECT COUNT(*) FROM SKI_COMMENT WHERE BOARD_ID = #{board_id}
+	</select>
+	
+	<delete id="skillDelCom" parameterType="skill">
+		DELETE FROM SKI_COMMENT WHERE BOARD_ID = #{board_id}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
