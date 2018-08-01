@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="member">
+
+	<resultMap type="member" id="memberMap">
+		<result column="ID" property="id"/>
+		<result column="E_MAIL" property="eMail"/>
+		<result column="PASSWORD" property = "password"/>
+		<result column="DISTINICTION" property="distinction"/>
+		<result column="ENROLL_DATE" property="enrollDate"/>
+	</resultMap>
+	
+	<select id="selectOneMember" parameterType="string" resultMap="memberMap">
+		SELECT * FROM IT_MEMBER WHERE ID = #{id}
+	</select>
+	
+	<select id="checkIdDuplicate" resultType="_int">
+		SELECT COUNT(*) AS CNT FROM IT_MEMBER WHERE ID = #{id}
+	</select>
+	
+	<select id="checkEmailDuplicate" resultType="_int">
+		SELECT COUNT(*) AS CNT FROM IT_MEMBER WHERE E_MAIL = #{eMail}
+	</select>
+	
+	<insert id="insertMember" parameterType="member">
+		INSERT INTO IT_MEMBER 
+		VALUES(#{id}, #{eMail}, #{password},  #{distinction}, DEFAULT)
+	</insert>
+	
+	<update id="updateMember" parameterType="member">
+		
+	</update>
+	
+	<delete id="deleteMember">
+		DELETE IT_MEMBER WHERE ID = #{id}
+	</delete>
+	
+	<select id="findId" resultType="string"> 
+		SELECT ID FROM IT_MEMBER WHERE E_MAIL = #{eMail} 
+	</select>
+	
+	<select id="checkIdEmail" parameterType="hashmap" resultType="string"> 
+		SELECT ID, E_MAIL FROM IT_MEMBER WHERE ID = #{id} AND E_MAIL = #{eMail} 
+	</select>
+	
+	<update id="changePass" parameterType="member"> 
+		UPDATE IT_MEMBER SET PASSWORD = #{password} WHERE E_MAIL = #{eMail} 
+	</update>
+</mapper>

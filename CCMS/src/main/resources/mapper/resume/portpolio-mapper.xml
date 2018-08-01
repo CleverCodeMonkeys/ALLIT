@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="portpolio">
+
+	<resultMap type="portpolio" id="portMap">
+		<result column="ID" property="id"/>
+		<result column="PORT_ID" property="portId"/>
+		<result column="PORT_URL" property="url"/>
+		<result column="PORT_DATA" property="data"/> 
+	</resultMap>
+
+	<insert id="insertPort" parameterType="portpolio">
+		INSERT INTO PORTPOLIO VALUES(
+			#{id}, PORT_SEQ.NEXTVAL, #{url} , #{data}
+		)
+	</insert>
+	
+	<select id="selectPortList" resultMap="portMap" parameterType="_int">
+		SELECT * FROM PORTPOLIO WHERE ID = #{id}
+	</select>
+	
+	<select id ="selectOnePort" resultMap="portMap" parameterType="_int">
+		SELECT * FROM PORTPOLIO WHERE PORT_ID = #{portId}
+	</select>
+	
+	<select id="selectCountPort" resultType="_int" parameterType="_int">
+		SELECT COUNT(*) PORTPOLIO WHERE ID = #{id}
+	</select>
+	
+	<delete id="deletePort" parameterType="_int">
+		DELETE FROM PORTPOLIO WHERE PORT_ID = #{portId}
+	</delete>
+	
+	<update id="updatePort" parameterType="portpolio">
+		UPDATE PORTPOLIO SET PORT_URL = #{url} ,
+		PORT_DATA = #{data} WHERE PORT_ID = #{portId}
+	</update>
+	
+</mapper>

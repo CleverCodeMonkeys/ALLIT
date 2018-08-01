@@ -1,0 +1,547 @@
+package com.kh.ccms.resume.model.util;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.kh.ccms.common.vo.DegreeValue;
+import com.kh.ccms.resume.model.service.ResumeServiceImple;
+import com.kh.ccms.resume.model.vo.Academy;
+import com.kh.ccms.resume.model.vo.Award;
+import com.kh.ccms.resume.model.vo.Certificate;
+import com.kh.ccms.resume.model.vo.CertificateLanguage;
+import com.kh.ccms.resume.model.vo.Degree;
+import com.kh.ccms.resume.model.vo.HighSchool;
+import com.kh.ccms.resume.model.vo.HopeCondition;
+import com.kh.ccms.resume.model.vo.Introduction;
+import com.kh.ccms.resume.model.vo.Resume;
+
+public class UpdateResumeFactory 
+{
+	private HttpServletRequest req;
+	private ResumeServiceImple service;
+	private final String CHECK_T = "1";
+	private final int ERROR_EXCEPTION = -1;
+	private int resumeId;
+	private String memberId;
+	private ResumeComplete resumeComplete;
+	
+	public UpdateResumeFactory(HttpServletRequest req, ResumeServiceImple service,
+			int resumeId, String memberId){
+		this.req = req;
+		this.service = service;
+		this.resumeId = resumeId;
+		this.memberId = memberId;
+	}
+	
+	public int updateIntoFactory() throws Exception
+	{
+		int result = 0;
+		
+		boolean degreeValue = req.getParameter("hiddenDegree") != CHECK_T? true : false;
+		boolean eduValue = req.getParameter("hiddenEdu") != CHECK_T ? true : false;
+		boolean certValue = req.getParameter("hiddenCert") != CHECK_T? true : false;
+		boolean awardValue = req.getParameter("hiddenAward") != CHECK_T ? true : false;
+		boolean langValue = req.getParameter("hiddenLang") != CHECK_T ? true : false;
+		boolean portValue = req.getParameter("hiddenPort") != CHECK_T ? true : false;
+		boolean introdValue = req.getParameter("hiddenIntrod") != CHECK_T ? true : false;
+		
+		//For Update
+		resumeComplete = new ResumeCompleteFactory().createResumeComple(resumeId, service);
+		if(resumeComplete == null) return ERROR_EXCEPTION;
+		
+		// update Resume and Hope Condition
+		result = (updateResume() != ERROR_EXCEPTION) ? 1 : ERROR_EXCEPTION;
+		
+		if(result == ERROR_EXCEPTION) return result;
+		
+		updateHighSchool();
+		updateHopeCondition();
+		
+		if(degreeValue) updateDegree();
+		if(eduValue) updateEdu();
+		if(certValue) updateCert();
+		if(awardValue) updateAward();
+		if(langValue) updateLang();
+		if(introdValue) updateIntroduction();
+				
+		return result;
+	}
+	
+	private void updateIntroduction() throws Exception
+	{
+		String[] introductionTitle = req.getParameterValues(ScriptResumeValue.INTRODUCTION_TITLE);
+		String[] contents = req.getParameterValues(ScriptResumeValue.INTRODUCTION_CONTENT);
+		
+		int beforeIntrodSize = resumeComplete.getIntroductionList() == null ? 0 : resumeComplete.getIntroductionList().size();
+		
+		if(introductionTitle != null){
+			
+			boolean more = beforeIntrodSize > introductionTitle.length ? true : false;
+			
+			for(int i = 0; i < introductionTitle.length; i++){
+				Introduction introd = 
+						new Introduction(resumeId, ERROR_EXCEPTION, introductionTitle[i], contents[i]);
+				
+				if(more){
+					introd.setIntroId(resumeComplete.getIntroductionList().get(i).getIntroId());
+					updateOrDeleteIntroduction(introd);
+				}else{
+					if(i < beforeIntrodSize){
+						introd.setIntroId(resumeComplete.getIntroductionList().get(i).getIntroId());
+						updateOrDeleteIntroduction(introd);
+					}else service.insertItem(introd, ScriptResumeValue.INSERT, ScriptResumeValue.INTRODUCTION);
+				}
+				
+			}
+			// Delete Remain Introduction Data
+			if(more){
+				for(int i = introductionTitle.length; i < beforeIntrodSize; i++)
+					service.deleteItem(resumeComplete.getIntroductionList().get(i).getIntroId(), 
+							ScriptResumeValue.DELETE, ScriptResumeValue.INTRODUCTION);
+			}
+			
+		}else{
+			for(int i = 0; i < beforeIntrodSize; i++)
+				service.deleteItem(resumeComplete.getIntroductionList().get(i).getIntroId(), 
+						ScriptResumeValue.DELETE, ScriptResumeValue.INTRODUCTION);
+		}
+	}
+	
+	private void updateOrDeleteIntroduction(Introduction introd){
+		if(introd.getTitle() != "" || introd.getContent().trim() != "" )
+			service.updateItem(introd, ScriptResumeValue.UPDATE, ScriptResumeValue.INTRODUCTION);
+		else 
+			service.deleteItem(introd.getIntroId(), ScriptResumeValue.DELETE, ScriptResumeValue.INTRODUCTION);
+	}
+
+	private void updateLang() throws Exception
+	{
+		String[] langName = req.getParameterValues(ScriptResumeValue.LANG_NAME);
+		String[] testName = req.getParameterValues(ScriptResumeValue.LANG_TEST_NAME);
+		String[] score = req.getParameterValues(ScriptResumeValue.LANG_SCORE);
+		String[] getDate = req.getParameterValues(ScriptResumeValue.LANG_GET_DATE);
+		
+		int beforeLangSize = resumeComplete.getCertiLanguageList() == null ? 0 : resumeComplete.getCertiLanguageList().size();
+		
+		if(langName != null){
+			
+			boolean more = beforeLangSize > langName.length ? true : false;
+			
+			for(int i = 0; i < langName.length; i++){
+				CertificateLanguage lang = new CertificateLanguage.LanguageBuilder().
+						setLangName(langName[i]).
+						setTestName(testName[i]).
+						setScore(score[i]).build();
+				
+				if(getDate[i] != null && getDate[i] != "")
+					lang.setGetDate(java.sql.Date.valueOf(getDate[i]));
+							
+				lang.setId(resumeId);
+				
+				if(more){
+					lang.setLangId(resumeComplete.getCertiLanguageList().get(i).getLangId());
+					updateOrDeleteLanguage(lang);
+				}else
+				{
+					if(i < beforeLangSize){
+						lang.setLangId(resumeComplete.getCertiLanguageList().get(i).getLangId());
+						updateOrDeleteLanguage(lang);
+					}else service.insertItem(lang, ScriptResumeValue.INSERT, ScriptResumeValue.LANG);
+				}
+				
+			}
+			
+			// Delete Remain Language Data
+			if(more){
+				for(int i = langName.length; i < beforeLangSize; i++){
+					service.deleteItem(resumeComplete.getCertiLanguageList().get(i).getLangId(), 
+							ScriptResumeValue.DELETE, ScriptResumeValue.LANG);
+				}
+			}
+			
+		}else{
+			for(int i = 0; i < beforeLangSize; i++){
+				service.deleteItem(resumeComplete.getCertiLanguageList().get(i).getLangId(), 
+						ScriptResumeValue.DELETE, ScriptResumeValue.LANG);
+			}
+		}
+	}
+	
+	private void updateOrDeleteLanguage(CertificateLanguage lang){
+		if(lang.getLanguageName() != "" && lang.getTestName() != "" &&
+				lang.getGetDate() != null && lang.getScore() != "")
+		service.updateItem(lang, ScriptResumeValue.UPDATE, ScriptResumeValue.LANG);
+		else service.deleteItem(lang.getLangId(), ScriptResumeValue.DELETE, ScriptResumeValue.LANG);
+	}
+
+	private void updateAward() throws Exception
+	{
+		String[] awardTitle = req.getParameterValues(ScriptResumeValue.AWARD_TITLE);
+		String[] awardContent = req.getParameterValues(ScriptResumeValue.AWARD_CONTENT);
+		String[] awardOrgan = req.getParameterValues(ScriptResumeValue.AWARD_ORGANIZATION);
+		String[] getAward =req.getParameterValues(ScriptResumeValue.AWARD_DATE);
+		
+		int beforeAwardSize = resumeComplete.getAwardList() == null ? 0 : resumeComplete.getAwardList().size();
+		
+		if(awardTitle != null){
+			
+			boolean more = beforeAwardSize > awardTitle.length ? true : false;
+			
+			for(int i = 0; i <awardTitle.length; i++){
+				Award award = new Award.AwardBuilder().
+						setAwardContent(awardContent[i]).
+						setAwardOrgan(awardOrgan[i]).
+						setTitle(awardTitle[i]).build();
+				
+				if(getAward[i] != null && getAward[i] != "")
+					award.setAwardDate(java.sql.Date.valueOf(getAward[i]));
+							
+				award.setId(resumeId);
+				
+				if(more){
+					award.setAwardId(resumeComplete.getAwardList().get(i).getAwardId());
+					updateOrDeleteAward(award);
+				}else{
+					if(i < beforeAwardSize){
+						award.setAwardId(resumeComplete.getAwardList().get(i).getAwardId());
+						updateOrDeleteAward(award);
+					}else service.insertItem(award, ScriptResumeValue.INSERT, ScriptResumeValue.AWARD);
+				}
+			}
+			
+			// Delete Remain Award Data
+			if(more){
+				for(int i = awardTitle.length; i < beforeAwardSize; i++)
+					service.deleteItem(resumeComplete.getAwardList().get(i).getAwardId(),
+							ScriptResumeValue.DELETE, ScriptResumeValue.AWARD);
+			}
+		}else{
+			for(int i = 0; i < beforeAwardSize; i++){
+				service.deleteItem(resumeComplete.getAwardList().get(i).getAwardId(),
+						ScriptResumeValue.DELETE, ScriptResumeValue.AWARD);
+			}
+		}
+	}
+	
+	private void updateOrDeleteAward(Award award){
+		if(award.getAwardContent().trim() != "" && award.getAwardOrganization() != "" &&
+				award.getAwardDate() != null)
+			service.updateItem(award, ScriptResumeValue.UPDATE, ScriptResumeValue.AWARD);
+		else service.deleteItem(award.getAwardId(), ScriptResumeValue.DELETE, ScriptResumeValue.AWARD);
+	}
+
+	private void updateCert() throws Exception{
+		String[] certName = req.getParameterValues(ScriptResumeValue.CERTIFICATE_NAME);
+		String[] certFrom = req.getParameterValues(ScriptResumeValue.CERTIFICATE_FROM);
+		String[]  certDate = req.getParameterValues(ScriptResumeValue.CERTIFICATE_DATE);
+		
+		int beforeCertSize = resumeComplete.getCertificateList() == null ? 0 : resumeComplete.getCertificateList().size();
+		
+		if(certName != null){
+			
+			boolean more = beforeCertSize > certName.length ? true : false;
+			
+			for(int i =0; i <certName.length; i++){
+				Certificate cert = new Certificate.CertificationBuilder().
+						setCertFrom(certFrom[i]).
+						setCertificationName(certName[i]).
+						build();
+				
+				if(certDate[i] != null && certDate[i] != "")
+					cert.setCertificateDate(java.sql.Date.valueOf(certDate[i]));
+								
+				cert.setId(resumeId);
+				
+				if(more){
+					cert.setCertificateId(resumeComplete.getCertificateList().get(i).getCertificateId());
+					updateOrDeleteCertificate(cert);
+				}else{
+					if(i < beforeCertSize){
+						cert.setCertificateId(resumeComplete.getCertificateList().get(i).getCertificateId());
+						updateOrDeleteCertificate(cert);
+					}else service.insertItem(cert, ScriptResumeValue.INSERT, ScriptResumeValue.CERTIFICATE);					
+				}				
+			}
+			
+			// Delete Remain Certificate Data
+			if(more){
+				for(int i = certName.length; i < beforeCertSize; i++){
+					service.deleteItem(resumeComplete.getCertificateList().get(i).getCertificateId(), 
+							ScriptResumeValue.DELETE, ScriptResumeValue.CERTIFICATE);
+				}
+			}
+			
+		}else{
+			for(int i = 0 ; i < beforeCertSize; i ++){
+				service.deleteItem(resumeComplete.getCertificateList().get(i).getCertificateId(), 
+						ScriptResumeValue.DELETE, ScriptResumeValue.CERTIFICATE);
+			}
+		}
+	}
+	
+	private void updateOrDeleteCertificate(Certificate cert){
+		if(cert.getCertificateDate() != null && cert.getCertificateFrom() != "" 
+				&& cert.getCertificateName() != "")
+			service.updateItem(cert, ScriptResumeValue.UPDATE, ScriptResumeValue.CERTIFICATE);
+		else service.deleteItem(cert.getCertificateId(), ScriptResumeValue.DELETE, ScriptResumeValue.CERTIFICATE);
+	}
+
+	private void updateEdu() throws Exception 
+	{
+		String[] educationTitle = req.getParameterValues(ScriptResumeValue.ACADEMY_TITLE);
+		String[] academyName = req.getParameterValues(ScriptResumeValue.ACADEMY_NAME);
+		String[] contents = req.getParameterValues(ScriptResumeValue.ACADEMY_CONTENT);
+		String[] enrollDate = req.getParameterValues(ScriptResumeValue.ACADEMY_START_DATE);
+		String[] endDate = req.getParameterValues(ScriptResumeValue.ACADEMY_END_DATE);
+		
+		int beforeEduSize = resumeComplete.getAcademyList() == null ? 0 : resumeComplete.getAcademyList().size();
+		
+		if(educationTitle != null){
+			
+			boolean more = beforeEduSize > educationTitle.length ? true : false;
+			
+			for(int i = 0; i < educationTitle.length; i++){
+				Academy academy = new Academy.AcademyBuilder().
+						setAcademyName(academyName[i]).
+						setContent(contents[i]).
+						setEducationTitle(educationTitle[i]).
+						build();
+				
+				if(enrollDate[i] != null && enrollDate[i] != "")
+					academy.setStartDate(java.sql.Date.valueOf(enrollDate[i]));
+				
+				if(endDate[i] != null && endDate[i] != "")
+					academy.setEndDate(java.sql.Date.valueOf(endDate[i]));
+								
+				academy.setId(resumeId);
+				
+				if(more){
+					academy.setAcademyId(resumeComplete.getAcademyList().get(i).getAcademyId());
+					updateOrDeleteEdu(academy);
+				}else{
+					//.. till beforeEdusize
+					if(i < beforeEduSize){
+						academy.setAcademyId(resumeComplete.getAcademyList().get(i).getAcademyId());
+						updateOrDeleteEdu(academy);
+					}else service.insertItem(academy, ScriptResumeValue.INSERT, ScriptResumeValue.ACADEMY);
+					
+				}							
+			}
+			
+			// Delete Remain Academy Data
+			if(more){
+				for(int i = educationTitle.length; i < beforeEduSize; i++){
+					service.deleteItem(resumeComplete.getAcademyList().get(i).getAcademyId(), 
+							ScriptResumeValue.DELETE, ScriptResumeValue.ACADEMY);
+				}
+			}
+			
+		}else{
+			//Delete All
+			for(int i = 0; i < beforeEduSize; i++){
+				service.deleteItem(resumeComplete.getAcademyList().get(i).getAcademyId(), 
+						ScriptResumeValue.DELETE, ScriptResumeValue.ACADEMY);
+			}
+		}
+	}
+
+	private void updateOrDeleteEdu(Academy academy){
+		if(academy.getContent().trim() != "" && academy.getAcademyName() != "" &&
+				academy.getEducationTitle() != "" && academy.getStartDate() != null && 
+				academy.getEndDate() != null)
+			service.updateItem(academy, ScriptResumeValue.UPDATE, ScriptResumeValue.ACADEMY);
+		else service.deleteItem(academy.getAcademyId(), ScriptResumeValue.DELETE, ScriptResumeValue.ACADEMY);
+	}
+	
+	private double[] makeDoubleArray(String[] array){
+		if(array == null) return null;
+		double[] dArray = new double[array.length];
+		for(int i = 0; i < array.length; i++){
+			if(array[i] != null || array[i] != ""){
+				try{
+					dArray[i] = Double.parseDouble(array[i]);
+				}catch(Exception e){
+					dArray[i] = ERROR_EXCEPTION;
+				}
+			}else{
+				dArray[i] = ERROR_EXCEPTION;
+			}
+		}
+		return dArray;
+	}
+
+	private void updateDegree() throws Exception
+	{	
+		// Degree Name And Confirm exist or not		
+		String[] schoolType = req.getParameterValues(ScriptResumeValue.DEGREE_UNIVERSITY_TYPE);		
+		String[] enrollDate = req.getParameterValues(ScriptResumeValue.DEGREE_ENROLL_DATE);
+						
+		String[] graduDate = req.getParameterValues(ScriptResumeValue.DEGREE_GRADU_DATE);
+						
+		String[] major  = req.getParameterValues(ScriptResumeValue.DEGREE_MAJOR);
+		String[] schoolName  = req.getParameterValues(ScriptResumeValue.DEGREE_SCHOOL_NAME);
+						
+		String[] score = req.getParameterValues(ScriptResumeValue.DEGREE_SCORE);
+		double[] scoreDouble = makeDoubleArray(score);
+						
+		String[] totalScore = req.getParameterValues(ScriptResumeValue.DEGREE_TOTAL_SCORE);
+		double[] totalScoreDouble = makeDoubleArray(totalScore);
+		
+		int beforeDegreeSize = resumeComplete.getDegreeList() == null ? 0 : resumeComplete.getDegreeList().size();
+		
+		if(schoolName != null){								
+					boolean more = beforeDegreeSize > schoolName.length ? true : false;
+					
+					for(int i = 0 ; i < schoolName.length; i++){
+						Degree degree = new Degree.DegreeBuilder().
+								setSchoolName(schoolName[i]).
+								setMajor(major[i]).
+								setSchoolType(schoolType[i]).
+								setScore(scoreDouble[i]).
+								setTotalScore(totalScoreDouble[i]).build();
+						
+						// Parent Key Violate
+						degree.setId(resumeId);
+						
+						if(enrollDate[i] != null && enrollDate[i] != "")
+							degree.setEnrollDate(java.sql.Date.valueOf(enrollDate[i]));
+						
+						if(graduDate[i] != null && graduDate[i] != "")
+							degree.setGraduDate(java.sql.Date.valueOf(graduDate[i]));
+						
+						// If before Size more Bigger than Now
+						if(more){
+							degree.setDegreeId(resumeComplete.getDegreeList().get(i).getDegreeId());
+							updateOrDeleteDegree(degree);			
+						}else{
+							// till schoolName Size..
+							if (i < beforeDegreeSize){ 
+								degree.setDegreeId(resumeComplete.getDegreeList().get(i).getDegreeId());
+								updateOrDeleteDegree(degree);}
+							else service.insertItem(degree, ScriptResumeValue.INSERT, ScriptResumeValue.DEGREE);						
+						}
+					}
+					
+					// Delete Remain Degree.
+					if(more){					
+						for(int i = schoolName.length; i < beforeDegreeSize; i++)
+							service.deleteItem(resumeComplete.getDegreeList().get(i).getDegreeId(), 
+									ScriptResumeValue.DELETE, ScriptResumeValue.DEGREE);												
+					}
+										
+				}else{
+					// Delete All.
+					for(int i = 0 ; i < beforeDegreeSize; i++)
+						service.deleteItem(resumeComplete.getDegreeList().get(i).getDegreeId(), 
+								ScriptResumeValue.DELETE, ScriptResumeValue.DEGREE);	
+				}			
+	}
+	
+	private void updateOrDeleteDegree(Degree degree){
+		if(degree.getSchoolName() != "" || degree.getMajor() != "" || degree.getSchoolType() != "" ||
+				degree.getEnrollDate() != null || degree.getGraduDate() != null || degree.getScore() != -1 ||
+				degree.getTotalScore() != -1)
+			service.updateItem(degree, ScriptResumeValue.UPDATE, ScriptResumeValue.DEGREE);
+		else service.deleteItem(degree.getDegreeId(), ScriptResumeValue.DELETE, ScriptResumeValue.DEGREE);	
+	}
+
+	private void updateHighSchool() {
+		String highSchoolName = req.getParameter(ScriptResumeValue.SCHOOL_NAME);
+		String enrollDate = req.getParameter(ScriptResumeValue.SCHOOL_ENROLL_DATE);
+		String graduDate = req.getParameter(ScriptResumeValue.SCHOOL_GRADU_DATE);
+		
+		HighSchool highSchool = new HighSchool();
+		if(highSchoolName == "" && enrollDate ==  "" && graduDate == ""){}
+		else{
+			highSchool.setSchoolName(highSchoolName);
+			
+			if(enrollDate != "") highSchool.setEnrollDate(java.sql.Date.valueOf(enrollDate));
+			if(graduDate != "")highSchool.setGraduDate(java.sql.Date.valueOf(graduDate));			
+			highSchool.setId(resumeId);
+			highSchool.setHighSchoolId(resumeComplete.getHighSchool().getHighSchoolId());
+			service.updateHighSchool(highSchool);
+		}
+	}
+
+	private void updateHopeCondition() {
+		String salaryString = req.getParameter(ScriptResumeValue.HOPE_SALARY);
+		int salary;
+		try{
+			salary = Integer.parseInt(salaryString);}catch(Exception e){
+			salary = 0;	
+		}
+		
+		HopeCondition hope = new HopeCondition.HopeBuilder().
+				setJob(req.getParameter(ScriptResumeValue.HOPE_JOB)).
+				setLocation(req.getParameter(ScriptResumeValue.HOPE_LOCATION)).
+				setSalary(salary).build();
+		
+		hope.setId(resumeId);
+		hope.setConditionId(resumeComplete.getHopeCondition().getConditionId());
+		
+		if(hope.getJob() == "" && hope.getLocation() == "" && hope.getSalary() == 0)
+			System.out.println("희망 사항 적힌게 없음.");
+		else service.updateHopeCondition(hope);
+	}
+
+	private int updateResume() 
+	{
+		int result = ERROR_EXCEPTION;
+		
+		Resume resume = new Resume.ResumeBuilder(memberId)
+				.setTitle(req.getParameter(ScriptResumeValue.TITLE)).
+				setAddress(req.getParameter(ScriptResumeValue.ADDRESS)).
+				setBirthday(req.getParameter(ScriptResumeValue.BIRTH)).
+				setGender(req.getParameter(ScriptResumeValue.GENDER)).
+				setName(req.getParameter(ScriptResumeValue.NAME)).
+				setPhoto(req.getParameter(ScriptResumeValue.PHOTO)).
+				setEmail(req.getParameter(ScriptResumeValue.EMAIL)).
+				setTel(req.getParameter(ScriptResumeValue.TEL)).build();
+		
+		System.out.println(resume.toString());
+		if((resume.getTitle() != null) && (!resume.getTitle().equals("")))
+		{
+			//Test
+			/*resume.setLanguage("java,c,c++");*/
+			String langs = req.getParameter(ScriptResumeValue.LANGUAGE);
+			
+			resume.setLanguage((langs != null) && (!langs.equals("")) ? langs : "기타");
+			
+			resume.setLastEdu(makeLastEdu());
+			resume.setId(resumeId);
+			if(service.updateResume(resume) > 0) result = 0;				
+		}
+		
+		return result;
+	}
+	
+	public String makeLastEdu(){
+		String result = DegreeValue.HIGH_SCHOOL;
+		String[] array = req.getParameterValues(ScriptResumeValue.DEGREE_UNIVERSITY_TYPE);
+		
+		/*대학교(4년)
+		대학(2,3년)
+		대학원
+		고등학교*/
+		
+		for(String s : array){
+			if(s != null){
+				if(s.equals(DegreeValue.POSTGRADE)){ 
+					result = DegreeValue.POSTGRADE;
+					return result;
+				}
+				
+				if(s.equals(DegreeValue.UNIVERSITY)){
+					result = DegreeValue.UNIVERSITY;
+				}
+				
+				if(s.equals(DegreeValue.COLLEGE)){
+					if(!result.equals(DegreeValue.UNIVERSITY)){
+						result = DegreeValue.UNIVERSITY;
+					}
+				}
+			}
+		}
+		
+		return result;
+	}
+}

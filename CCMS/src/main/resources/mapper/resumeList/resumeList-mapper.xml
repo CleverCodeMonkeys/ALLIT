@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="resumeList">
+	
+	<resultMap type="resume" id="ResumeMap_mine">
+		<result column="ID" property="id"/>
+		<result column="TITLE" property="title"/>
+		<result column="MEMBER_ID" property="memberId"/>
+		<result column="PHOTO" property="photo"/>
+		<result column="ADDRESS" property="address"/>
+		<result column="REGIST_DATE" property="registDate"/>
+		<result column="UPDATE_DATE" property ="updateDate"/>
+		<result column="TEL" property="tel"/>
+		<result column="BIRTHDAY" property = "birthday"/>
+		<result column="GENDER" property="gender"/>
+		<result column="NAME" property="name"/>
+		
+		<!-- New Add -->
+		<result column="LANGUAGE" property = "language"/>
+		<result column="DISPLAY" property = "display"/>
+		<result column="LAST_EDU" property="lastEdu"/>
+	</resultMap>
+	
+	<select id="selectResumeList" parameterType="string" resultMap="ResumeMap_mine">
+		SELECT * FROM RESUME WHERE MEMBER_ID = #{memberId} ORDER BY UPDATE_DATE DESC
+	</select>
+	
+	<!-- <select id="selectResumeTotalLists" resultType="_int" parameterType="string">
+		SELECT COUNT(*) FROM RESUME WHERE MEMBER_ID = #{memberId}
+	</select> -->
+	
+	<delete id="deleteResume" parameterType="_int">
+		DELETE FROM RESUME WHERE ID = #{id}
+	</delete>
+	
+	<update id="displayResume" parameterType="resume">
+		UPDATE RESUME SET DISPLAY= #{display}
+		WHERE ID= #{id}
+	</update>
+	
+	<select id="filterResume" parameterType="hashmap" resultMap="ResumeMap_mine">
+		SELECT * FROM RESUME
+		<where>
+			MEMBER_ID = #{memberId}
+			<if test="chk != null">
+				AND DISPLAY = 'Y'
+			</if>
+		</where> 
+		ORDER BY UPDATE_DATE DESC
+	</select>
+</mapper>
