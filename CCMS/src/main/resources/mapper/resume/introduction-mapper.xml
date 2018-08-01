@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="introduction">
+
+	<resultMap type="introduction" id="introdMap">
+		<result column="ID" property="id"/>
+		<result column="INTRO_ID" property="introId"/>
+		<result column="INTRO_TITLE" property="title"/>
+		<result column="INTRO_CONTENT" property="content"/>
+	</resultMap>
+	
+	<insert id="insertIntrod" parameterType="introduction">
+		INSERT INTO INTRODUCTION VALUES (
+		#{id}, INTRO_SEQ.NEXTVAL, #{title}, #{content}
+		)
+	</insert>
+	
+	<select id="selectIntrodList" resultMap="introdMap" parameterType="_int">
+		SELECT * FROM INTRODUCTION WHERE ID = #{id}
+	</select>
+	
+	<select id ="selectOneIntrod" resultMap="introdMap" parameterType="_int">
+		SELECT * FROM INTRODUCTION WHERE INTRO_ID = #{introId}
+	</select>
+	
+	<select id="selectCountIntrod" resultType="_int" parameterType="_int">
+		SELECT COUNT(*) FROM INTRODCTION WHERE ID = #{id}
+	</select>
+	
+	<delete id="deleteIntrod" parameterType="_int">
+		DELETE FROM INTRODUCTION WHERE INTRO_ID = #{introId}
+	</delete>
+	
+	<update id="updateIntrod" parameterType="introduction">
+		UPDATE INTRODUCTION SET INTRO_TITLE = #{title} ,
+		INTRO_CONTENT = #{content} WHERE INTRO_ID = #{introId}
+	</update>
+	
+</mapper>

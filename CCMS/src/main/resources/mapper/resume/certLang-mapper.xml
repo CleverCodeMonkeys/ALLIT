@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="lang">
+
+	<resultMap type="lang" id="langMap">
+		<result column="ID" property="id"/>
+		<result column="LANG_ID" property="langId"/>
+		<result column="CERT_LANG_NAME" property="languageName"/>
+		<result column="CERT_TEST_NAME" property="testName"/>
+		<result column="CERT_SCORE" property="score"/>
+		<result column="CERT_GET_DATE" property="getDate"/>
+	</resultMap>
+	
+	<insert id="insertLang" parameterType="lang">
+		INSERT INTO CERT_LANGUAGE VALUES(
+			#{id}, LANG_SEQ.NEXTVAL, #{languageName}, #{testName}, #{score}, #{getDate, jdbcType=DATE}
+		)
+	</insert>
+	
+	<select id="selectLangList" resultMap="langMap" parameterType="_int">
+		SELECT * FROM CERT_LANGUAGE WHERE ID = #{id}
+	</select>
+	
+	<select id ="selectOneLang" resultMap="langMap" parameterType="_int">
+		SELECT * FROM CERT_LANGUAGE WHERE LANG_ID = #{langId}
+	</select>
+	
+	<select id="selectCountLang" resultType="_int" parameterType="_int">
+		SELECT COUNT(*) FROM CERT_LANGUAGE WHERE ID = #{id}
+	</select>
+	
+	<delete id="deleteLang" parameterType="_int">
+		DELETE FROM CERT_LANGUAGE WHERE LANG_ID = #{langId}
+	</delete>
+	
+	<update id="updateLang" parameterType="lang">
+		UPDATE CERT_LANGUAGE SET 
+		CERT_LANG_NAME = #{languageName} ,
+		CERT_TEST_NAME = #{testName},
+		CERT_SCORE = #{score},
+		CERT_GET_dATE = #{getDate, jdbcType=DATE} WHERE LANG_ID = #{langId}
+	</update>
+	
+</mapper>

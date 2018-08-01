@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="degree">
+	<resultMap type="degree" id="degreeMap">
+		<result column="ID" property="id"/>
+		<result column="DEGREE_ID" property="degreeId"/>
+		<result column="SCHOOL_NAME" property="schoolName"/>
+		<result column="ENROLL_DATE" property="enrollDate"/>
+		<result column="GRADU_DATE" property="graduDate"/>
+		<result column="MAJOR" property="major"/>
+		<result column="SCORE"  property="score"/>
+		<result column="TOTAL_SCORE" property="totalScore"/>
+		
+		<!-- 4년제, 전문대, 타입 -->
+		<result column="SCHOOL_TYPE" property="schoolType"/>
+	</resultMap>
+	
+	<insert id="insertDegree" parameterType="degree">
+		INSERT INTO DEGREE(ID, DEGREE_ID, SCHOOL_TYPE,
+		SCHOOL_NAME, ENROLL_DATE, GRADU_DATE, MAJOR, SCORE, TOTAL_SCORE) VALUES(
+			#{id} , DEGREE_SEQ.NEXTVAL, #{schoolType}, #{schoolName}, #{enrollDate , 
+			jdbcType=DATE}, #{graduDate, jdbcType=DATE},
+			#{major} , #{score} , #{totalScore}
+		)
+	</insert>
+	
+	<select id="selectDegreeList" parameterType="_int" resultMap="degreeMap">
+		SELECT * FROM DEGREE WHERE ID = #{id}
+	</select>
+	
+	<select id="selectOneDegree" parameterType="_int" resultMap="degreeMap">
+		SELECT * FROM DEGREE WHERE DEGREE_ID = #{degreeId}
+	</select>
+	
+	<select id="selectCountDegree" resultType="_int" parameterType="_int">
+		SELECT COUNT(*) DEGREE WHERE ID = #{id}
+	</select>
+	
+	<delete id="deleteDegree" parameterType="_int">
+		DELETE FROM DEGREE WHERE DEGREE_ID = #{degreeId}
+	</delete>
+	
+	<update id="updateDegree" parameterType="degree">
+		UPDATE DEGREE SET SCHOOL_TYPE = #{schoolType},
+					SCHOOL_NAME = #{schoolName},
+					ENROLL_DATE = #{enrollDate, jdbcType=DATE},
+					GRADU_DATE = #{graduDate, jdbcType=DATE},
+					MAJOR = #{major},
+					SCORE = #{score},
+					TOTAL_SCORE = #{totalScore}
+					WHERE DEGREE_ID = #{degreeId}
+	</update>
+</mapper>
