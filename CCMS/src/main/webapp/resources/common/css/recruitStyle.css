@@ -1,5 +1,9 @@
 @CHARSET "UTF-8";
 
+* {
+	font-family: penB;
+}
+
 ul {
     padding: 0;
     margin: 0;
@@ -9,8 +13,8 @@ li {
 }
 
 .wrap {
-    background-color: #eee;
-    padding: 3% 15% 5% 15%;
+    /* background-color: #eee; */
+    padding: 0 10% 5% 10%;
 }
 
 .side_nav, .content {
@@ -19,14 +23,16 @@ li {
 
 .navigation {
     background-color: white;
-    border: 1px solid #ddd;
-    padding: 10px 20px;
+    /* border: 1px solid #ddd; */
+    padding: 0 20px;
 }
 .navigation ul li {
     margin: 25px 0;
 }
 .navigation ul li a {
     text-decoration: none;
+    font-size: 1.3em;
+    font-family: vitamin;
 }
 .navigation ul li a:hover {
     color: royalblue;
@@ -35,8 +41,8 @@ li {
 .content {
     background-color: white;
     float: right;
-    border: 1px solid #ddd;
-    padding: 50px;
+    border-left: 3px solid black;
+    padding: 0 50px 50px 100px;
 }
 
 .search_area div {
@@ -54,8 +60,9 @@ li {
 }
 .filter_header div {
     padding: 10px 10px;
-    background-color: #eee;
-    font-size: .9em;
+    background-color: #ffbf00;
+    font-size: 1.1em;
+    font-family: vitamin;
 }
 .filter_content div {
     height: 250px;
@@ -75,7 +82,7 @@ li {
 
 /* Handle */
 .filter_content div::-webkit-scrollbar-thumb {
-    background: #888; 
+    background: #777; 
 }
 
 /* Handle on hover */
@@ -85,7 +92,7 @@ li {
 
 .filter_content ul li {
     list-style: none;
-    font-size: .8em;
+    font-size: 0.9em;
     padding: 8px 20px;
 }
 .filter_content ul li:hover {
@@ -124,7 +131,7 @@ li {
 }
 
 .condition {
-    font-size: .8em;
+    font-size: .9em;
     padding: 0 10px;
     cursor: pointer;
     display: inline-block;
@@ -191,10 +198,10 @@ li {
     margin: 0;
 }
 .user_info_name {
-    font-size: .9em;
+    font-size: 1.0em;
 }
 .user_info_detail {
-    font-size: .7em;
+    font-size: .8em;
     color: #555;
 }
 .resume_view div p {
@@ -204,9 +211,10 @@ li {
     font-weight: bold;
     cursor: pointer;
     display: inline-block;
+    font-size: 1.1em;
 }
 .resume_view_detail {
-    font-size: .8em;
+    font-size: .9em;
     color: #333;
 }
 .resume_badge {
@@ -217,7 +225,7 @@ li {
     border-radius: 15px;
 }
 .resume_date {
-    font-size: .8em;
+    font-size: .9em;
     color: #555;
     text-align: center;
     line-height: 123px;
@@ -241,4 +249,12 @@ li {
 .selectedItem {
 	color: royalblue;
 	font-weight: bold;
+}
+
+th {
+	font-family: vitamin;
+	font-size: 1.1em;	
+}
+.gender li {
+	font-size: 1.0em !important;
 }

@@ -17,7 +17,7 @@ public interface ResumeListService {
 
 	List<Resume> filterResume(String memberId,String chk);
 
-
+	Resume selectOneResume(int id);
 
 
 }

@@ -5,16 +5,25 @@ public class DegreeBox
 	private static final String DEGREE_HEADER = "<div class = 'w3-row' style='margin-top: 30px; font-family: penB; padding-bottom: 5%;'>";
 	
 	 private static final String DEGREE_SCHOOL_TYPE = 
-			    "<div class ='w3-col m2 w3-center'>" +
+			    /*"<div class ='w3-col m2 w3-center'>" +
 	   			"<label class='inp'>" +
 			    "<input type='text' placeholder='&nbsp;' name = 'schoolType' class='cInput'>" +
 	   			"<span class='label'>학교타입</span>" +
 			    "<span class='border'></span>" + 
 	   			"</label>"+
-			    "</div>";
-	 
+			    "</div>";*/
+			 	"<div class ='w3-col m3 w3-center'>" +
+			 	" <div include='form-input-select()'>" +
+			    "<select name='schoolType' class ='selectType'>" +
+			 	"<option value=''>학교타입</option>" +
+			    "<option value='대학교(4년) 졸업'}>대학교(4년) 졸업</option>" +
+			 	"<option value='대학(2,3년) 졸업'}>대학(2,3년) 졸업</option>" +
+			    "<option value='대학원 졸업'}>대학원 졸업</option>" + 
+			 	"</select>" +
+			    "</div></div>";
+			     
 	 private static final String DEGREE_SCHOOL_NAME = 
-			 "<div class ='w3-col m4 w3-center'>" +
+			 "<div class ='w3-col m3 w3-center'>" +
 			 "<label class='inp'>" + 
 			 "<input type='text' placeholder='&nbsp;' name = 'universityName' class='cInput'>" +
 			 "<span class=label>학교명</span>" +

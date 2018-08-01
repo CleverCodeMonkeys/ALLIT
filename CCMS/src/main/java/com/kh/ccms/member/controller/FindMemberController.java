@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.kh.ccms.member.model.service.MemberService;
@@ -84,6 +85,48 @@ public class FindMemberController
 		int result2 = memberService.changePass(member);
 		
 		if (result2 > 0) map.put("value", "success");
+		else map.put("value", "fail");
+		
+		return map;
+	}
+	
+	// 비밀번호 수정 폼 보기
+	@RequestMapping(value="/member/updatePwdForm.join")
+	public String updatePwdForm(@SessionAttribute(name = "m", required= false) Member m, Model model)
+	{
+		String msg = (m != null) ? "member/updatePwd" : "common/msg";
+		
+		String loc = "/";
+		String error = "로그인을 해주세요.";
+		
+		model.addAttribute("loc", loc).addAttribute("msg", error);
+		
+		return msg;
+	}
+	
+	// 비밀번호 바꾸기
+	@ResponseBody
+	@RequestMapping(value="/member/updatePwd.join")
+	public Map<String, Object> updatePwd(@RequestParam("pPwd") String pPwd, @RequestParam("nPwd") String nPwd,
+			@SessionAttribute(name = "m", required= false) Member m, Member member, Model model)
+	{
+		Map<String, Object> map = new HashMap<>();
+		
+		String msg = (m != null) ? "member/updatePwd" : "common/msg";
+		
+		model.addAttribute("msg", msg);
+		
+		if(!bcryptPasswordEncoder.matches(pPwd, m.getPassword()))
+		{
+			map.put("value", "pPwdError");
+			return map;
+		}
+		
+		m.setPassword(bcryptPasswordEncoder.encode(nPwd));
+		
+		int result = memberService.updatePwd(m);
+		
+		if (result > 0) map.put("value", "success");
 		else map.put("value", "fail");
 		
 		return map;

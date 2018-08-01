@@ -4,7 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.kh.ccms.member.model.vo.Member;
+import com.kh.ccms.resume.model.util.ResumePictureMethod;
 import com.kh.ccms.resume.model.vo.Resume;
 import com.kh.ccms.resumeList.model.service.ResumeListService;
 
@@ -44,8 +48,28 @@ public class ResumeListController {
 	
 	
 	@RequestMapping("/resumeList/deleteResume.resume")
-	public String deleteResume(@RequestParam int id, Model model){
-		System.out.println("deleteResume : " + id);
+	public String deleteResume(@RequestParam int id, Model model 
+			, @SessionAttribute(name = "m", required= false) Member m,
+			HttpServletRequest request){
+		
+		if(m == null || m.equals("")) {
+			model.addAttribute("msg","권한 없음.").addAttribute("loc","/");
+			return "common/msg";
+		}
+		
+		if(id < 0){
+			model.addAttribute("msg","잘못된 삭제").addAttribute("loc","/");
+			return "common/msg";
+		}
+				
+		//Add Delete Image File. [2018-07-30] [START]
+		Resume resume = resumeListService.selectOneResume(id);
+		if(resume != null){
+			ResumePictureMethod method = new ResumePictureMethod();	
+			method.removePicture(m.getId(), request, resume.getPhoto());
+		}
+		//Add Delete Image File. [2018-07-30] [END]
+		
 		int result = resumeListService.deleteResume(id);
 		
 		if(result > 0)

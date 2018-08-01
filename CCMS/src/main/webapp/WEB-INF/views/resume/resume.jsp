@@ -122,7 +122,7 @@ textarea:focus ~ .bar:before {
    <c:import url="/WEB-INF/views/common/header.jsp" charEncoding="UTF-8"/>
    <div class ="w3-light-gray" style ="height:100px;"></div>
       
-   <form action="${pageContext.request.contextPath}/resume/saveResume.resume" method="post">
+   <form action="${pageContext.request.contextPath}/resume/saveResume.resume" method="post" enctype="multipart/form-data">
    
    <!-- Distinguish New or Modify Resume -->
    <input type="hidden" value="${resume.resume.id}" name ="modifyResume"/>
@@ -211,11 +211,13 @@ textarea:focus ~ .bar:before {
             </div>
 
 			<!-- 포트폴리오 뷰 -->         
-            <div id="portfForm">
+            <div id="portForm">
                <div class = "w3-indigo boxTitle w3-display-container">포트폴리오<span class="w3-right w3-amber plusBtn w3-hover-deep-orange" onclick="plusForm(id);" id="rPort">+</span></div>               		
                <div class = "w3-container w3-white boxForm" id = "portIndexZ1">
                		<c:import url="/WEB-INF/views/resume/port.jsp" charEncoding="UTF-8"/>
                </div>
+               
+               <c:import url="/WEB-INF/views/resume/morePort.jsp" charEncoding="UTF-8"/> 
             </div>
             
             <!-- 자기소개서 뷰  -->

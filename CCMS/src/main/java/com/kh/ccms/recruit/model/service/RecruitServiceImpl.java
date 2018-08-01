@@ -9,6 +9,7 @@ import com.kh.ccms.recruit.model.dao.RecruitDao;
 import com.kh.ccms.recruit.model.vo.FilterQuery;
 import com.kh.ccms.recruit.model.vo.Recruit;
 import com.kh.ccms.recruit.model.vo.RecruitFilter;
+import com.kh.ccms.recruit.model.vo.Scrab;
 import com.kh.ccms.recruit.util.QueryFactory;
 
 @Service
@@ -18,8 +19,8 @@ public class RecruitServiceImpl implements RecruitService {
 	RecruitDao recruitDao;
 	
 	@Override
-	public List<Recruit> selectRecruitList(int cPage, int numPerPage) {
-		return recruitDao.selectRecruitList(cPage, numPerPage);
+	public List<Recruit> selectRecruitList(String id, int cPage, int numPerPage) {
+		return recruitDao.selectRecruitList(id, cPage, numPerPage);
 	}
 
 	@Override
@@ -28,7 +29,7 @@ public class RecruitServiceImpl implements RecruitService {
 	}
 
 	@Override
-	public List<Recruit> filterRecruitList(int cPage, int numPerPage, RecruitFilter rcFilter,
+	public List<Recruit> filterRecruitList(String id, int cPage, int numPerPage, RecruitFilter rcFilter,
 			String order, String searchSelect, String searchInput) {
 		
 		FilterQuery sql = new FilterQuery();
@@ -48,7 +49,7 @@ public class RecruitServiceImpl implements RecruitService {
 		System.out.println(sql.toString());
 		System.out.println("====================================================");
 
-		return recruitDao.filterRecruitList(cPage, numPerPage, sql);
+		return recruitDao.filterRecruitList(id, cPage, numPerPage, sql);
 		
 	}
 
@@ -70,6 +71,26 @@ public class RecruitServiceImpl implements RecruitService {
 		
 		return recruitDao.filterRecruitTotalContents(sql);
 		
+	}
+
+	@Override
+	public int insertScrab(Scrab scrab) {
+		return recruitDao.insertScrab(scrab);
+	}
+
+	@Override
+	public int deleteScrab(Scrab scrab) {
+		return recruitDao.deleteScrab(scrab);
+	}
+
+	@Override
+	public List<Recruit> selectScrabList(String id, int cPage, int numPerPage) {
+		return recruitDao.selectScrabList(id, cPage, numPerPage);
+	}
+
+	@Override
+	public int selectScrabTotalContents(String id) {
+		return recruitDao.selectScrabTotalContents(id);
 	}
 
 }

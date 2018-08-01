@@ -68,6 +68,81 @@
   transform: scaleX(1);
 }
 
+/* Add New Content  */
+.button-wrap {
+  position: relative;
+  text-align: center;
+  top: 50%;
+   margin-top: -1.5em; 
+}
+
+.button-label {
+  display: inline-block;
+  padding: 1em 2em;
+  margin: 0.5em;
+  cursor: pointer;
+  color: #292929;
+  border-radius: 0.25em;
+  background: #efefef;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2), inset 0 -3px 0 rgba(0, 0, 0, 0.22);
+  transition: 0.3s;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.button-label h1 {
+  font-size: 1em;
+  font-family: "Lato", sans-serif;
+}
+.button-label:hover {
+  background: #d6d6d6;
+  color: #101010;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2), inset 0 -3px 0 rgba(0, 0, 0, 0.32);
+}
+.button-label:active {
+  -webkit-transform: translateY(2px);
+          transform: translateY(2px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2), inset 0px -1px 0 rgba(0, 0, 0, 0.22);
+}
+@media (max-width: 40em) {
+  .button-label {
+    padding: 0em 1em 3px;
+    margin: 0.25em;
+  }
+}
+
+#yes-button:checked + .button-label {
+  background: rgb(63, 81, 181);
+  color: #efefef;
+}
+#yes-button:checked + .button-label:hover {
+  background: rgb(63, 81, 181);
+  color: #e2e2e2;
+}
+
+#no-button:checked + .button-label {
+  background: #D91E18;
+  color: #efefef;
+}
+#no-button:checked + .button-label:hover {
+  background: #c21b15;
+  color: #e2e2e2;
+}
+
+#maybe-button:checked + .button-label {
+  background: #4183D7;
+  color: #efefef;
+}
+#maybe-button:checked + .button-label:hover {
+  background: #2c75d2;
+  color: #e2e2e2;
+}
+
+.hidden {
+  display: none;
+}
+
 </style>
 
 	<div class = "w3-row" style="margin-top: 30px; font-family: penB;">
@@ -101,13 +176,25 @@
 	
 	<div class = "w3-row" style="margin-top: 50px; font-family: penB; padding-bottom: 5%;">
 	    <div class ="w3-col m4 w3-center">
-	        <label class="inp">
+	        <%-- <label class="inp">
 	      		<input type="text" id="gender" 
-	      		placeholder="&nbsp;" name = "gender" class="cInput" readonly="readonly"
+	      		placeholder="&nbsp;" name = "gender" class="cInput" onkeydown="return genderKey(event);"
+	      		onclick="openGender();"
 	      		required="required" value ="${resume.resume.gender}">
 	            <span class="label">성별</span>
 	            <span class="border"></span>
-	        </label>
+	        </label> --%>
+	        <div class="button-wrap">
+	        
+      		<input class="hidden radio-label" type="radio" name="gender" id="yes-button" checked="checked" value="남"/>
+      		<label class="button-label" for="yes-button">
+        			남자
+      		</label>
+      		<input class="hidden radio-label" type="radio" name="gender" id="no-button" value="여"/>
+      		<label class="button-label" for="no-button">
+        			여자
+      		</label>
+    		</div>
 	    </div>
 	
 	    <div class ="w3-col m4 w3-center">
@@ -167,4 +254,15 @@
 	 	if(value >  addressMax)
 	 		$(this).val($(this).val().substring(0,addressMax));
  });
+ 
+ // 성별 세팅 체크 박스
+ $( document ).ready(function() {
+	var gender = '${resume.resume.gender}';
+	if(gender != ""){
+		if(gender != $('#yes-button').val()){
+			$('#no-button').attr('checked', true);
+		}
+	}
+});
+ 
 </script>

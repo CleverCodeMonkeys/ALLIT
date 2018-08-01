@@ -19,4 +19,6 @@ public interface MemberDao
 	String checkIdEmail(String id, String email);
 
 	int changePass(Member member);
+
+	int updatePwd(Member m);
 }

@@ -2,6 +2,8 @@ package com.kh.ccms.resume.model.util;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.kh.ccms.common.vo.DegreeValue;
 import com.kh.ccms.resume.model.service.ResumeServiceImple;
 import com.kh.ccms.resume.model.vo.Academy;
@@ -25,10 +27,14 @@ public class SaveResumeFactory
 	private String memberId;
 	private int resumeId;
 	
-	public SaveResumeFactory(HttpServletRequest req, ResumeServiceImple service, String memberId){
+	// New
+	private MultipartFile file;
+	
+	public SaveResumeFactory(HttpServletRequest req, ResumeServiceImple service, String memberId, MultipartFile file){
 		this.req = req;
 		this.service = service;
 		this.memberId = memberId;
+		this.file = file;
 	}
 	
 	public int insertIntoFactory() throws Exception
@@ -82,7 +88,7 @@ public class SaveResumeFactory
 		
 		hope.setId(resumeId);
 		
-		if(hope.getJob() == "" && hope.getLocation() == "" && hope.getSalary() == 0)
+		if(hope.getJob().equals("") && hope.getLocation().equals("") && hope.getSalary() == 0)
 			System.out.println("희망 사항 적힌게 없음.");
 		else service.insertHopeCondition(hope);
 	}
@@ -93,12 +99,12 @@ public class SaveResumeFactory
 		String graduDate = req.getParameter(ScriptResumeValue.SCHOOL_GRADU_DATE);
 		
 		HighSchool highSchool = new HighSchool();
-		if(highSchoolName == "" && enrollDate ==  "" && graduDate == ""){}
+		if(highSchoolName.trim().equals("") && enrollDate.equals("") && graduDate.equals("")){}
 		else{
 			highSchool.setSchoolName(highSchoolName);
 			
-			if(enrollDate != "") highSchool.setEnrollDate(java.sql.Date.valueOf(enrollDate));
-			if(graduDate != "")highSchool.setGraduDate(java.sql.Date.valueOf(graduDate));			
+			if(!enrollDate.equals("")) highSchool.setEnrollDate(java.sql.Date.valueOf(enrollDate));
+			if(!graduDate.equals(""))highSchool.setGraduDate(java.sql.Date.valueOf(graduDate));			
 			highSchool.setId(resumeId);
 			service.insertHighSchool(highSchool);
 		}
@@ -114,11 +120,26 @@ public class SaveResumeFactory
 				setBirthday(req.getParameter(ScriptResumeValue.BIRTH)).
 				setGender(req.getParameter(ScriptResumeValue.GENDER)).
 				setName(req.getParameter(ScriptResumeValue.NAME)).
-				setPhoto(req.getParameter(ScriptResumeValue.PHOTO)).
+				/*setPhoto(req.getParameter(ScriptResumeValue.PHOTO)).*/
 				setEmail(req.getParameter(ScriptResumeValue.EMAIL)).
 				setTel(req.getParameter(ScriptResumeValue.TEL)).build();
-		
-		System.out.println(resume.toString());
+	
+		// Photo Handler.
+		String resumePhoto = req.getParameter(ScriptResumeValue.PHOTO);
+		TempPictureMemorize memorize = TempPictureMemorize.getInstance();
+
+		if(memorize.getBeforeName().equals(resumePhoto)){
+			ResumePictureMethod method = new ResumePictureMethod();
+			memorize.setPictureName(method.SavePicture(memberId, file, req));
+			
+			resume.setPhoto(memorize.getPictureName() != null ? 
+					memorize.getPictureName() : ScriptResumeValue.DEFAULT_IMAGE);
+			
+		}else{
+			resume.setPhoto(ScriptResumeValue.DEFAULT_IMAGE);
+		}
+		// Initialize for Singleton.
+		memorize.initialize();
 		
 		if((resume.getTitle() != null) && (!resume.getTitle().equals("")))
 		{
@@ -180,26 +201,27 @@ public class SaveResumeFactory
 				Introduction introd = 
 						new Introduction(resumeId, ERROR_EXCEPTION, introductionTitle[i], contents[i]);
 				
-				System.out.println(introd.toString());
-					if(introd.getTitle() != "" || introd.getContent().trim() != "" ) // 구지 빈 값을 DB에 넣을 필요는 없다.
-						service.insertItem(introd, ScriptResumeValue.INSERT, ScriptResumeValue.INTRODUCTION); 
+					// 구지 빈 값을 DB에 넣을 필요는 없다.
+					if(introd.getTitle().trim().equals("") && introd.getContent().trim().equals("")) {}
+					else	service.insertItem(introd, ScriptResumeValue.INSERT, ScriptResumeValue.INTRODUCTION); 
 			}
 		}
 	}
 
 	private void insertPortpolio() {
 		// TODO Auto-generated method stub
-		/*String [] portUrl = req.getParameterValues(ScriptResumeValue.PORTPOLIO_URL);
-		String [] portData = req.getParameterValues(ScriptResumeValue.PORTPOLIO_DATA);
+		String [] portUrl = req.getParameterValues(ScriptResumeValue.PORTPOLIO_URL);
+		/*String [] portData = req.getParameterValues(ScriptResumeValue.PORTPOLIO_DATA);*/
 		if(portUrl != null){
 			for(int i =0; i < portUrl.length; i++){
-				Portpolio port = new Portpolio(ERROR_EXCEPTION, ERROR_EXCEPTION,
-						portUrl[i], portData[i]);
+				Portpolio port = new Portpolio(resumeId, ERROR_EXCEPTION,
+						portUrl[i], null);
 				
 				System.out.println(port.toString());
-				service.insertItem(port, ScriptResumeValue.INSERT, ScriptResumeValue.PORTPOLIO);
+				if(portUrl[i] != null && !portUrl[i].trim().equals(""))
+					service.insertItem(port, ScriptResumeValue.INSERT, ScriptResumeValue.PORTPOLIO);
 			}
-		}*/
+		}
 	}
 
 	private void insertLanganguage() {
@@ -216,13 +238,13 @@ public class SaveResumeFactory
 						setTestName(testName[i]).
 						setScore(score[i]).build();
 				
-				if(getDate[i] != null && getDate[i] != "")
+				if(getDate[i] != null && !getDate[i].equals(""))
 					lang.setGetDate(java.sql.Date.valueOf(getDate[i]));
 							
 				System.out.println(lang.toString());
 				lang.setId(resumeId);
-				if(lang.getLanguageName() != "" && lang.getTestName() != "" &&
-						lang.getGetDate() != null && lang.getScore() != "")
+				if(!(lang.getLanguageName().trim().equals("") && lang.getTestName().trim().equals("") &&
+						lang.getGetDate() == null && lang.getScore().trim().equals("")))
 					service.insertItem(lang, ScriptResumeValue.INSERT, ScriptResumeValue.LANG);				
 			}
 		}
@@ -242,13 +264,13 @@ public class SaveResumeFactory
 						setAwardOrgan(awardOrgan[i]).
 						setTitle(awardTitle[i]).build();
 				
-				if(getAward[i] != null && getAward[i] != "")
+				if(getAward[i] != null && !getAward[i].equals(""))
 					award.setAwardDate(java.sql.Date.valueOf(getAward[i]));
 							
 				award.setId(resumeId);
 				System.out.println(award.toString());
-				if(award.getAwardContent().trim() != "" && award.getAwardOrganization() != "" &&
-						award.getAwardDate() != null)
+				if(!(award.getAwardContent().trim().equals("") && award.getAwardOrganization().equals("") &&
+						award.getAwardDate() == null))
 					service.insertItem(award, ScriptResumeValue.INSERT, ScriptResumeValue.AWARD);				
 			}
 		}
@@ -267,13 +289,13 @@ public class SaveResumeFactory
 						setCertificationName(certName[i]).
 						build();
 				
-				if(certDate[i] != null && certDate[i] != "")
+				if(certDate[i] != null && !certDate[i].equals(""))
 					cert.setCertificateDate(java.sql.Date.valueOf(certDate[i]));
 								
 				System.out.println(cert.toString());
 				cert.setId(resumeId);
-				if(cert.getCertificateDate() != null && cert.getCertificateFrom() != "" 
-						&& cert.getCertificateName() != "")
+				if(!(cert.getCertificateDate() == null && cert.getCertificateFrom().trim().equals("") 
+						&& cert.getCertificateName().trim().equals("")))
 					service.insertItem(cert, ScriptResumeValue.INSERT, ScriptResumeValue.CERTIFICATE); 
 				
 			}
@@ -284,7 +306,7 @@ public class SaveResumeFactory
 		if(array == null) return null;
 		double[] dArray = new double[array.length];
 		for(int i = 0; i < array.length; i++){
-			if(array[i] != null || array[i] != ""){
+			if(array[i] != null || array[i].equals("")){
 				try{
 					dArray[i] = Double.parseDouble(array[i]);
 				}catch(Exception e){
@@ -313,18 +335,18 @@ public class SaveResumeFactory
 						setEducationTitle(educationTitle[i]).
 						build();
 				
-				if(enrollDate[i] != null && enrollDate[i] != "")
+				if(enrollDate[i] != null && !enrollDate[i].equals(""))
 					academy.setStartDate(java.sql.Date.valueOf(enrollDate[i]));
 				
-				if(endDate[i] != null && endDate[i] != "")
+				if(endDate[i] != null && !endDate[i].equals(""))
 					academy.setEndDate(java.sql.Date.valueOf(endDate[i]));
 								
 				/*System.out.println(academy.toString());*/
 				academy.setId(resumeId);
 				
-				if(academy.getContent().trim() != "" && academy.getAcademyName() != "" &&
-						academy.getEducationTitle() != "" && academy.getStartDate() != null && 
-						academy.getEndDate() != null)
+				if(!(academy.getContent().trim().equals("") && academy.getAcademyName().equals("") &&
+						academy.getEducationTitle().equals("") && academy.getStartDate() == null && 
+						academy.getEndDate() == null))
 					service.insertItem(academy, ScriptResumeValue.INSERT, ScriptResumeValue.ACADEMY);			
 			}
 		}
@@ -355,16 +377,16 @@ public class SaveResumeFactory
 						setScore(scoreDouble[i]).
 						setTotalScore(totalScoreDouble[i]).build();
 				
-				if(enrollDate[i] != null && enrollDate[i] != "")
+				if(enrollDate[i] != null && !enrollDate[i].equals(""))
 					degree.setEnrollDate(java.sql.Date.valueOf(enrollDate[i]));
 				
-				if(graduDate[i] != null && graduDate[i] != "")
+				if(graduDate[i] != null && !graduDate[i].equals(""))
 					degree.setGraduDate(java.sql.Date.valueOf(graduDate[i]));
 				
 //				System.out.println(degree.toString());
-				if(degree.getSchoolName() != "" || degree.getMajor() != "" || degree.getSchoolType() != "" ||
-						degree.getEnrollDate() != null || degree.getGraduDate() != null || degree.getScore() != -1 ||
-						degree.getTotalScore() != -1)
+				if(!(degree.getSchoolName().equals("") && degree.getMajor().equals("") && degree.getSchoolType().equals("") &&
+						degree.getEnrollDate() == null && degree.getGraduDate() == null && degree.getScore() == -1 &&
+						degree.getTotalScore() == -1))
 				{
 					degree.setId(resumeId);
 					service.insertItem(degree, ScriptResumeValue.INSERT, ScriptResumeValue.DEGREE);				

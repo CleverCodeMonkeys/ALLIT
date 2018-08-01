@@ -71,7 +71,18 @@ p{
 			<c:import url="/WEB-INF/views/member/myPageMenu.jsp" charEncoding="UTF-8" />
 		</div>
 		
-	
+		<!-- <div class="w3-container">
+		  <div id="delMem" class="w3-modal">
+		    <div class="w3-modal-content">
+		      <div class="w3-container">
+		        <span onclick="document.getElementById('delMem').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+		        <p>회원 탈퇴하시겠습니까?</p>
+		        <p>한 번 탈퇴하시면 모든 정보는 삭제되며 되돌릴 수 없습니다.</p>
+		      </div>
+		    </div>
+		  </div>
+		</div> -->
+		
 		<div class=" w3-row w3-col m10 w3-white" style="margin-top: 30px; font-family: penB;">
 		
 		<p>회원 탈퇴하시겠습니까?<br>
@@ -81,7 +92,7 @@ p{
 		         <label><b>비밀번호</b></label>
 		         <input class="w3-input w3-border w3-margin-bottom" type="password" placeholder="비밀번호를 입력해주세요" id= "pwd" name="password" required>
 		    
-		    	 <button class="btn w3-button w3-red" type ="submit">회원탈퇴</button></td>     
+		    	 <button class="btn w3-button w3-blue" type ="submit">회원탈퇴</button></td>     
 	        </div>
 	     
 	        

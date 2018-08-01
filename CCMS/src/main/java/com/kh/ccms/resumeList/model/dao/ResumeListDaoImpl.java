@@ -48,6 +48,12 @@ public class ResumeListDaoImpl implements ResumeListDao {
 		return sqlSession.selectList("resumeList.filterResume",map);
 	}
 
+	@Override
+	public Resume selectOneResume(int id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("resumeList.selectOneResume", id);
+	}
+
 
 
 }

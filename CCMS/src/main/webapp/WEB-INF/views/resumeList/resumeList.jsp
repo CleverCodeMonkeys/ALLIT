@@ -74,8 +74,7 @@ td{
 	
 		<div class ="w3-col m9 w3-center tab_font2 w3-white" style ="margin-left:3%;">
 		
-		<label style="margin-right:80%;"><input type="checkbox" id="filterResume" onclick="filterResume();" >올린이력서만 보기</label>
-			
+			<label style="margin-right:80%;" ><input type="checkbox" id="filterResume" onclick="filterResume();" > 올린이력서만 보기</label>
 		
 			<table id="tbl-board" class="table table-striped table-hover">
 	 				<tr class="w3-white">

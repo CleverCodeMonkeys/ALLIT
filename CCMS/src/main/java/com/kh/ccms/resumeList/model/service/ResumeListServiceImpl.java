@@ -47,6 +47,12 @@ public class ResumeListServiceImpl implements ResumeListService {
 		return resumeListDao.filterResume(memberId,chk);
 	}
 
+	@Override
+	public Resume selectOneResume(int id) {
+		// TODO Auto-generated method stub
+		return resumeListDao.selectOneResume(id);
+	}
+
 
 	
 }

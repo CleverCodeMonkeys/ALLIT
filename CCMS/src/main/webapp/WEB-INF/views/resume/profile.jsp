@@ -104,6 +104,8 @@
        border: 1px solid lightgrey; cursor: pointer;" onclick='changeImage();'>
         <div class="w3-display-topright"><button type="button" class ="w3-button w3-pink" onclick="delPhoto();">X</button></div>
         <input type="hidden" name="photo" value="test.jpg" id ="hiddenPhoto">
+        <!-- Detect Find Change Hidden Input -->
+        <input type ="hidden" name ="detect" value ="0" id ="detect">
     </div>
     
     <div class ="w3-col m10 w3-center w3-display-container lang-span" style="padding-top: 6%; padding-left: 2%;">
@@ -195,7 +197,7 @@
 <div id="photoModal" class="w3-modal">
     <div class="w3-modal-content  w3-animate-top w3-card-4" style="width: 500px;">
       <header class="w3-container w3-amber"> 
-        <span onclick="document.getElementById('photoModal').style.display='none'" 
+        <span onclick="cancelPhoto();" 
         class="w3-button w3-display-topright">&times;</span>
         <h2 style ="font-family: whiteCloud">사진등록</h2>
       </header>
@@ -203,9 +205,9 @@
         <!-- 사진 등록하기 -->
         <div class = "w3-row w3-center">  
         	<img id ="modalPhoto" style ="width: 400px; height:400px;"/>
-        	<form id="test">
-        		<input type ="file" id ="input-file" name="files"/>
-        	</form>
+        	<!-- <form id="test" enctype="multipart/form-data"> -->
+        		<input type ="file" id ="input-file" name="file"/>
+        	<!-- </form> -->
         </div>
       </div>
       <footer class="w3-teal" style ="font-family: penB">
@@ -224,7 +226,7 @@ $('#input-file').on('change', function(ev){
 	if(window.FileReader){
 		if (!$(this)[0].files[0].type.match(/image\//)){
 			alert('이미지 파일만 가능합니다');
-			$(this).val('');
+			$(this).val(''); 
 			return false;
 		}else{
 			var reader = new FileReader();
@@ -256,17 +258,31 @@ function CountChecked(field) {
 }
 
 function savePhoto(){
-	//Save Photo
 	
-	var form = $('#test');
+	if($('#input-file').val() == "")
+	{
+		alert('사진을 선택하셔야 합니다.');
+	}else{
+		//Setting
+		saveRealPhoto();
+		$('#photoImage').attr('src', $('#modalPhoto').attr('src'));
+		var fileValue = $('#input-file').val().split('\\');
+		var fileName = fileValue[fileValue.length - 1];
+		console.log(fileName);
+		$('#hiddenPhoto').val(fileName);
+		document.getElementById('photoModal').style.display='none';
+		
+		/* find and set Change State */
+		$('#detect').val('1');
+	}
+}
+
+function saveRealPhoto()
+{
+	var data = new FormData();
+	var file = $("#input-file");
+	data.append("file", file[0].files[0]);
 	
-	form.method = "POST";
-	form.enctype = "multipart/form-data";
-	
-	data = new FormData();
-	data.append("file", $("#input-file")[0]);
-	console.log(data);
-	console.log(data.file);
 	 $.ajax({
 		url : "${pageContext.request.contextPath}/resume/saveImage.resume",
 		type: "POST",
@@ -275,7 +291,11 @@ function savePhoto(){
         contentType : false,
         processData : false,
 		success: function(data){
-			console.log('success');
+			if(data.result){
+				alert('사진 등록 성공');
+			}else{
+				alert('사진 등록 실패');
+			}
 		}, error : function(data){
 			
 		}
@@ -284,14 +304,14 @@ function savePhoto(){
 
 function cancelPhoto(){
 	document.getElementById('photoModal').style.display='none';
-	$('#input-file').val("");
+	/* $('#input-file').val(""); */
 }
 
 //upload File Image.
 function changeImage(){
 	document.getElementById('photoModal').style.display='block';
 	//initialize photo	
-	$('#modalPhoto').attr('src', $('#photoImage').attr('src'));
+	//$('#modalPhoto').attr('src', $('#photoImage').attr('src'));
 }
 
 function delPhoto(){
@@ -338,15 +358,20 @@ $( document ).ready(function() {
    // Setting Picture Image
   var photo =  '${resume.resume.photo}';
   var location = '${pageContext.request.contextPath}/resources/images/logo/';
-  if(photo == ""){
+  var loc = '${pageContext.request.contextPath}/resources/uploadFiles/picture/';
+  if(photo == "" || photo == defaultImage){
      location += defaultImage;
      $('#photoImage').attr('src', location);
      $('#modalPhoto').attr('src', location);
      $('#hiddenPhoto').val(defaultImage);
   }else{
-     location += photo;
+    /*  location += photo;
      $('#photoImage').attr('src', location);
      $('#modalPhoto').attr('src', location);
+     $('#hiddenPhoto').val(photo); */
+     loc += '${resume.resume.memberId}' + '/' + photo;
+     $('#photoImage').attr('src', loc);
+     $('#modalPhoto').attr('src', loc);
      $('#hiddenPhoto').val(photo);
   }
 });

@@ -82,4 +82,9 @@ public class ScriptResumeValue
 	public static final String HOPE_SALARY = "salary";
 	public static final String HOPE_JOB = "hopeJob";
 	
+	//Default Image
+	public static final String DEFAULT_IMAGE = "monkeyLogo.jpg";
+	
+	// State Value
+	public static final String PHOTO_DETECT = "detect";
 }

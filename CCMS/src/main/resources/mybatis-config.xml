@@ -24,8 +24,11 @@
 		
 		<typeAlias type="com.kh.ccms.member.model.vo.Member" alias="member"/>
 		
+		<!-- [START] RECRUIT -->
 		<typeAlias type="com.kh.ccms.recruit.model.vo.Recruit" alias="recruit"/>
       	<typeAlias type="com.kh.ccms.recruit.model.vo.FilterQuery" alias="filterQuery"/>
+      	<typeAlias alias="scrab" type="com.kh.ccms.recruit.model.vo.Scrab"/>
+      	<!-- [END] RECRUIT -->
       	
       	<!--  [START] COMMUNITY -->
 		<typeAlias alias="community" type="com.kh.ccms.community.model.vo.Community"/>
@@ -34,6 +37,11 @@
 		<typeAlias alias="commentS" type="com.kh.ccms.skill.model.vo.CommentS"/>
 		<!-- [END] COMMUNITY -->	
 		<typeAlias alias="profile" type="com.kh.ccms.myPage.model.vo.Profile"/>
+		
+		<!-- Resume Correction -->
+		<typeAlias type="com.kh.ccms.correction.model.vo.Correction" alias="correction"/>
+		<typeAlias type="com.kh.ccms.correction.model.vo.CorrectionComment" alias="correctionComment"/>
+		<typeAlias type="com.kh.ccms.correction.model.vo.CorrectionSearchFilter" alias="correctionSearchFilter"/>
 	</typeAliases>
 		
 	<typeHandlers>

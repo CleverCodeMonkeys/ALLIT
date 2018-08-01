@@ -38,4 +38,20 @@
 	<beans:bean id ="multipartResolver" class ="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="10485760"/> <!-- 10MB -->
 	</beans:bean>
+	
+	<!--  interceptor correction -->
+	<interceptors>
+      <interceptor>
+         <mapping path="/correction/correction.correct"/>
+         <mapping path="/correction/correctionView.correct"/>
+         <mapping path="/correction/correctionWrite.correct"/>
+         <mapping path="/correction/correctionWriteEnd.correct"/>
+         <mapping path="/correction/correctionDelete.correct"/>      
+         <mapping path="/correction/correctionCommentWrite.correct"/>
+         <mapping path="/correction/correctionCommentUpdate.correct"/>
+         <mapping path="/correction/correctionCommentDelete.correct"/>
+         <beans:bean id="logincheckInterceptor" class="com.kh.ccms.common.interceptor.LoginCheckInterceptor"/>
+      </interceptor>
+   </interceptors>
+	
 </beans:beans>
