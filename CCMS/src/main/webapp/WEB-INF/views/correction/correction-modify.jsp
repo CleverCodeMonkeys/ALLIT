@@ -134,7 +134,7 @@
     <div class="layout-container w3-row">
         <div class="main">
             <!-- 메인 부분을 감싸는 div -->
-            <div id="article" class="content all-list w3-col m8" role="main">
+            <div id="article" class="content all-list w3-col m8" role="main"  style="margin-right: 50px;">
                 <div class="content-header">
                     <h3>첨삭 이력서  수정하기</h3>
                     
@@ -184,8 +184,45 @@
                     
                 </div>
             </div>
+            <!-- 이력서 보기 창 -->
+            <div id="resumeView" class="content all-list w3-col m3" role="main">
+            	<div class="content-header">
+                    <h3>내 이력서 확인하기</h3> 
+                    <button type="button"  onclick="resumeModal('${m.id}');"  class="btn btn-default pull-right" >이력서 불러오기</button> 
+                </div>
+
+               <div class="panel panel-default">
+                    
+                    <div class="panel-body">
+                     	<!-- <input type="file" name="file" id="testFile" style="display : none;"> -->
+                             <div class="form-group">
+                                 
+                             </div>
+                             <div class="form-group">					
+                                 <div id="resumeValue"></div> 
+                             </div>
+                    </div>  
+                </div>
+            </div>
         </div>      
     </div>
+    
+    <!-- Modal -->
+	<div id="resume" class="w3-modal" style="z-index: 1100;" >
+	   <div class="w3-modal-content w3-animate-top" style ="width: 500px;">
+	      <header class="w3-container w3-amber w3-center"> 
+   			<h2 style="font-family:vitamin">내 이력서</h2>
+   			<span onclick="document.getElementById('resume').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+	      </header>
+	      
+	      <div id="resumeBody" class="w3-container member">
+	      	<form class="w3-container" action="${pageContext.request.contextPath}/correction/correctionResumeModal.correct" method="POST" onsubmit="return closeModal();">
+		         	<!-- append를 통해  작성 -->
+	      	</form>
+	      </div>
+   		 </div>
+	  </div>
+	  
     <script>
        //제목 글자수 제한하기
        $(function(){
@@ -257,6 +294,55 @@
     	  }
     		 
     	  
+       }
+       
+       //모달 창 띠우기
+       function resumeModal(userId){
+     	   var id = userId;
+     	   console.log(id);
+     	   $.ajax({
+     		  url : "${pageContext.request.contextPath}/correction/correctionResumeModal.correct",  
+     		  type : "POST",
+     		  data : {id : id},
+     		  success : function(data) {
+ 						
+ 					var j = 0;
+ 					var resumeDiv = $("<div id='resumeDiv' style='margin-top:10px;'>")					
+ 					var resumeTable = $("<table style='cellpadding: 5px;'>");
+ 					
+ 					$('#resume').children('div').children('div').children('form').children('div').css("display","none");
+ 					$(resumeTable).append("<b>이력서 제목</b><br>");
+ 									
+ 					for(var i in data){
+ 						var num = ++j;
+ 						/* $(resumeTable).append("<tr>"+"<td>"+"&nbsp"+num+"</td>"+"<td>"+data[i].resumeTitle+"</td>"+"</tr>"); */
+ 						$(resumeTable).append("<input type='radio' name='resume' value='"+data[i].resumeContent+"'>"+data[i].resumeTitle+"<br>");
+
+ 					}
+ 					
+ 					$(resumeDiv).append(resumeTable);
+ 					$(resumeDiv).append("<button class='w3-button w3-block w3-indigo w3-section w3-padding' type='button' onclick='insertResume();'>이력서 등록</button>");
+ 					
+ 					$('#resume').children('div').children('div').children('form').append(resumeDiv);
+ 			
+ 					$('#resume').css("display", "block");
+ 					
+ 				},
+ 				error : function() {
+ 					alert("에러발생");
+ 				}
+     	   });	  
+        }
+       
+       // 이력서 modal 등록 버튼
+       function insertResume(){
+    	   $('#resumeValue').empty();
+    	  	var resumeContent= $("input[name='resume']:checked").val();
+
+    	 	$('#resumeValue').prepend(resumeContent);
+    	   
+    	  
+    	   $('#resume').css("display", "none");
        }
     </script>
 	<c:import url="/WEB-INF/views/common/footer.jsp" charEncoding="UTF-8"/>
