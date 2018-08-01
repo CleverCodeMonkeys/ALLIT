@@ -2,11 +2,40 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="myPage">
 
+	<resultMap type="community" id="communityMap">
+		<result column="BOARD_ID" property="board_id"/>
+		<result column="TITLE" property="title"/>
+		<result column="CONTENT" property="content"/>
+		<result column="WRITER" property="writer"/>
+		<result column="WRITE_DATE" property="writer_date"/>
+		<result column="SEE" property="see"/>
+		<result column="COMMENT_COUNT" property="comment_count"/>
+	</resultMap>
+	
+	<resultMap type="skill" id="skillMap">
+		<result column="BOARD_ID" property="board_id"/>
+		<result column="TITLE" property="title"/>
+		<result column="TYPE" property="type"/>
+		<result column="CONTENT" property="content"/>
+		<result column="WRITER" property="writer"/>
+		<result column="WRITE_DATE" property="writer_date"/>
+		<result column="SEE" property="see"/>
+		<result column="COMMENT_COUNT" property="comment_count"/>
+	</resultMap>
+	
 	<select id="countResume" resultType="_int" parameterType="string">
 		SELECT COUNT(*) FROM RESUME WHERE MEMBER_ID = #{userId}
 	</select>
 	
 	<select id="countComm" resultType="_int" parameterType="string">
+		SELECT COUNT(*) FROM COMU_BOARD WHERE WRITER = #{userId}
+	</select>
+	
+	<select id="selectMyComm" resultMap="communityMap">
+		SELECT * FROM COMU_BOARD WHERE WRITER=#{id} ORDER BY BOARD_ID DESC
+	</select>
+	
+	<select id="selectCommunityTotalContents" resultType="_int">
 		SELECT COUNT(*) FROM COMU_BOARD WHERE WRITER = #{userId}
 	</select>
 	
@@ -30,4 +59,53 @@
 	<delete id="deleteMember">
 		DELETE FROM IT_MEMBER WHERE ID=#{id}
 	</delete>
+	
+	<select id="selectCommunitySearch" parameterType="hashmap" resultMap="communityMap">
+		SELECT * FROM COMU_BOARD
+		WHERE WRITER=#{id}
+		<!-- supported Class monitor -->
+			<if test="searchSelect eq 'TITLE'">
+				AND TITLE
+			</if>
+			<if test="searchSelect eq 'WRITER'">
+				AND WRITER
+			</if>
+			<if test="searchSelect eq 'CONTENT'">
+				AND CONTENT
+			</if>
+		LIKE '%'||#{searchComu}||'%' ORDER BY BOARD_ID DESC
+	</select>
+	
+	<select id="selectCommunityTotalContentsSer" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*) FROM COMU_BOARD WHERE WRITER=#{id} AND TITLE LIKE '%'||#{searchComu}||'%'
+	</select>
+	
+	<select id="selectSkillList" resultMap="skillMap">
+		SELECT * FROM SKI_BOARD WHERE WRITER=#{id} ORDER BY BOARD_ID DESC
+	</select>
+	
+	<select id="selectSkillSearch" parameterType="hashmap" resultMap="skillMap">
+		SELECT * FROM SKI_BOARD
+		WHERE WRITER=#{id}
+		<!-- supported Class monitor -->
+			<if test="searchSelect eq 'TITLE'">
+				AND TITLE
+			</if>
+			<if test="searchSelect eq 'WRITER'">
+				AND WRITER
+			</if>
+			<if test="searchSelect eq 'CONTENT'">
+				AND CONTENT
+			</if>
+		LIKE '%'||#{searchSki}||'%' ORDER BY BOARD_ID DESC
+	</select>
+	
+	<select id="selectSkillTotalContents" resultType="_int">
+		SELECT COUNT(*) FROM SKI_BOARD WHERE WRITER=#{id}
+	</select>
+	
+	<select id="selectSkillTotalContentsSer" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*) FROM SKI_BOARD WHERE WRITER=#{id} AND TITLE LIKE '%'||#{searchSki}||'%'
+	</select>
+	
 </mapper>
