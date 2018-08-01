@@ -90,29 +90,29 @@
 	<!-- 전체를 감싸는 div -->
     <div class="layout-container w3-row">
         <!-- 메인 부분을 감싸는 div -->
-        <div id="list-article" class="content all-list w3-col m8" role="main">
+        <div id="list-article" class="content all-list w3-col m10" role="main">
             <!-- 머리통 + 검색창 + 버튼 -->
             <div id="resume-nav" class="w3-bar">
-                <a href="/ccms/correction/correctionWrite.correct" id="resume-nav-button" class="btn btn-success btn-wide pull-right"><i class="fa fa-pencil"></i>새 글 쓰기</a>
-                <h4 style="margin-left: 50px"> 이력서 첨삭</h4>
+                <a href="/ccms/correction/correctionWrite.correct" id="resume-nav-button" class="btn btn-success btn-wide pull-right" style="font-family: vitamin;"><i class="fa fa-pencil"></i>새 글 쓰기</a>
+                <h4 style="margin-left: 50px; font-family: vitamin;" > 이력서 첨삭</h4>
                 <form action="#" name="category-filter" id="category-filter-form">
                     <div class="category-filter-wrapper w3-row">
                         <ul class="filter-list pull-left">                        	
 	                            <li class="filter-name">
-	                                <a onclick="reNew('dateSort')" id="dateSort" class="filter-list-link active">최신순</a>
+	                                <a onclick="reNew('dateSort')" id="dateSort" style="font-family: penB;" class="filter-list-link active">최신순</a>
 	                            </li>
 	
 	                            <li class="filter-name">
-	                                <a onclick="reNew('commentSort')" id="commentSort" class="filter-list-link">댓글순</a>
+	                                <a onclick="reNew('commentSort')" id="commentSort" style="font-family: penB;" class="filter-list-link">댓글순</a>
 	                            </li >
 	
 	                            <li class="filter-name">
-	                                <a onclick="reNew('seeSort')" id="seeSort" class="filter-list-link">조회순</a>
+	                                <a onclick="reNew('seeSort')" id="seeSort" style="font-family: penB;" class="filter-list-link">조회순</a>
 	                            </li>
                         </ul>
                         <div class="category-filter-search pull-right" >   
                             <div class="input-group input-group-sm">
-                                <input type="text" name="search" id="search" class="form-control" onkeydown="JavaScript:enterCheck();" placeholder="검색어" value="${search}">
+                                <input type="text" maxlength="30" name="search" id="search" class="form-control" onkeydown="JavaScript:enterCheck();" placeholder="검색어 30자 제한" value="${search}">
                                 
                                 <span class="input-group-btn">
                                     <button type="button" id="searchFiled" onclick="searchGo();" class="btn btn-default"><i class="fa fa-search"></i></button>
@@ -131,11 +131,11 @@
             			<c:forEach items="${list}" var="correction">
 
             			     <c:if test="${correction.correctionCommentCount gt 0}">      		                
-			                    <li id="list-group-li" class="w3-panel w3-border w3-border-gray w3-leftbar" style="border-left-color: #71A4D9 !important;">
+			                    <li id="list-group-li" class="w3-panel w3-border w3-border-gray w3-leftbar" style="border-left-color: #71A4D9 !important; font-family: penB;">
 			                        <!-- title -->		             
 			                        <div class="list-title-wrapper">
 			                            <h5>
-			                                <a id="${correction.correctionId}" onclick="goView(id)" >${correction.correctionTitle} </a>
+			                                <a id="${correction.correctionId}"  onclick="goView(id)" style="font-family: penB;">${correction.correctionTitle} </a>
 			                            </h5>
 			                        </div>
 			                        <!-- 댓글 수 조회 수 확인 --> 
@@ -159,11 +159,11 @@
 			                    </li>	
 			              </c:if>
 			              <c:if test="${correction.correctionCommentCount le 0}">
-			              		<li id="list-group-li" class="w3-panel w3-border w3-border-gray w3-leftbar">
+			              		<li id="list-group-li" class="w3-panel w3-border w3-border-gray w3-leftbar" style="font-family: penB;">
 			                        <!-- title -->		             
 			                        <div class="list-title-wrapper">
 			                            <h5>
-			                                <a id="${correction.correctionId}" onclick="goView(id)" >${correction.correctionTitle} </a>
+			                                <a id="${correction.correctionId}" onclick="goView(id)" style="font-family: penB;">${correction.correctionTitle} </a>
 			                            </h5>
 			                        </div>
 			                        <!-- 댓글 수 조회 수 확인 --> 
@@ -229,11 +229,11 @@
 	$(function(){
 		var sortOpt = '${sort}';
 		if(sortOpt == 'dateSort' || sortOpt == ""){
-			$('#dateSort').css("background-color", "#71A4D9");
+			$('#dateSort').css("color", "#E31D2E");
 		} else if(sortOpt == 'commentSort'){
-			$('#commentSort').css("background-color", "#71A4D9");
+			$('#commentSort').css("color", "#E31D2E");
 		} else if(sortOpt == 'seeSort'){
-			$('#seeSort').css("background-color", "#71A4D9");
+			$('#seeSort').css("color", "#E31D2E");
 		} 
 	});
 	

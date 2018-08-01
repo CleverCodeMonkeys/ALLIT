@@ -19,6 +19,9 @@ public interface CorrectionService {
 	int deleteCorrection(Correction correction);
 
 	int updateCorrection(Correction correction);
+
+	//이력서 불러오는 모달창
+	List<Map<String, String>> selectResume(String id);
 	
 	
 }
