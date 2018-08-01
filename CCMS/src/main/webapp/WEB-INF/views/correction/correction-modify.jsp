@@ -134,9 +134,9 @@
     <div class="layout-container w3-row">
         <div class="main">
             <!-- 메인 부분을 감싸는 div -->
-            <div id="article" class="content all-list w3-col m8" role="main">
+            <div id="article" class="content all-list w3-col m7" role="main" style="margin-right: 30px;">
                 <div class="content-header">
-                    <h3>첨삭 이력서  수정하기</h3>
+                    <h3 style="font-family: vitamin;">첨삭 이력서  수정하기</h3>
                     
                 </div>
                 <div class="panel panel-default">
@@ -161,9 +161,7 @@
 
                                 <div class="form-group">
                                     
-                                    <div>
-                                        <input type="button" class="btn btn-default pull-right" value="이력서 불러오기">
-                                    </div>
+                                   
                                 </div>
 
                                 <div class="form-group">
@@ -182,6 +180,30 @@
                     </div>
                     
                     
+                </div>
+            </div>
+            <!-- 이력서 보기 창 -->
+            <div id="resumeView" class="content all-list w3-col m4" role="main">
+            	<div class="content-header">
+                    <h3 style="font-family: vitamin;">내  자소서 확인하기</h3>   
+                </div>
+		  
+               <div class="panel panel-default">
+                    <div class="panel-head">
+                    	<div style="display: inline; font-family: penB;" >
+                    		자소서 확인   
+                        	<input type="button" onclick="resumeModal('${m.id}');"  class="pull-right" value="자소서 불러오기" />
+                        </div>                    
+                    </div>
+                    <div class="panel-body">
+                     	<!-- <input type="file" name="file" id="testFile" style="display : none;"> -->
+                             <div class="form-group">
+                                 
+                             </div>
+                             <div class="form-group">					
+                                 <div id="resumeValue"></div> 
+                             </div>
+                    </div>  
                 </div>
             </div>
         </div>      
