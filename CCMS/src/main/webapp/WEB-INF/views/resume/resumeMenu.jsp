@@ -3,10 +3,89 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>    
-    
+<style>
+.cbx {
+  margin: auto;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
+}
+.cbx span {
+  display: inline-block;
+  vertical-align: middle;
+  transform: translate3d(0, 0, 0);
+}
+.cbx span:first-child {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  transform: scale(1);
+  vertical-align: middle;
+  border: 1px solid #9098A9;
+  transition: all 0.2s ease;
+}
+.cbx span:first-child svg {
+  position: absolute;
+  top: 3px;
+  left: 2px;
+  fill: none;
+  stroke: #FFFFFF;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 16px;
+  stroke-dashoffset: 16px;
+  transition: all 0.3s ease;
+  transition-delay: 0.1s;
+  transform: translate3d(0, 0, 0);
+}
+.cbx span:first-child:before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: #506EEC;
+  display: block;
+  transform: scale(0);
+  opacity: 1;
+  border-radius: 50%;
+}
+.cbx span:last-child {
+  padding-left: 8px;
+}
+.cbx:hover span:first-child {
+  border-color: #506EEC;
+}
+
+.inp-cbx:checked + .cbx span:first-child {
+  background: #506EEC;
+  border-color: #506EEC;
+  animation: wave 0.4s ease;
+}
+.inp-cbx:checked + .cbx span:first-child svg {
+  stroke-dashoffset: 0;
+}
+.inp-cbx:checked + .cbx span:first-child:before {
+  transform: scale(3.5);
+  opacity: 0;
+  transition: all 0.6s ease;
+}
+
+@keyframes wave {
+  50% {
+    transform: scale(0.9);
+  }
+}
+</style>    
     	<!-- [RIGHT SIDE BAR] Remote Controller -->
 		<div class="w3-col m3 w3-sidebar w3-white w3-light-gray" style="right:0; margin-top: 5%; padding-left: 3%;">
-		
+			<div class = "w3-row" style ="margin-right: 55%; font-family: penB; padding-top: 2%; padding-bottom: 2%;">
+				<input class="inp-cbx" id="cbx" type="checkbox" style="display: none;"/>
+				<label class="cbx" for="cbx"><span>
+	    		<svg width="12px" height="10px" viewbox="0 0 12 10">
+	      		<polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+	    		</svg></span><span>기본정보 추가</span></label>
+    		</div>
         	<div class ="w3-white" style ="margin-right: 50%; font-family: penB; padding-top: 2%;">     	
         		<div class ="w3-panel w3-large" style ="cursor: pointer;" onclick="degreeF();" id ="degreeMenu">
 	        		<span style="text-decoration: none;">
@@ -81,13 +160,46 @@
        <script>
     	// 학위
    		var degreeFlag = true; //1
-    	var careerFlag = true; //2
+    	/* var careerFlag = true; //2 */
     	var eduFlag = true; //3
     	var certFlag = true; //4 
     	var awardFlag = true; //5
     	var langFlag = true; //6
     	var portfFlag = true; //7
     	var introdFlag = true; //8
+    	
+    	$(function(){
+    			if('${resume}' == "") return;
+    		
+    			degreeFlag = '${resume.degreeList.size()}' > 0 ? true : false;
+    			eduFlag = '${resume.academyList.size()}' > 0 ? true : false;
+    			certFlag = '${resume.certificateList.size()}' > 0 ? true : false;
+    			awardFlag = '${resume.awardList.size()}' > 0 ? true : false;
+    			langFlag = '${resume.certiLanguageList.size()}' > 0 ? true : false;
+    			portfFlag = '${resume.portpolioList.size()}' > 0 ? true : false;
+    			introdFlag = '${resume.introductionList.size()}' > 0 ? true : false;
+    			
+    			changeMenucolor("degree" , degreeFlag);
+    			changeMenucolor("edu" , eduFlag);
+    			changeMenucolor("cert" , certFlag);
+    			changeMenucolor("award" , awardFlag);
+    			changeMenucolor("lang" , langFlag);
+    			changeMenucolor("portf" , portfFlag);
+    			changeMenucolor("introd" , introdFlag);
+    			
+    			$('#degreeForm').css('display',flaging(degreeFlag));
+    			$('#eduForm').css('display', flaging(eduFlag));
+    			$('#certForm').css('display', flaging(certFlag));
+    			$('#awardForm').css('display', flaging(awardFlag));
+    			$('#langForm').css('display', flaging(langFlag));
+    			$('#portForm').css('display', flaging(portfFlag));
+    			$('#introdForm').css('display', flaging(introdFlag));
+    	 });
+    	
+    	function flaging(flag){
+    		if(flag) return 'block';
+    		else return 'none';
+    	}
     	
     	//1
        function degreeF()
@@ -170,13 +282,13 @@
     	//7
     	function portfF(){
     		if(portfFlag){
-    			if(confirm("수상목록 추가를 취소하겠습니까?")){
+    			if(confirm("포트폴리오 추가를 취소하겠습니까?")){
     				portfFlag = !portfFlag;
     				changeMenucolor("portf" ,portfFlag);
-    				$('#portfForm').css('display', 'none');
+    				$('#portForm').css('display', 'none');
     			}
     		}else{
-    			$('#portfForm').css('display', 'block');
+    			$('#portForm').css('display', 'block');
     			portfFlag  = !portfFlag;
     			changeMenucolor("portf" ,portfFlag);
     		}
