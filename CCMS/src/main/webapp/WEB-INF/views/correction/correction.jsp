@@ -22,7 +22,7 @@
 <style>
     .layout-container{
         margin-left: 25%;
-        margin-right: 15%;
+        margin-right: 25%;
     }
     .filter-name{
         list-style: none;
@@ -148,11 +148,12 @@
 			                            </div>
 			                        </div>
 			                        <!-- 작성자 및 작성일 확인 -->
-			                        <div class="list-author-wrapper">
-			                            <div class="list-author-specific">
+			                        <div class="list-author-wrapper" style="display: inline;">
+			                            <div class="list-author-specific" style="display: inline;">
 			                                <span >${correction.correctionUserId}</span>  
 			                            </div>
-			                            <div class="list-date">
+			                            &nbsp;&nbsp;
+			                            <div class="list-date" style="display: inline;"> 
 			                                <span>${fn:substring(correction.correctionDate,0,11)}</span>
 			                            </div>
 			                        </div>
@@ -177,10 +178,11 @@
 			                        </div>
 			                        <!-- 작성자 및 작성일 확인 -->
 			                        <div class="list-author-wrapper">
-			                            <div class="list-author-specific">
+			                            <div class="list-author-specific" style="display: inline;">
 			                                <span >${correction.correctionUserId}</span>  
 			                            </div>
-			                            <div class="list-date">
+			                            &nbsp;&nbsp;
+			                            <div class="list-date" style="display: inline;">
 			                                <span>${fn:substring(correction.correctionDate,0,11)}</span>
 			                            </div>
 			                        </div>

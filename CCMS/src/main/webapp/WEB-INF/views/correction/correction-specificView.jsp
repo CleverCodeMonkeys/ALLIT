@@ -30,7 +30,7 @@
 
 .layout-container {
 	margin-left: 25%;
-	margin-right: 15%;
+	margin-right: 25%;
 }
 
 .filter-name {
@@ -141,47 +141,47 @@
 	<div class="layout-container w3-row">
 		<div class="main">
 			<!-- 메인 부분을 감싸는 div -->
-			<div id="article" class="content all-list w3-col m10" role="main">
+			<div id="article" class="content all-list w3-col m12" role="main">
 				<form action="${pageContext.request.contextPath}/correction/correctionModify.correct" method="POST">
 					<input type="text" name="title" style="display: none;" value="${correction.correctionTitle}"/> 
 					<input type="text" name="cId" style="display: none;" value="${correction.correctionId}"/>
 					<textarea name="content" style="display: none;">${correction.correctionContent}</textarea>
 					<textarea name="see" style="display: none;">${correction.correctionSee}</textarea> 
-					<div class="content-header">
-						<h3 style="display: inline;">첨삭 이력서 작성하기</h3>
-
+					<div class="content-header" style ="margin-bottom: 1%;">
+						<h3 style="display: inline; font-family: vitamin;">첨삭 이력서</h3>
+						&nbsp; &nbsp;
 						<c:if test="${correction.correctionUserId eq m.id}">
-							<input type="submit" value="글수정" class="btn btn-success" />
-							<input type="button" onclick="deleteCorrection('${correction.correctionId}','${m.id}');" value="글삭제" class="btn btn-success" />
+							<input type="submit" style="font-family: penB;" value="글수정" class="w3-btn w3-indigo" />
+							<input type="button" style="font-family: penB;" onclick="deleteCorrection('${correction.correctionId}','${m.id}');" value="글삭제" class="w3-btn w3-pink" />
 						</c:if>
 					</div>
 					<div class="panel panel-default">
 						<div class="panel-head">
-							<div class="panel-userId" style="display: inline;">
+							<div class="panel-userId"  style="display: inline; font-family: penB;">
 								${correction.correctionUserId}</div>
 							<div class="viewCount" style="display: inline;">
 								<i class="fa fa-eye">&nbsp;</i>${correction.correctionSee}
 							</div>
-							<div class="write-date pull-right" style="display: inline;">
+							<div class="write-date pull-right" style="display: inline; font-family: penB;">
 								${correction.correctionDate}</div>
 						</div>
-						<div class="panel-title">${correction.correctionTitle}</div>
-						<div id="mainContent" class="panel-maintext">${correction.correctionContent}</div>
+						<div class="panel-title" style="font-family: penB">${correction.correctionTitle}</div>
+						<div id="mainContent" style="font-family: penB" class="panel-maintext">${correction.correctionContent}</div>
 					</div>
 				</form>
 				<c:if test="${!empty commentList}">
 					<div class="review">
 						<ul class="list-group">
 							<li class="list-group-item">
-								<h5 class="review-title" style="display: inline;">댓글</h5> <span
-								class="review-count">${commentCount}</span>
+								<h5 class="review-title" style="display: inline; font-family: vitamin;">댓글</h5> 
+								<span class="review-count" style="font-family: vitamin;">${commentCount}</span>
 							</li>
 
 
 							<c:forEach items="${commentList}" var="commentList">
 
 								<li class="list-group-item">
-									<form action="#" method="get" class="review-update-form">
+									<form action="#" method="get" class="review-update-form" style="font-family: penB;">
 										<div>
 											<div class="panel-userId" style="display: inline;">
 												${commentList.commentUserId} <input type="hidden"
@@ -222,10 +222,9 @@
 									action="${pageContext.request.contextPath}/correction/correctionCommentWrite.correct"
 									method="get" class="review-write-form">
 									<div>
-										<div class="panel-userId" style="display: inline;">${m.id }</div>
-										<input type="hidden" id="review-userId" name="review-userId"
-											value="${m.id }" /> <input type="button" id="commentContent"
-											onclick="commentWrite();" value="등록" />
+										<div class="panel-userId" style="display: inline; font-family: penB;">${m.id }</div>
+										<input type="hidden" id="review-userId" name="review-userId" value="${m.id }" /> 
+										<input class="w3-btn w3-indigo"  type="button" id="commentContent" onclick="commentWrite();" style="font-family: penB;" value="등록" />
 										<fieldset id="contentForm" class="form" style="border: 0;">
 											<input type="hidden" id="correctionId" name="correctionId"
 												value="${correction.correctionId}" />
@@ -249,7 +248,7 @@
 										<div class="panel-userId" style="display: inline;">${m.id }</div>
 										<input type="hidden" id="review-userId" name="review-userId"
 											value="${m.id }" /> <input type="button" id="commentContent"
-											onclick="commentWrite();" value="등록" />
+											onclick="commentWrite();" value="등록" class="w3-btn w3-indigo" />
 										<fieldset class="form" style="border: 0;">
 											<input type="hidden" id="correctionId" name="correctionId"
 												value="${correction.correctionId}" />
