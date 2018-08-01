@@ -5,7 +5,6 @@ package com.kh.ccms.correction.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -180,8 +179,20 @@ public class CorrectionController
 			
 			
 			if(result > 0) {
-				mv.setViewName("redirect:/correction/correction.correct");
-	
+				//기본 1페이지로 가게한다.
+				String sort = "dateSort";
+				String search = "";
+				int numPerPage = 10;
+				CorrectionSearchFilter filter = new CorrectionSearchFilter(search, sort);
+				int totalContents = correctionService.selectCorrectionTotalContents(filter);
+								
+				List<Map<String, String>> list = correctionService.selectCorrectionList(1,numPerPage,filter);
+				
+				mv.setViewName("correction/correction");
+				mv.addObject("list", list).addObject("numPerPage",numPerPage).addObject("totalContents", totalContents)
+					.addObject("sort",sort).addObject("search", search);
+			
+				
 				return mv;
 			}
 			else{ 
@@ -224,39 +235,13 @@ public class CorrectionController
 			} catch (IllegalStateException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return "/correction/correctionWrite.correct";
+				return null;
 			}
 		
 			return getBaseUrl(req) + "/resources/upload/correctionUpload/" + saveName;
 			
 		}
 		
-		// 이력서 등록 modal 띄우기
-		@RequestMapping(value="/correction/correctionResumeModal.correct", method=RequestMethod.POST)
-		@ResponseBody
-		public List<Map<String, String>> resumeModal(@RequestParam(value="id") String id, Model model){
-			
-			System.out.println("현재 이력서 부르는 id값 :" + id);
-			List<Map<String, String>> resumeList = correctionService.selectResume(id);
-			
-			
-			
-			for(int i = 0 ; i<resumeList.size(); i++){
-				System.out.println("안녕하세요.");
-			}
-			
-			return resumeList;	
-
-		}
-		
-		//이력서 등록 modal에서 등록 버튼 눌렀을 경우 
-		@RequestMapping(value="/correction/correctionResumeInsert.correct", method=RequestMethod.POST)
-		public String resumeInsert(@RequestParam(value="title") String title, @RequestParam(value="content") String content, 
-				@RequestParam(value="cId") int cId, Model model){
-			
-			model.addAttribute("cId", cId).addAttribute("title", title).addAttribute("content", content);
-			return "correction/correction-modify";
-		}
 		
 		//글 수정하기 페이지로 이동
 		@RequestMapping(value="/correction/correctionModify.correct", method=RequestMethod.POST)

@@ -56,10 +56,4 @@ public class CorrectionServiceImple implements CorrectionService {
 		return correctionDao.updateCorrection(correction);
 	}
 
-	@Override
-	public List<Map<String, String>> selectResume(String id) {
-		// TODO Auto-generated method stub
-		return correctionDao.selectResume(id);
-	}
-
 }

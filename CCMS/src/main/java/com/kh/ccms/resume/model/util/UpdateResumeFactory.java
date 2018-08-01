@@ -279,7 +279,7 @@ public class UpdateResumeFactory
 	
 	private void updateOrDeleteAward(Award award){
 		if(!(award.getAwardContent().trim().equals("") && award.getAwardOrganization().trim().equals("") &&
-				award.getAwardDate() == null))
+				award.getAwardDate() == null && award.getAwardTitle().trim().equals("")))
 			service.updateItem(award, ScriptResumeValue.UPDATE, ScriptResumeValue.AWARD);
 		else service.deleteItem(award.getAwardId(), ScriptResumeValue.DELETE, ScriptResumeValue.AWARD);
 	}
