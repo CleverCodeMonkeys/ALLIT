@@ -385,8 +385,8 @@ public class SaveResumeFactory
 				
 //				System.out.println(degree.toString());
 				if(!(degree.getSchoolName().equals("") && degree.getMajor().equals("") && degree.getSchoolType().equals("") &&
-						degree.getEnrollDate() == null && degree.getGraduDate() == null && degree.getScore() == -1 &&
-						degree.getTotalScore() == -1))
+						degree.getEnrollDate() == null && degree.getGraduDate() == null && degree.getScore() == 0 &&
+						degree.getTotalScore() == 0))
 				{
 					degree.setId(resumeId);
 					service.insertItem(degree, ScriptResumeValue.INSERT, ScriptResumeValue.DEGREE);				
