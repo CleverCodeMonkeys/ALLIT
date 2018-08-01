@@ -21,6 +21,25 @@ public interface MyPageService {
 
 	int deleteMember(String id);
 
+	List<Map<String, String>> selectCommunityList(int cPage, int numPerPage, String id);
+
+	int selectCommunityTotalContents(String id);
+
+	List<Map<String, String>> selectCommunitySearch(int cPage, int numPerPage, String searchComu, String searchSelect,
+			String id);
+	
+	int selectCommunityTotalContentsSer(String searchComu, String id);
+
+	List<Map<String, String>> selectSkillList(int cPage, int numPerPage, String id);
+
+	int selectSkillTotalContents(String id);
+
+	List<Map<String, String>> selectSkillSearch(int cPage, int numPerPage, String searchSki, String searchSelect,
+			String id);
+
+	int selectSkillTotalContentsSer(String searchSki, String id);
+
+
 	
 
 }
