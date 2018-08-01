@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="resume">
+	
+	<!-- Resume  -->
+	<resultMap type="resume" id="ResumeMap">
+		<result column="ID" property="id"/>
+		<result column="TITLE" property="title"/>
+		<result column="MEMBER_ID" property="memberId"/>
+		<result column="PHOTO" property="photo"/>
+		<result column="ADDRESS" property="address"/>
+		<result column="REGIST_DATE" property="registDate"/>
+		<result column="UPDATE_DATE" property ="updateDate"/>
+		<result column="TEL" property="tel"/>
+		<result column="BIRTHDAY" property = "birthday"/>
+		<result column="GENDER" property="gender"/>
+		<result column="NAME" property="name"/>
+		
+		<!-- New Add -->
+		<result column="LANGUAGE" property = "language"/>
+		<result column="DISPLAY" property = "display"/>
+		<result column="LAST_EDU" property="lastEdu"/>
+		<result column="EMAIL" property="email"/>
+	</resultMap>
+	
+	<select id ="selectResumeOne" parameterType="_int" resultMap="ResumeMap">
+		SELECT * FROM RESUME WHERE ID = #{id}
+	</select>
+	
+	<select id="selectResumeList" parameterType="String" resultMap="ResumeMap">
+		SELECT * FROM RESUME WHERE MEMBER_ID = #{memberId} ORDER BY REGIST_DATE
+	</select>
+	
+	<insert id="insertResume" parameterType="resume">
+		<selectKey keyProperty="id" resultType="_int" order="AFTER">
+			SELECT RESUME_SEQ.CURRVAL FROM DUAL
+		</selectKey>
+			
+		INSERT INTO RESUME(ID, TITLE, MEMBER_ID, PHOTO, 
+									ADDRESS, TEL,REGIST_DATE, 
+									UPDATE_DATE,  BIRTHDAY, GENDER, 
+									NAME, LANGUAGE, DISPLAY, 
+									LAST_EDU, EMAIL)
+		 VALUES(
+			RESUME_SEQ.NEXTVAL ,#{title} ,#{memberId} , #{photo} , 
+			#{address}, #{tel} , DEFAULT, 
+			DEFAULT,  #{birthday}, #{gender}, 
+			#{name} , #{language}, 'N', 
+			#{lastEdu} , #{email}
+		)
+	</insert>
+	
+	<update id="updateResume" parameterType="resume">
+		UPDATE RESUME SET TITLE = #{title}, 
+								ADDRESS = #{address},					
+								TEL = #{tel},
+								BIRTHDAY = #{birthday},
+								GENDER = #{gender},
+								NAME = #{name},
+								PHOTO = #{photo}, 
+								UPDATE_DATE = DEFAULT,
+								LANGUAGE = #{language},
+								EMAIL = #{email},
+								LAST_EDU = #{lastEdu} WHERE ID = #{id}
+	</update>
+	
+	<delete id="deleteResume" parameterType="_int">
+		DELETE FROM RESUME WHERE ID = #{id}
+	</delete>
+	
+</mapper>

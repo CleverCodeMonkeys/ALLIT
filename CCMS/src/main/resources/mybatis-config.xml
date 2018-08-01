@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0/EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	<typeAliases>
+		<!-- [START] INTRO VO -->
+		<typeAlias type="com.kh.ccms.intro.model.vo.BannerItem" alias="banner"/>
+		<typeAlias type="com.kh.ccms.intro.model.vo.MovieItem" alias="movie"/>
+		<typeAlias type="com.kh.ccms.intro.model.vo.Top10Item" alias="top10"/>
+		<typeAlias type="com.kh.ccms.intro.model.vo.AlgorithmItem" alias="algorithm"/>
+		<!-- [END] INTRO VO -->
+		
+		<!-- [START] Resume VO -->
+		<typeAlias type="com.kh.ccms.resume.model.vo.Academy" alias="academy"/> 
+		<typeAlias type="com.kh.ccms.resume.model.vo.Award" alias="award"/>
+		<typeAlias type="com.kh.ccms.resume.model.vo.Certificate" alias="certificate"/>
+		<typeAlias type="com.kh.ccms.resume.model.vo.CertificateLanguage" alias="lang"/>
+		<typeAlias type="com.kh.ccms.resume.model.vo.Degree" alias="degree"/>
+		<typeAlias type="com.kh.ccms.resume.model.vo.HighSchool" alias="highschool"/>
+		<typeAlias type="com.kh.ccms.resume.model.vo.HopeCondition" alias="hope"/>
+		<typeAlias type="com.kh.ccms.resume.model.vo.Introduction" alias="introduction"/>
+		<typeAlias type="com.kh.ccms.resume.model.vo.Portpolio" alias="portpolio"/>
+		<typeAlias type="com.kh.ccms.resume.model.vo.Resume" alias="resume"/>		
+		<!-- [END] Resume VO -->
+		
+		<typeAlias type="com.kh.ccms.member.model.vo.Member" alias="member"/>
+		
+		<typeAlias type="com.kh.ccms.recruit.model.vo.Recruit" alias="recruit"/>
+      	<typeAlias type="com.kh.ccms.recruit.model.vo.FilterQuery" alias="filterQuery"/>
+      	
+      	<!--  [START] COMMUNITY -->
+		<typeAlias alias="community" type="com.kh.ccms.community.model.vo.Community"/>
+		<typeAlias alias="skill" type="com.kh.ccms.skill.model.vo.Skill"/>
+		<typeAlias alias="comment" type="com.kh.ccms.community.model.vo.Comment"/>
+		<typeAlias alias="commentS" type="com.kh.ccms.skill.model.vo.CommentS"/>
+		<!-- [END] COMMUNITY -->	
+		<typeAlias alias="profile" type="com.kh.ccms.myPage.model.vo.Profile"/>
+		
+		<!-- Resume Correction -->
+		<typeAlias type="com.kh.ccms.correction.model.vo.Correction" alias="correction"/>
+		<typeAlias type="com.kh.ccms.correction.model.vo.CorrectionComment" alias="correctionComment"/>
+		<typeAlias type="com.kh.ccms.correction.model.vo.CorrectionSearchFilter" alias="correctionSearchFilter"/>
+	</typeAliases>
+		
+	<typeHandlers>
+		<!-- 해당패키지의 모든 TypeHandler구현클래스를 등록함 -->
+		
+	</typeHandlers>
+</configuration>

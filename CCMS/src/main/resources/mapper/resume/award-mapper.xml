@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="award">
+	<resultMap type="award" id="awardMap">
+		<result column="ID" property="id"/>
+		<result column="AWARD_ID" property="awardId"/>
+		<result column="AWARD_TITLE" property="awardTitle"/>
+		<result column="ORGAN" property="awardOrganization"/>
+		<result column="AWARD_DATE" property="awardDate"/>
+		<result column="AWARD_CONTENT" property="awardContent"/>
+	</resultMap>
+	
+	<insert id="insertAward" parameterType="award">
+		INSERT INTO AWARD VALUES(
+			#{id}, AWARD_SEQ.NEXTVAL, #{awardTitle} ,
+			#{awardOrganization}, #{awardDate, jdbcType=DATE},
+			#{awardContent}
+		)
+	</insert>
+	
+	<select id="selectAwardList" resultMap="awardMap" parameterType="_int">
+		SELECT * FROM AWARD WHERE ID = #{id}
+	</select>
+	
+	<select id="selectOneAward" resultMap="awardMap" parameterType="_int">
+		SELECT * FROM AWARD WHERE AWARD_ID =#{awardId}
+	</select>
+	
+	<select id ="selectCountAward" resultMap="awardMap" parameterType="_int">
+		SELECT COUNT(*) FROM AWARD WHERE ID = #{id}
+	</select>
+	
+	<delete id="deleteAward" parameterType="_int">
+		DELETE FROM AWARD WHERE AWARD_ID = #{awardId}
+	</delete>
+	
+	<update id="updateAward" parameterType="award">
+		UPDATE AWARD SET AWARD_TITLE = #{awardTitle},
+		ORGAN = #{awardOrganization},
+		AWARD_DATE = #{awardDate, jdbcType=DATE},
+		AWARD_CONTENT = #{awardContent} WHERE AWARD_ID = #{awardId}
+	</update>
+</mapper>

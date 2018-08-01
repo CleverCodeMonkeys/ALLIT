@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="recruit">
+
+	<select id="selectRecruitList" resultType="recruit">
+		SELECT NAME, GENDER, SUBSTR(BIRTHDAY, 1, 2)+1900 BIRTHYEAR,
+			TO_CHAR(SYSDATE, 'YYYY') - (SUBSTR(BIRTHDAY, 1, 2)+1900) + 1 AGE,
+			TITLE, LAST_EDU, LOCATION,
+			TO_CHAR(SALARY, '999,999,999') SALARY,
+			JOB, REGIST_DATE, UPDATE_DATE, LANGUAGE
+		FROM RESUME
+		JOIN HOPE_CONDITION USING(ID)
+		WHERE DISPLAY = 'Y'
+	</select>
+	
+	<select id="selectRecruitTotalContents" resultType="_int">
+		SELECT COUNT(*) FROM RESUME
+		WHERE DISPLAY = 'Y'
+	</select>
+	
+	<select id="filterRecruitList" parameterType="filterQuery" resultType="recruit">
+		SELECT NAME, GENDER, SUBSTR(BIRTHDAY, 1, 2)+1900 BIRTHYEAR,
+			TO_CHAR(SYSDATE, 'YYYY') - (SUBSTR(BIRTHDAY, 1, 2)+1900) + 1 AGE,
+			TITLE, LAST_EDU, LOCATION,
+			TO_CHAR(SALARY, '999,999,999') SALARY,
+			JOB, REGIST_DATE, UPDATE_DATE, LANGUAGE
+		FROM RESUME
+		JOIN HOPE_CONDITION USING(ID)
+		<where>
+			DISPLAY = 'Y'
+			<if test="jobQuery != null">
+				AND (${jobQuery})
+			</if>
+			<if test="languageQuery != null">
+				AND (${languageQuery})
+			</if>
+			<if test="salaryQuery != null">
+				AND (${salaryQuery})
+			</if>
+			<if test="locQuery != null">
+				AND (${locQuery})
+			</if>
+			<if test="eduQuery != null">
+				AND (${eduQuery})
+			</if>
+			<if test="ageQuery != null">
+				AND (${ageQuery})
+			</if>
+			<if test="genderQuery != null">
+				AND (${genderQuery})
+			</if>
+			<if test="searchQuery != null">
+				AND (${searchQuery})
+			</if>
+		</where>
+		<if test="orderQuery != null">
+			${orderQuery}
+		</if>
+	</select>
+
+	<select id="filterRecruitTotalContents" resultType="_int">
+		SELECT COUNT(*)
+		FROM RESUME
+		JOIN HOPE_CONDITION USING(ID)
+		<where>
+			DISPLAY = 'Y'
+			<if test="jobQuery != null">
+				AND (${jobQuery})
+			</if>
+			<if test="languageQuery != null">
+				AND (${languageQuery})
+			</if>
+			<if test="salaryQuery != null">
+				AND (${salaryQuery})
+			</if>
+			<if test="locQuery != null">
+				AND (${locQuery})
+			</if>
+			<if test="eduQuery != null">
+				AND (${eduQuery})
+			</if>
+			<if test="ageQuery != null">
+				AND (${ageQuery})
+			</if>
+			<if test="genderQuery != null">
+				AND (${genderQuery})
+			</if>
+			<if test="searchQuery != null">
+				AND (${searchQuery})
+			</if>
+		</where>
+		<if test="orderQuery != null">
+			${orderQuery}
+		</if>
+	</select>
+
+</mapper>
+
+
+
+
+
+
