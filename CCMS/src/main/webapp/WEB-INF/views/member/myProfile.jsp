@@ -55,15 +55,14 @@
 	<!-- Spare Space -->
 
 	<div class="w3-amber w3-center"
-		style="padding-top: 1%; padding-bottom: 1%; margin-left: 15%; margin-right: 15%;">
+		style="padding-top: 0.7%; padding-bottom: 0.7%; margin-left: 15%; margin-right: 15%;">
 		<h1 style="font-family: vitamin;">${m.id}님의공간</h1>
 	</div>
 
 	<div class="w3-row"
 		style="padding-left: 15%; padding-right: 15%; margin-bottom: 1%; margin-top: 1%;">
 		<div class="w3-col m2 w3-center tab_font w3-white">
-			<c:import url="/WEB-INF/views/member/myPageMenu.jsp"
-				charEncoding="UTF-8" />
+			<c:import url="/WEB-INF/views/member/myPageMenu.jsp" charEncoding="UTF-8" />
 		</div>
 
 		<c:if test="${empty pro.id}">
@@ -240,15 +239,7 @@
 				}
 			}); 
 
-			function cancelPhoto() {
-				$('#photoModal').hide();
-			}
-
-			function savePhoto() {
-				document.getElementById('photoModal').style.display = 'block';
-				$('#profileImg').attr('src','${pageContext.request.contextPath}/resources/images/logo/'+ formData);
-				$('#photoModal').hide();
-			}
+			
 		 */
 		function updateProfile() {
 			$('#proForm')

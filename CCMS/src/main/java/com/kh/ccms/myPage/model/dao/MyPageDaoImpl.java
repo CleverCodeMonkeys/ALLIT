@@ -1,6 +1,7 @@
 package com.kh.ccms.myPage.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,19 @@ public class MyPageDaoImpl implements MyPageDao {
 		System.out.println();
 		return sqlSession.selectOne("myPage.countResume",userId);
 	}
+	
+	@Override
+	public int countComm(String userId) {
+		
+		return sqlSession.selectOne("myPage.countComm",userId);
+	}
+	
+	@Override
+	public int countSkill(String userId) {
+		
+		return sqlSession.selectOne("myPage.countSkill",userId);
+	}
+
 
 	@Override
 	public int saveProfile(Profile profile, String userId) {
@@ -43,5 +57,14 @@ public class MyPageDaoImpl implements MyPageDao {
 	public int updateProfileSave(Profile profile) {
 		return sqlSession.update("myPage.updateProfileSave",profile);
 	}
+
+	@Override
+	public int deleteMember(String id) {
+		
+		return sqlSession.delete("myPage.deleteMember",id);
+	}
+
+	
+	
 
 }

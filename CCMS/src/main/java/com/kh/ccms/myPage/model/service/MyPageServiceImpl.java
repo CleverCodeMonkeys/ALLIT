@@ -1,6 +1,7 @@
 package com.kh.ccms.myPage.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,19 @@ public class MyPageServiceImpl implements MyPageService {
 		
 		return myPageDao.countResume(userId);
 	}
+	
+	@Override
+	public int countComm(String userId) {
+	
+		return myPageDao.countComm(userId);
+	}
 
+	@Override
+	public int countSkill(String userId) {
+
+		return myPageDao.countSkill(userId);
+	}
+	
 	@Override
 	public int saveProfile(Profile profile,String userId) {
 		
@@ -36,5 +49,12 @@ public class MyPageServiceImpl implements MyPageService {
 	public int updateProfileSave(Profile profile) {
 		return myPageDao.updateProfileSave(profile);
 	}
+
+	@Override
+	public int deleteMember(String id) {
+		return myPageDao.deleteMember(id);
+	}
+
+
 
 }

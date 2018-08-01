@@ -14,59 +14,26 @@
 	 type ='button' onclick='removeBtn(name)'  name='degreeIndexZ${degreeItem.degreeId}'>삭제</button></div>	 
 	 <div class = 'w3-container w3-white boxForm'>
 	 		<div class = "w3-row" style="margin-top: 30px; font-family: penB; padding-bottom: 5%;">
-				<div class ="w3-col m2 w3-center">
+				<div class ="w3-col m3 w3-center">
 					<%-- <label class="inp">
 				           <input type="text" placeholder="&nbsp;" name = "schoolType"
 				            class="cInput" value ="${degreeItem.schoolType}">
 				           <span class="label">학교타입</span>
 				           <span class="border"></span>
-				    </label>  --%>
-				    <c:set var ="check" value = "${degreeItem.schoolType}"/>
-				    <span class="dropdown-el"> 
-			  			<input type="radio" name="schoolType" value="default" checked="checked" class="sort-relevance"><label for="sort-relevance">학교타입</label>
-			  			<c:choose>
-			  				<c:when test="${check eq '대학교(4년) 졸업'}">
-			  					<input type="radio" name="schoolType" value="대학교(4년) 졸업" checked="checked" class="sort-best"><label for="sort-best">대학교(4년) 졸업</label>
-			  				</c:when>
-			  				
-			  				<c:otherwise>
-			  					<input type="radio" name="schoolType" value="대학교(4년) 졸업" class="sort-best"><label for="sort-best">대학교(4년) 졸업</label>
-			  				</c:otherwise>
-			  			</c:choose>
-			  			
-			  			<c:choose>
-			  				<c:when test="${check eq '대학(2,3년) 졸업'}">			  			
-			  					<input type="radio" name="schoolType" value="대학(2,3년) 졸업" checked="checked" class="sort-low"><label for="sort-low">대학(2,3년) 졸업</label>
-			  				</c:when>
-			  				
-			  				<c:otherwise>
-			  					<input type="radio" name="schoolType" value="대학(2,3년) 졸업" class="sort-low"><label for="sort-low">대학(2,3년) 졸업</label>
-			  				</c:otherwise>
-			  			</c:choose>
-			  			
-			  			<c:choose>
-			  				<c:when test="${check eq '대학원 졸업'}">
-			  					<input type="radio" name="schoolType" value="대학원 졸업" class="sort-high" checked="checked"><label for="sort-high">대학원 졸업</label>
-			  				</c:when>
-			  				
-			  				<c:otherwise>
-			  					<input type="radio" name="schoolType" value="대학원 졸업" class="sort-high"><label for="sort-high">대학원 졸업</label>
-			  				</c:otherwise>
-			  			</c:choose>
-			  			
-			  			<c:choose>
-			  				<c:when test="${check eq '고등학교 졸업'}">
-			  					<input type="radio" name="schoolType" value="고등학교 졸업" checked="checked" class="sort-brand"><label for="sort-brand">고등학교 졸업</label>
-			  				</c:when>
-			  				
-			  				<c:otherwise>
-			  					<input type="radio" name="schoolType" value="고등학교 졸업" class="sort-brand"><label for="sort-brand">고등학교 졸업</label>
-			  				</c:otherwise>
-			  			</c:choose>
-					</span>
+				    </label> --%>
+				    <div include="form-input-select()">
+		    				<select name="schoolType" class ="selectType">
+			    			<option value="">학교타입</option>
+			
+			    			<!-- normal options -->
+			    			<option value="대학교(4년) 졸업" ${degreeItem.schoolType == '대학교(4년) 졸업' ? 'selected="selected"' : ''}>대학교(4년) 졸업</option>
+			    			<option value="대학(2,3년) 졸업" ${degreeItem.schoolType == '대학(2,3년) 졸업' ? 'selected="selected"' : ''}>대학(2,3년) 졸업</option>
+			    			<option value="대학원 졸업" ${degreeItem.schoolType == '대학원 졸업' ? 'selected="selected"' : ''}>대학원 졸업</option>	
+	  					</select>
+  					</div>
 				</div>
 				
-				<div class ="w3-col m4 w3-center">
+				<div class ="w3-col m3 w3-center">
 					<label class="inp">
 				           <input type="text" placeholder="&nbsp;" name = "universityName" 
 				           class="cInput" value = "${degreeItem.schoolName}">

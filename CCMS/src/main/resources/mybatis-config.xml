@@ -24,8 +24,11 @@
 		
 		<typeAlias type="com.kh.ccms.member.model.vo.Member" alias="member"/>
 		
+		<!-- [START] RECRUIT -->
 		<typeAlias type="com.kh.ccms.recruit.model.vo.Recruit" alias="recruit"/>
       	<typeAlias type="com.kh.ccms.recruit.model.vo.FilterQuery" alias="filterQuery"/>
+      	<typeAlias alias="scrab" type="com.kh.ccms.recruit.model.vo.Scrab"/>
+      	<!-- [END] RECRUIT -->
       	
       	<!--  [START] COMMUNITY -->
 		<typeAlias alias="community" type="com.kh.ccms.community.model.vo.Community"/>

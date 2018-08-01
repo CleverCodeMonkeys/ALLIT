@@ -6,6 +6,14 @@
 		SELECT COUNT(*) FROM RESUME WHERE MEMBER_ID = #{userId}
 	</select>
 	
+	<select id="countComm" resultType="_int" parameterType="string">
+		SELECT COUNT(*) FROM COMU_BOARD WHERE WRITER = #{userId}
+	</select>
+	
+	<select id="countSkill" resultType="_int" parameterType="string">
+		SELECT COUNT(*) FROM SKI_BOARD WHERE WRITER = #{userId}
+	</select>
+	
 	<insert id="saveProfile" parameterType="hashmap">
 		INSERT INTO PROFILE VALUES
 		(PROFILE_SEQ.NEXTVAL,#{member_id},#{name},#{birth},#{email},#{gender},#{tel},#{address},#{language},#{photo, jdbcType=VARCHAR})
@@ -18,4 +26,8 @@
 	<update id="updateProfileSave" parameterType="profile">
 		UPDATE PROFILE SET NAME=#{name},BIRTH=#{birth},EMAIL=#{email},GENDER=#{gender},TEL=#{tel},ADDRESS=#{address}
 	</update>
+	
+	<delete id="deleteMember">
+		DELETE FROM IT_MEMBER WHERE ID=#{id}
+	</delete>
 </mapper>

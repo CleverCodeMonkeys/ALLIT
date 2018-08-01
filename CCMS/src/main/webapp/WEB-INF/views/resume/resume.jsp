@@ -216,6 +216,8 @@ textarea:focus ~ .bar:before {
                <div class = "w3-container w3-white boxForm" id = "portIndexZ1">
                		<c:import url="/WEB-INF/views/resume/port.jsp" charEncoding="UTF-8"/>
                </div>
+               
+               <c:import url="/WEB-INF/views/resume/morePort.jsp" charEncoding="UTF-8"/> 
             </div>
             
             <!-- 자기소개서 뷰  -->

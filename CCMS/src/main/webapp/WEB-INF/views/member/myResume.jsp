@@ -57,6 +57,11 @@ td{
 	text-align:left;
 	font-size:11pt;
 }
+
+#newResume{
+	margin-left: 20%;
+	margin-bottom:5%;
+}
 </style>
 <body>
 	<c:import url="/WEB-INF/views/common/header.jsp" charEncoding="UTF-8"/>
@@ -66,16 +71,21 @@ td{
 		<h1 style="font-family: vitamin;">${m.id} 님의 이력서</h1>
 	</div>
 	
-	<div class ="w3-row" style ="padding-left: 15%; padding-right: 15%; margin-bottom: 1%; margin-top: 1%; height: 950px;">
+	<div class ="w3-row" style ="padding-left: 15%; padding-right: 15%; margin-bottom: 1%; margin-top: 1%;">
 		<div class ="w3-col m2 w3-center tab_font w3-white">
   			<c:import url ="/WEB-INF/views/member/myPageMenu.jsp" charEncoding="UTF-8"/>
   			
 		</div>
 	
 		<div class ="w3-col m9 w3-center tab_font2 w3-white" style ="margin-left:3%;">
-		
-			<label style="margin-right:80%;" ><input type="checkbox" id="filterResume" onclick="filterResume();" > 올린이력서만 보기</label>
-		
+			<div class="w3-row">
+				<div class="w3-col m3" style ="margin-left:-2%;">
+					<label><input type="checkbox" id="filterResume" onclick="filterResume();" > 올린이력서만 보기</label>
+				</div>	
+				<div class="w3-col m3" style ="margin-left:50%;">
+					<button onclick="newResume();" class="btn w3-button w3-black" type ="button" id="newResume">새 이력서 등록</button>
+				</div>
+			</div>
 			<table id="tbl-board" class="table table-striped table-hover">
 	 				<tr class="w3-white">
 	 					<th style="width:11%;">내 이력서 올리기</th>
@@ -108,28 +118,15 @@ td{
 	  		</div>
 	  		
 	</div>
-	<%-- <% 
-      int totalContents = Integer.parseInt(String.valueOf(request.getAttribute("totalContents")));
-      int numPerPage = Integer.parseInt(String.valueOf(request.getAttribute("numPerPage")));
-      
-      //파라미터 cPage가 null이거나 "" 일 때에는 기본값 1로 세팅함.  
-      String cPageTemp = request.getParameter("cPage");
-      int cPage = 1;
-      try{
-         cPage = Integer.parseInt(cPageTemp);
-      } catch(NumberFormatException e){
-         
-      }
-      
-   %>
-   <!-- 페이지 처리 -->
-   <%= com.kh.ccms.common.util.Utils.getPageBar(totalContents, cPage, numPerPage, "resumeList.resume") %> --%>
-	
 	<div style ="height: 50px;"></div>
 	
 	<c:import url="/WEB-INF/views/common/footer.jsp" charEncoding="UTF-8"/>
 	<script>
-				
+
+	 function newResume(){
+		 location.href= "${pageContext.request.contextPath}/resume/resume.resume";
+	 }
+	 
 			$('.showResume').on('click',function(){				
 				var chk = "N";		
 				var id = $(this).siblings('input').val();
@@ -192,19 +189,6 @@ td{
 					})
 			 }
 			 
-/* 			 $.ajax({
-					url:"${pageContext.request.contextPath}/resumeList/filterResume.resume",
-					type:"post",
-					data:{
-						chk : chk
-					},
-					success:function(data){
-						console.log(data);
-						
-					},error : function(data){
-						console.log(data);
-					}
-				});  */	
 		}
 		
 		

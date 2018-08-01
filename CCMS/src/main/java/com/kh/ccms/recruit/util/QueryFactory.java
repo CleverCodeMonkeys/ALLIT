@@ -88,17 +88,21 @@ public class QueryFactory {
 		
 		String query = null;
 		
-		switch(sal) {
+		if(sal != null) {
 		
-		case SAL1 : query = "SALARY < 2000"; break;
-		case SAL2 : query = "SALARY BETWEEN 2000 AND 2500"; break;
-		case SAL3 : query = "SALARY BETWEEN 2500 AND 3000"; break;
-		case SAL4 : query = "SALARY BETWEEN 3000 AND 3500"; break;
-		case SAL5 : query = "SALARY BETWEEN 3500 AND 4000"; break;
-		case SAL6 : query = "SALARY BETWEEN 4000 AND 4500"; break;
-		case SAL7 : query = "SALARY BETWEEN 4500 AND 5000"; break;
-		case SAL8 : query = "SALARY BETWEEN 5000 AND 6000"; break;
-		case SAL9 : query = "SALARY > 6000"; break;
+			switch(sal) {
+			
+			case SAL1 : query = "SALARY < 2000"; break;
+			case SAL2 : query = "SALARY BETWEEN 2000 AND 2500"; break;
+			case SAL3 : query = "SALARY BETWEEN 2500 AND 3000"; break;
+			case SAL4 : query = "SALARY BETWEEN 3000 AND 3500"; break;
+			case SAL5 : query = "SALARY BETWEEN 3500 AND 4000"; break;
+			case SAL6 : query = "SALARY BETWEEN 4000 AND 4500"; break;
+			case SAL7 : query = "SALARY BETWEEN 4500 AND 5000"; break;
+			case SAL8 : query = "SALARY BETWEEN 5000 AND 6000"; break;
+			case SAL9 : query = "SALARY > 6000"; break;
+			
+			}
 		
 		}
 
@@ -172,18 +176,21 @@ public class QueryFactory {
 		
 		String query = null;
 		
-		switch(age) {
+		if(age != null) {
 		
-		case AGE1 : query = "(TO_CHAR(SYSDATE, 'YYYY') - (SUBSTR(BIRTHDAY, 1, 2)+1900) + 1) < 26"; break;
-		case AGE2 : query = "(TO_CHAR(SYSDATE, 'YYYY') - (SUBSTR(BIRTHDAY, 1, 2)+1900) + 1) BETWEEN 26 AND 30"; break;
-		case AGE3 : query = "(TO_CHAR(SYSDATE, 'YYYY') - (SUBSTR(BIRTHDAY, 1, 2)+1900) + 1) BETWEEN 31 AND 35"; break;
-		case AGE4 : query = "(TO_CHAR(SYSDATE, 'YYYY') - (SUBSTR(BIRTHDAY, 1, 2)+1900) + 1) BETWEEN 36 AND 40"; break;
-		case AGE5 : query = "(TO_CHAR(SYSDATE, 'YYYY') - (SUBSTR(BIRTHDAY, 1, 2)+1900) + 1) BETWEEN 41 AND 50"; break;
-		case AGE6 : query = "(TO_CHAR(SYSDATE, 'YYYY') - (SUBSTR(BIRTHDAY, 1, 2)+1900) + 1) > 50"; break;
+			switch(age) {
+			
+			case AGE1 : query = "(TO_CHAR(SYSDATE, 'YYYY') - (SUBSTR(BIRTHDAY, 1, 2)+1900) + 1) < 26"; break;
+			case AGE2 : query = "(TO_CHAR(SYSDATE, 'YYYY') - (SUBSTR(BIRTHDAY, 1, 2)+1900) + 1) BETWEEN 26 AND 30"; break;
+			case AGE3 : query = "(TO_CHAR(SYSDATE, 'YYYY') - (SUBSTR(BIRTHDAY, 1, 2)+1900) + 1) BETWEEN 31 AND 35"; break;
+			case AGE4 : query = "(TO_CHAR(SYSDATE, 'YYYY') - (SUBSTR(BIRTHDAY, 1, 2)+1900) + 1) BETWEEN 36 AND 40"; break;
+			case AGE5 : query = "(TO_CHAR(SYSDATE, 'YYYY') - (SUBSTR(BIRTHDAY, 1, 2)+1900) + 1) BETWEEN 41 AND 50"; break;
+			case AGE6 : query = "(TO_CHAR(SYSDATE, 'YYYY') - (SUBSTR(BIRTHDAY, 1, 2)+1900) + 1) > 50"; break;
+			
+			}
 		
 		}
 			
-		
 		return query;
 		
 	}

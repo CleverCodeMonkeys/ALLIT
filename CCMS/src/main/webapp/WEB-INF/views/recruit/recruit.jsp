@@ -25,8 +25,8 @@
             <div class="w3-col side_nav" style="width: 10%; margin-right: 10px;">
                 <div class="w3-col navigation">
                     <ul>
-                        <li><a href="recruit.rc">인재검색</a></li>
-                        <li><a href="">인재관리</a></li>
+                        <li><a href="recruit.rc" style="color: royalblue;">인재검색</a></li>
+                        <li><a href="javascript:loginChk()">인재관리</a></li>
                     </ul>
                 </div>
             </div>
@@ -149,14 +149,14 @@
 						<c:forEach items="${rcFilter.rcLang}" var="rcLang">
 							<span class="condition language"><span class="conditionText">${rcLang}</span>×</span>
 						</c:forEach>
-						<c:if test="${!empty rcFilter.rcSal}"><span class="condition salary"><span class="conditionText">${filter.rcSal}</span>×</span></c:if>
+						<c:if test="${!empty rcFilter.rcSal}"><span class="condition salary"><span class="conditionText">${rcFilter.rcSal}</span>×</span></c:if>
 						<c:forEach items="${rcFilter.rcLoc}" var="rcLoc">
 							<span class="condition loc"><span class="conditionText">${rcLoc}</span>×</span>
 						</c:forEach>
 						<c:forEach items="${rcFilter.rcEdu}" var="rcEdu">
 							<span class="condition edu"><span class="conditionText">${rcEdu}</span>×</span>
 						</c:forEach>
-						<c:if test="${!empty rcFilter.rcAge}"><span class="condition age"><span class="conditionText">${filter.rcAge}</span>×</span></c:if>
+						<c:if test="${!empty rcFilter.rcAge}"><span class="condition age"><span class="conditionText">${rcFilter.rcAge}</span>×</span></c:if>
 						<c:forEach items="${rcFilter.rcGender}" var="rcGender">
 							<span class="condition gender"><span class="conditionText">${rcGender}</span>×</span>
 						</c:forEach>
@@ -209,7 +209,14 @@
                                     <td class="user_info" style="width: 22%; padding-top: 20px;">
                                         <div class="w3-row">
                                             <div class="w3-col m2">
-                                                <img class="scrab_btn" src="${pageContext.request.contextPath}/resources/common/image/star.png">
+                                            	<input type="hidden" value="${rc.rId}" />
+                                            	<c:if test="${rc.scrab == 'Y'}">
+                                            		<img class="scrab_btn" src="${pageContext.request.contextPath}/resources/common/image/star_selected.png">
+                                            	</c:if>
+                                            	<c:if test="${rc.scrab == 'N'}">
+                                            		<img class="scrab_btn" src="${pageContext.request.contextPath}/resources/common/image/star.png">
+                                            	</c:if>
+                                                
                                             </div>
                                             <div class="w3-col m10">
                                                 <p class="user_info_name">${rc.name}</p>
@@ -452,6 +459,12 @@
 							else
 								orderDate = new Date(data.list[idx].update_date+86400000).toISOString().slice(0, 10);
 							
+							var scrabImg
+							if(data.list[idx].scrab == 'Y')
+								scrabImg = '${pageContext.request.contextPath}/resources/common/image/star_selected.png';
+							else
+								scrabImg = '${pageContext.request.contextPath}/resources/common/image/star.png';
+							
 							
 							$('#list_tbody').html(
 		            				$('#list_tbody').html()
@@ -460,7 +473,8 @@
 		                            +'   	<td class="user_info" style="width: 22%; padding-top: 20px;">                                              '
 		                            +'        <div class="w3-row">                                                                                     '
 		                            +'            <div class="w3-col m2">                                                                              '
-		                            +'                <img class="scrab_btn" src="${pageContext.request.contextPath}/resources/common/image/star.png"> '
+		                            +'				<input type="hidden" value='+data.list[idx].rId+' />												'
+		                            +'                <img class="scrab_btn" src='+scrabImg+'>															 '
 		                            +'            </div>                                                                                               '
 		                            +'            <div class="w3-col m10">                                                                             '
 		                            +'                <p class="user_info_name">'+data.list[idx].name+'</p>                                            '
@@ -534,12 +548,70 @@
         function scrabBtnListner() {
 			
             $('.scrab_btn').on('click', function() {
-        		
-            	if($(this).attr('src') == '${pageContext.request.contextPath}/resources/common/image/star.png') {
-            		$(this).attr('src', '${pageContext.request.contextPath}/resources/common/image/star_selected.png');	
+            	
+            	var id = '${m.id}';
+            	var rId = $(this).siblings('input').val();
+            	
+            	if(id == '') {
+            		alert('로그인을 해주세요.');
             	} else {
-            		$(this).attr('src', '${pageContext.request.contextPath}/resources/common/image/star.png');
-            	}                   	
+            	
+	            	if($(this).attr('src') == '${pageContext.request.contextPath}/resources/common/image/star.png') {
+	            		
+	            		$.ajax({
+	            			
+	            			url : '${pageContext.request.contextPath}/recruit/insertScrab.rc',
+	            			data : {
+	            				"rId" : rId,
+	            			},
+	            			type : "POST",
+	            			success : function(data) {
+								
+	            				if(data.result == 1) {
+	            					alert('스크랩되었습니다.');
+	            				} else {
+	            					alert('스크랩 실패 했습니다.');
+	            				}
+	            				
+							} ,
+	            			error : function(data) {
+								console.log(data);
+							}
+	            			
+	            		});
+	            		
+	            		$(this).attr('src', '${pageContext.request.contextPath}/resources/common/image/star_selected.png');	
+	            		
+	            	} else {
+	            		
+	            		$.ajax({
+	            			
+	            			url : '${pageContext.request.contextPath}/recruit/deleteScrab.rc',
+	            			data : {
+	            				"rId" : rId,
+	            			},
+	            			type : "POST",
+	            			success : function(data) {
+								
+	            				if(data.result == 1) {
+	            					alert('스크랩 해제 되었습니다.');
+	            				} else {
+	            					alert('스크랩 해제를 실패 했습니다.');
+	            				}
+	            				
+							} ,
+	            			error : function(data) {
+								console.log(data);
+							}
+	            			
+	            		});
+	            		
+	            		$(this).attr('src', '${pageContext.request.contextPath}/resources/common/image/star.png');
+	            		
+	            	} 
+            	
+            	}
+            	
     		});
         	
 		}
@@ -713,6 +785,19 @@
 				}
 				
 			});
+			
+		}
+		
+		function loginChk() {
+		
+			var id = '${m.id}';
+			
+			if(id == '') {
+        		alert('로그인을 해주세요.');
+        		return false;
+        	} else {
+        		location.href="scrabList.rc";
+        	}
 			
 		}
 		

@@ -37,7 +37,7 @@
 	<c:import url="/WEB-INF/views/common/header.jsp" charEncoding="UTF-8"/>
 	<div class ="w3-white" style ="height:100px;"></div> <!-- Spare Space -->
 	
-	<div class ="w3-amber w3-center" style ="padding-top: 1%; padding-bottom: 1%; margin-left: 15%; margin-right: 15%;">
+	<div class ="w3-black w3-center" style ="padding-top: 0.7%; padding-bottom: 0.7%; margin-left: 15%; margin-right: 15%;">
 		<h1 style="font-family: vitamin;">${m.id} 님의 공간</h1>
 	</div>
 	
@@ -48,19 +48,19 @@
 		
 		<div class ="w3-col m10 w3-white w3-center">
 			<div class ="w3-row">
-				<div class ="w3-col m4 w3-pale-yellow sub_menu_padding">
+				<div class ="w3-col m4 w3-blue sub_menu_padding">
 					<h3 class="h3_font">내 이력서 현황</h3>
 					<h1>${ totalResume }</h1>
 					<button class="w3-btn w3-brown" id = "cntResume" onclick="goResume();">자세히 보기</button>
 				</div>
 				
-				<div class ="w3-col m4 w3-sand sub_menu_font sub_menu_padding">
+				<div class ="w3-col m4 w3-gray sub_menu_font sub_menu_padding">
 					<h3 class = "h3_font">내 커뮤니티 현황</h3>
-					<h1>0</h1>
-					<button class="w3-btn w3-brown">자세히 보기</button>
+					<h1>${ totalComm }</h1>
+					<button class="w3-btn w3-brown" onclick="goComm();">자세히 보기</button>
 				</div>
 				
-				<div class ="w3-col m4 w3-khaki sub_menu_font sub_menu_padding">
+				<div class ="w3-col m4 w3-pink sub_menu_font sub_menu_padding">
 					<h3 class ="h3_font">내 사전 현황</h3>
 					<h1>0</h1>
 					<button class="w3-btn w3-brown">자세히 보기</button>
@@ -68,19 +68,19 @@
 			</div>
 			
 			<div class ="w3-row" style ="margin-top: 2%;">
-				<div class ="w3-col m4 w3-light-blue sub_menu_font sub_menu_padding">
+				<div class ="w3-col m4 w3-light-green sub_menu_font sub_menu_padding">
 					<h3 class ="h3_font">내 기술 커뮤니티</h3>
-					<h1>0</h1>
-					<button class="w3-btn w3-brown">자세히 보기</button>
+					<h1>${totalSkill}</h1>
+					<button class="w3-btn w3-brown" onclick="goSkill();">자세히 보기</button>
 				</div>
 				
-				<div class ="w3-col m4 w3-light-green sub_menu_font sub_menu_padding">
+				<div class ="w3-col m4 w3-indigo sub_menu_font sub_menu_padding">
 					<h3 class ="h3_font">내 이력서 첨삭</h3>
 					<h1>0</h1>
 					<button class="w3-btn w3-brown">자세히 보기</button>
 				</div>
 				
-				<div class ="w3-col m4 w3-orange sub_menu_font sub_menu_padding">
+				<div class ="w3-col m4 w3-amber sub_menu_font sub_menu_padding">
 					<h3 class ="h3_font">찜 목록</h3>
 					<h1>0</h1>
 					<button class="w3-btn w3-brown">자세히 보기</button>
@@ -94,7 +94,18 @@
 	<script>
 		 function goResume(){
 			location.href = "${pageContext.request.contextPath}/member/myResume.do";
-		} 
+		}
+		 
+		 function goComm(){
+				location.href = "${pageContext.request.contextPath}/member/myComm.do";
+			}
+		 
+		 function goSkill(){
+				location.href = "${pageContext.request.contextPath}/member/mySkill.do";
+			}
+		function gotoMyPage(){
+			$('#myPageBtn').css('color','red');
+		}
 		
 	</script>
 </body>
