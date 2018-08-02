@@ -28,7 +28,10 @@ function validate1(){
 
 function backList() 
 {
-	location.href = "${pageContext.request.contextPath}/community/community.comu";
+	var answer = confirm('작성한 글은 저장되지 않습니다. 목록으로 돌아가시겠습니까?');
+	if(answer){
+		location.href = "${pageContext.request.contextPath}/community/community.comu";		
+	}
 }
 
 $(document).ready(function() {
@@ -36,7 +39,20 @@ $(document).ready(function() {
             height: 300,                 // set editor height
             minHeight: null,             // set minimum height of editor
             maxHeight: null,             // set maximum height of editor
-            focus: true                  // set focus to editable area after initializing summernote
+            focus: true,                 // set focus to editable area after initializing summernote
+            lang : 'ko-KR',
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['table', ['table']],
+                ['insert', ['link', 'hr']],
+                ['view', ['fullscreen', 'codeview']],
+                ['help', ['help']]
+              ],
     });
 });
 
@@ -64,7 +80,6 @@ $(document).ready(function() {
 	        </div>
 	        <div class="w3-bar w3-center" style="padding-top:7%; padding-bottom: 10%;">
 	        	<button class="w3-button w3-black" type="submit">저장하기</button>
-	            <button class="w3-button w3-teal" type="reset">취소하기</button>
 	        	<button class="w3-button w3-red" type="button" onclick="backList();">목록으로</button>
 	        </div>
 		</div>

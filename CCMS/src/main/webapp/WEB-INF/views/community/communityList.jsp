@@ -48,30 +48,30 @@ function validate1(){
 	padding-top: auto;
 }
 
-.sub_menu_padding{
-	margin-top: 1%;
-	padding-top: 2%;
-	padding-bottom: 2%;
-	font-family: penB;
+.j_title_font{
+	font-family: vitamin;
+	font-size: 1.7em;
+	padding-top: auto;
+	color: green;
 }
 </style>
 </head>
 <body>
 	<c:import url="/WEB-INF/views/common/header.jsp" charEncoding="UTF-8"/>
-	<div class="w3-container" style="padding-left: 15%; padding-right: 15%">
+	<div class="w3-container" style="padding-left: 15%; padding-right: 15%; padding-top: 4%;">
         <div class="w3-row">
         	<div class ="w3-col m2 w3-center w3-white tab_font">
-        		<div class="w3-col" style="padding-top: 100px">
+        		<div class="w3-col">
 	        		<button class="w3-button w3-white" type="button" onclick="freeboard();">자유게시판</button><br /><br />
 	        		<button class="w3-button w3-white" type="button" onclick="skillboard();">기술게시판</button>
         		</div>
         	</div>
         	<!-- M 10 -->
-        	<div class ="w3-col m10" style="padding-left:2%; border-left: 5px solid red;">
-	           	<div class="w3-col" style="padding-top: 10%;">
-	           		자유게시판
-	                <button class="w3-button w3-purple" style="float:right; margin: 0 0 15px;" type="button" onclick="fn_goComuForm()">글쓰기</button>
-	            </div>
+        	<div class ="w3-col m10" style="padding-left:2%; border-left: 5px solid orange;">
+	           	<div class="w3-row">
+        			<div class="w3-col s6 w3-left j_title_font"><p>자유게시판</p></div>
+        			<div class="w3-col s6 w3-right"><button class="w3-button w3-purple w3-right" type="button" onclick="fn_goComuForm()">글쓰기</button></div>
+        		</div>
 	            <div class="w3-col sub_menu_padding" style="padding-top: 2%; padding-bottom: 5%;">
 	                <p>총 ${totalContents}건의 게시물이 있습니다.</p>
 	                <table class="w3-table w3-bordered">
