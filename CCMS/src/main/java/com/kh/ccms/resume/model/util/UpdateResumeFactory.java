@@ -415,10 +415,10 @@ public class UpdateResumeFactory
 				try{
 					dArray[i] = Double.parseDouble(array[i]);
 				}catch(Exception e){
-					dArray[i] = ERROR_EXCEPTION;
+					dArray[i] = 0;
 				}
 			}else{
-				dArray[i] = ERROR_EXCEPTION;
+				dArray[i] = 0;
 			}
 		}
 		return dArray;

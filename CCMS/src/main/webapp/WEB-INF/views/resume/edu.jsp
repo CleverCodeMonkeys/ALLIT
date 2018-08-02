@@ -27,7 +27,7 @@
 </style>
 
 <div class = "w3-row" style="margin-top: 30px; font-family: penB;">
-	<div class ="w3-col m4 w3-center">
+	<div class ="w3-col m3 w3-center">
 		<label class="inp">
 	           <input type="text" placeholder="&nbsp;" name = "educationTitle" 
 	           class="cInput" value = "${resume.academyList[0].educationTitle}">
@@ -36,7 +36,7 @@
 	    </label>
 	</div>
 	
-	<div class ="w3-col m4 w3-center">
+	<div class ="w3-col m3 w3-center">
 		<label class="inp">
 	           <input type="text" placeholder="&nbsp;" name = "academyName" 
 	           class="cInput" value = "${resume.academyList[0].academyName}">
@@ -45,7 +45,7 @@
 	    </label>
 	</div>
 	
-	<div class ="w3-col m2 w3-center">
+	<div class ="w3-col m3 w3-center">
 		<label class="inp">
 	           <input type="date" placeholder="&nbsp;" name = "startDate" 
 	           class="cInput" value ="${resume.academyList[0].startDate}">
@@ -54,7 +54,7 @@
 	    </label>
 	</div>
 	
-	<div class ="w3-col m2 w3-center">
+	<div class ="w3-col m3 w3-center">
 		<label class="inp">
 	           <input type="date" placeholder="&nbsp;" name = "endDate" 
 	           class="cInput" value = "${resume.academyList[0].endDate}">
