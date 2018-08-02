@@ -23,6 +23,17 @@
 		<result column="COMMENT_COUNT" property="comment_count"/>
 	</resultMap>
 	
+	<resultMap type="java.util.HashMap" id="correctionHashMap">	
+		<result column="BOARD_ID" property="correctionId"/>
+		<result column="BOARD_TITLE" property="correctionTitle"/>
+		<result column="BOARD_CONTENT" property = "correctionContent"/>
+		<result column="RESUME_ID" property="correctionResumeId"/>
+		<result column="WRITE_DATE" property="correctionDate"/>
+		<result column="SEE" property="correctionSee"/>
+		<result column="ID" property="correctionUserId"/>
+		<result column="COMMENT_COUNT" property="correctionCommentCount"/>
+	</resultMap>
+	
 	<select id="countResume" resultType="_int" parameterType="string">
 		SELECT COUNT(*) FROM RESUME WHERE MEMBER_ID = #{userId}
 	</select>
@@ -41,6 +52,10 @@
 	
 	<select id="countSkill" resultType="_int" parameterType="string">
 		SELECT COUNT(*) FROM SKI_BOARD WHERE WRITER = #{userId}
+	</select>
+	
+	<select id="countCorr" resultType="_int" parameterType="string">
+		SELECT COUNT(*) FROM RESUME_CORRECT_BOARD WHERE ID = #{userId}
 	</select>
 	
 	<insert id="saveProfile" parameterType="hashmap">
@@ -105,7 +120,27 @@
 	</select>
 	
 	<select id="selectSkillTotalContentsSer" parameterType="hashmap" resultType="_int">
-		SELECT COUNT(*) FROM SKI_BOARD WHERE WRITER=#{id} AND TITLE LIKE '%'||#{searchSki}||'%'
+		SELECT COUNT(*) FROM SKI_BOARD WHERE WRITER=#{id} 
 	</select>
+	
+	<select id="selectCorrectionList" resultMap="correctionHashMap">
+		 SELECT R.BOARD_ID, R.BOARD_TITLE, R.BOARD_CONTENT, R.RESUME_ID,  R.WRITE_DATE, R.SEE, R.ID,
+				(SELECT count(*) FROM RESUME_CORRECT_COMMENT C WHERE R.BOARD_ID = C.BOARD_ID) AS COMMENT_COUNT 
+		 FROM RESUME_CORRECT_BOARD R
+		 WHERE R.ID=#{id} ORDER BY WRITE_DATE ASC		
+	</select>
+	
+	<!-- 글 개수  -->
+	<select id="selectCorrectionTotalContents" parameterType="string" resultType="_int">
+	
+		SELECT COUNT(*) FROM RESUME_CORRECT_BOARD WHERE ID=#{id}
+				
+	</select>
+	
+	<!--  글 insert 
+	<insert id="insertCorrection" parameterType="correction">
+		INSERT INTO RESUME_CORRECT_BOARD VALUES(RESUME_CORRECT_SEQ.NEXTVAL , #{correctionTitle},  #{correctionResumeId}, SYSDATE, default, #{correctionUserId}, #{correctionContent})
+	</insert> -->
+	
 	
 </mapper>

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.ccms.correction.model.vo.CorrectionSearchFilter;
 import com.kh.ccms.myPage.model.dao.MyPageDao;
 import com.kh.ccms.myPage.model.vo.Profile;
 
@@ -32,6 +33,12 @@ public class MyPageServiceImpl implements MyPageService {
 
 		return myPageDao.countSkill(userId);
 	}
+	
+	@Override
+	public int countCorr(String userId) {
+
+		return myPageDao.countCorr(userId);
+	}	
 	
 	@Override
 	public int saveProfile(Profile profile,String userId) {
@@ -103,6 +110,18 @@ public class MyPageServiceImpl implements MyPageService {
 	public int selectSkillTotalContentsSer(String searchSki, String id) {
 
 		return myPageDao.selectSkillTotalContentsSer(searchSki, id);
+	}
+
+	@Override
+	public int selectCorrectionTotalContents(String id) {
+		
+		return myPageDao.selectCorrectionTotalContents(id);
+	}
+
+	@Override
+	public List<Map<String, String>> selectCorrectionList(int cPage, int numPerPage, String id) {
+	
+		return myPageDao.selectCorrectionList(cPage,numPerPage,id);
 	}
 
 

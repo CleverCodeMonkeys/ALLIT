@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.ccms.correction.model.vo.CorrectionSearchFilter;
 import com.kh.ccms.myPage.model.vo.Profile;
 
 @Repository
@@ -32,6 +33,12 @@ public class MyPageDaoImpl implements MyPageDao {
 	public int countSkill(String userId) {
 		
 		return sqlSession.selectOne("myPage.countSkill",userId);
+	}
+
+	@Override
+	public int countCorr(String userId) {
+		
+		return sqlSession.selectOne("myPage.countCorr",userId);
 	}
 
 
@@ -134,6 +141,22 @@ public class MyPageDaoImpl implements MyPageDao {
 		map.put("id", id);
 		
 		return sqlSession.selectOne("myPage.selectSkillTotalContentsSer",map);
+	}
+
+
+
+	@Override
+	public int selectCorrectionTotalContents(String id) {
+	
+		return sqlSession.selectOne("myPage.selectCorrectionTotalContents", id);
+	}
+
+	@Override
+	public List<Map<String, String>> selectCorrectionList(int cPage, int numPerPage,String id) {
+		RowBounds rows = new RowBounds((cPage -1) * numPerPage, numPerPage);
+		
+		
+		return sqlSession.selectList("myPage.selectCorrectionList",id,rows);
 	}
 
 	
