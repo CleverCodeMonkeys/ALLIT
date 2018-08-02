@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <html>
@@ -13,8 +13,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<script src="${pageContext.request.contextPath}/resources/common/js/jquery-3.3.1.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/common/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/common/js/jquery-3.3.1.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/common/js/bootstrap.min.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Correction</title>
@@ -90,32 +90,30 @@
 	<!-- 전체를 감싸는 div -->
     <div class="layout-container w3-row">
         <!-- 메인 부분을 감싸는 div -->
-        <div id="list-article" class="content all-list w3-col m8" role="main">
+        <div id="list-article" class="content all-list w3-col m10" role="main">
             <!-- 머리통 + 검색창 + 버튼 -->
             <div id="resume-nav" class="w3-bar">
-                <a href="/ccms/correction/correctionWrite.correct" id="resume-nav-button" class="btn btn-success btn-wide pull-right"><i class="fa fa-pencil"></i>새 글 쓰기</a>
-                <h4 style="margin-left: 50px"> 이력서 첨삭</h4>
+                <a href="/ccms/correction/correctionWrite.correct" id="resume-nav-button" class="btn btn-success btn-wide pull-right" style="font-family: vitamin;"><i class="fa fa-pencil"></i>새 글 쓰기</a>
+                <h4 style="margin-left: 50px; font-family: vitamin;" > 이력서 첨삭</h4>
                 <form action="#" name="category-filter" id="category-filter-form">
                     <div class="category-filter-wrapper w3-row">
                         <ul class="filter-list pull-left">                        	
 	                            <li class="filter-name">
-	                                <a onclick="reNew('dateSort')" id="dateSort" class="filter-list-link active">최신순</a>
+	                                <a onclick="reNew('dateSort')" id="dateSort" style="font-family: penB;" class="filter-list-link active">최신순</a>
 	                            </li>
 	
 	                            <li class="filter-name">
-	                                <a onclick="reNew('commentSort')" id="commentSort" class="filter-list-link">댓글순</a>
+	                                <a onclick="reNew('commentSort')" id="commentSort" style="font-family: penB;" class="filter-list-link">댓글순</a>
 	                            </li >
 	
 	                            <li class="filter-name">
-	                                <a onclick="reNew('seeSort')" id="seeSort" class="filter-list-link">조회순</a>
+	                                <a onclick="reNew('seeSort')" id="seeSort" style="font-family: penB;" class="filter-list-link">조회순</a>
 	                            </li>
                         </ul>  
                          <div class="category-filter-search pull-right" >                              	 	 
                             <div class="input-group input-group-sm">
-
                               	
                                 <input type="text" maxlength="30" width="200px" name="search" id="search" class="form-control pull-right" onkeydown="JavaScript:enterCheck();" placeholder="검색어 30자 제한" value="${search}">
-
                                 
                                 <span class="input-group-btn">
                                     <button type="button" id="searchFiled" onclick="searchGo();" class="btn btn-default pull-right"><i class="fa fa-search"></i></button>
@@ -142,11 +140,11 @@
             			<c:forEach items="${list}" var="correction">
 
             			     <c:if test="${correction.correctionCommentCount gt 0}">      		                
-			                    <li id="list-group-li" class="w3-panel w3-border w3-border-gray w3-leftbar" style="border-left-color: #71A4D9 !important;">
+			                    <li id="list-group-li" class="w3-panel w3-border w3-border-gray w3-leftbar" style="border-left-color: #71A4D9 !important; font-family: penB;">
 			                        <!-- title -->		             
 			                        <div class="list-title-wrapper">
 			                            <h5>
-			                                <a id="${correction.correctionId}" onclick="goView(id)" >${correction.correctionTitle} </a>
+			                                <a id="${correction.correctionId}"  onclick="goView(id)" style="font-family: penB;">${correction.correctionTitle} </a>
 			                            </h5>
 			                        </div>
 			                        <!-- 댓글 수 조회 수 확인 --> 
@@ -171,11 +169,11 @@
 			                    </li>	
 			              </c:if>
 			              <c:if test="${correction.correctionCommentCount le 0}">
-			              		<li id="list-group-li" class="w3-panel w3-border w3-border-gray w3-leftbar">
+			              		<li id="list-group-li" class="w3-panel w3-border w3-border-gray w3-leftbar" style="font-family: penB;">
 			                        <!-- title -->		             
 			                        <div class="list-title-wrapper">
 			                            <h5>
-			                                <a id="${correction.correctionId}" onclick="goView(id)" >${correction.correctionTitle} </a>
+			                                <a id="${correction.correctionId}" onclick="goView(id)" style="font-family: penB;">${correction.correctionTitle} </a>
 			                            </h5>
 			                        </div>
 			                        <!-- 댓글 수 조회 수 확인 --> 
@@ -245,11 +243,11 @@
 		
 		//정렬
 		if(sortOpt == 'dateSort' || sortOpt == ""){
-			$('#dateSort').css("background-color", "#71A4D9");
+			$('#dateSort').css("color", "#E31D2E");
 		} else if(sortOpt == 'commentSort'){
-			$('#commentSort').css("background-color", "#71A4D9");
+			$('#commentSort').css("color", "#E31D2E");
 		} else if(sortOpt == 'seeSort'){
-			$('#seeSort').css("background-color", "#71A4D9");
+			$('#seeSort').css("color", "#E31D2E");
 		} 
 		
 		//검색 기준 
