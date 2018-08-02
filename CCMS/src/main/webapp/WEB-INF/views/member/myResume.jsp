@@ -196,7 +196,7 @@ td{
 			$("td[id]").on("click",function(){
 				var id = $(this).attr("id");
 				console.log("id = " + id);
-				location.href= "${pageContext.request.contextPath}/resume/resumeView.resume?id="+id;
+				location.href= "${pageContext.request.contextPath}/resume/resumeView.resume?resumeId="+id;
 			});
 		});
 		 
@@ -204,7 +204,7 @@ td{
 			// 내 Controller Reusme -> id 
 			 id = id.substring( 1, id.length ); 
 			 console.log(id);	
-			 location.href= "${pageContext.request.contextPath}/resumeList/updateResume.resume?id="+id;  
+			 location.href= "${pageContext.request.contextPath}/resume/resume.resume?resumeId="+id;  
 		}
 		
 		function rDelete(id){
