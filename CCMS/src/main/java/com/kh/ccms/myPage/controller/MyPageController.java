@@ -82,13 +82,13 @@ public class MyPageController
 	// 게시글 리스트 보기
 		@RequestMapping(value ="/member/myComm.do")
 		public String gotoCommunity(@RequestParam(value="cPage", required=false, defaultValue="1")
-		int cPage, Model model)
+		int cPage, Model model,@SessionAttribute("m")Member m)
 		{
 			int numPerPage = 10;
 			
-			List<Map<String, String>> list = communityService.selectCommunityList(cPage, numPerPage);
+			List<Map<String, String>> list = myPageService.selectCommunityList(cPage, numPerPage,m.getId());
 			
-			int totalContents = communityService.selectCommunityTotalContents();
+			int totalContents = myPageService.selectCommunityTotalContents(m.getId());
 			
 			
 			model.addAttribute("list", list)
@@ -103,13 +103,13 @@ public class MyPageController
 		// 게시글 검색하기
 		@RequestMapping(value="/member/communitySearch.do")
 		public String communitySearch(@RequestParam(value="cPage", required=false, defaultValue="1")
-		int cPage, Model model, @RequestParam("searchComu") String searchComu, @RequestParam("searchSelect") String searchSelect)
+		int cPage, Model model, @RequestParam("searchComu") String searchComu,@SessionAttribute("m")Member m,@RequestParam("searchSelect") String searchSelect)
 		{
 			int numPerPage = 10;
 		
-			List<Map<String, String>> list = communityService.selectCommunitySearch(cPage, numPerPage, searchComu, searchSelect);
+			List<Map<String, String>> list = myPageService.selectCommunitySearch(cPage, numPerPage, searchComu, searchSelect,m.getId());
 			
-			int totalContents = communityService.selectCommunityTotalContentsSer(searchComu);
+			int totalContents = myPageService.selectCommunityTotalContentsSer(searchComu,m.getId());
 			
 			model.addAttribute("list", list).addAttribute("numPerPage", numPerPage).addAttribute("totalContents", totalContents);
 			
@@ -119,13 +119,13 @@ public class MyPageController
 		// 게시글 리스트 보기
 		@RequestMapping(value ="/member/mySkill.do")
 		public String gotoSkill(@RequestParam(value="cPage", required=false, defaultValue="1")
-		int cPage, Model model)
+		int cPage, Model model,@SessionAttribute("m")Member m)
 		{
 			int numPerPage = 10;
 			
-			List<Map<String, String>> list = skillService.selectSkillList(cPage, numPerPage);
+			List<Map<String, String>> list = myPageService.selectSkillList(cPage, numPerPage,m.getId());
 			
-			int totalContents = skillService.selectSkillTotalContents();
+			int totalContents = myPageService.selectSkillTotalContents(m.getId());
 			
 			model.addAttribute("list", list).addAttribute("numPerPage", numPerPage)
 				 .addAttribute("totalContents", totalContents)
@@ -137,13 +137,13 @@ public class MyPageController
 		// 게시글 검색하기
 			@RequestMapping(value="/member/skillSearch.do")
 			public String skillSearch(@RequestParam(value="cPage", required=false, defaultValue="1")
-			int cPage, Model model, @RequestParam("searchSki") String searchSki, @RequestParam("searchSelect") String searchSelect)
+			int cPage, Model model, @RequestParam("searchSki") String searchSki, @SessionAttribute("m")Member m,@RequestParam("searchSelect") String searchSelect)
 			{
 				int numPerPage = 10;
 			
-				List<Map<String, String>> list = skillService.selectSkillSearch(cPage, numPerPage, searchSki, searchSelect);
+				List<Map<String, String>> list = myPageService.selectSkillSearch(cPage, numPerPage, searchSki, searchSelect,m.getId());
 				
-				int totalContents = skillService.selectSkillTotalContentsSer(searchSki);
+				int totalContents = myPageService.selectSkillTotalContentsSer(searchSki,m.getId());
 				
 				model.addAttribute("list", list).addAttribute("numPerPage", numPerPage).addAttribute("totalContents", totalContents);
 				

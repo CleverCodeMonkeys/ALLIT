@@ -15,5 +15,4 @@ public interface CorrectionDao {
 	int insertCorrection(Correction correction);
 	int deleteCorrection(Correction correction);
 	int updateCorrection(Correction correction);
-	List<Map<String, String>> selectResume(String id);
 }

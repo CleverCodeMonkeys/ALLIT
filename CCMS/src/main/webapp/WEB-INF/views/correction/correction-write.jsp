@@ -102,12 +102,12 @@
         resize: none;
         overflow:auto;
     }    
-    /* .toolbar{
+    .toolbar{
         display: block;
         width: 100%;
         border: 1px solid #ccc;
         background-color: #fff;
-    } */
+    }
     
     #buttons-fieldset{
     	border: 0;
@@ -157,14 +157,15 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <div>      
-                                   		
+                                    
+                                    <div>
+                                        <input type="button" class="btn btn-default pull-right" value="이력서 불러오기">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
 									<div class ="w3-white" style ="height:60px;"></div> <!-- Spare Space -->
-                                    <textarea name="content" id="summernote"></textarea> 
+                                    <textarea name="content" id="summernote" ></textarea> 
                                 </div>
                                 
                                 
@@ -224,7 +225,6 @@
 	      </div>
    		 </div>
 	  </div>
-
     <script>
        //제목 글자수 제한하기
        $(function(){
@@ -275,7 +275,6 @@
     	      
     	    });
     	  });
-     	 
        //모달 창 띠우기
       function resumeModal(userId){
     	   var id = userId;
@@ -335,9 +334,6 @@
     	  
     	   $('#resume').css("display", "none");
        }
-       
-       
-       
        /* function() {
       	    $('#summernote').summernote({
       	      width: '100%',       
@@ -381,8 +377,8 @@
     		      }
     		  });
     	  } */
-
     	  
+       
        //등록 버튼
        function saveForm(){
 			var title = $('#title-textarea').val();

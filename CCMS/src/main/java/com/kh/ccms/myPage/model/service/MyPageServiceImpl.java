@@ -55,6 +55,56 @@ public class MyPageServiceImpl implements MyPageService {
 		return myPageDao.deleteMember(id);
 	}
 
+	@Override
+	public List<Map<String, String>> selectCommunityList(int cPage, int numPerPage, String id) {
+	
+		return myPageDao.selectCommunityList(cPage,numPerPage,id);
+	}
+
+	@Override
+	public int selectCommunityTotalContents(String id) {
+	
+		return myPageDao.selectCommunityTotalContents(id);
+	}
+
+	@Override
+	public List<Map<String, String>> selectCommunitySearch(int cPage, int numPerPage, String searchComu,
+			String searchSelect, String id) {
+	
+		return myPageDao.selectCommunitySearch(cPage, numPerPage,searchComu,searchSelect, id);
+	}
+
+	@Override
+	public int selectCommunityTotalContentsSer(String searchComu, String id) {
+	
+		return myPageDao.selectCommunityTotalContentsSer(searchComu, id);
+	}
+
+	@Override
+	public List<Map<String, String>> selectSkillList(int cPage, int numPerPage, String id) {
+	
+		return myPageDao.selectSkillList(cPage, numPerPage, id);
+	}
+
+	@Override
+	public int selectSkillTotalContents(String id) {
+
+		return myPageDao.selectSkillTotalContents(id);
+	}
+
+	@Override
+	public List<Map<String, String>> selectSkillSearch(int cPage, int numPerPage, String searchSki, String searchSelect,
+			String id) {
+	
+		return myPageDao.selectSkillSearch(cPage, numPerPage,searchSki,searchSelect, id);
+	}
+
+	@Override
+	public int selectSkillTotalContentsSer(String searchSki, String id) {
+
+		return myPageDao.selectSkillTotalContentsSer(searchSki, id);
+	}
+
 
 
 }
