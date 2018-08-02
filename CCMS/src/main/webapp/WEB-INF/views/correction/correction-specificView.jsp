@@ -268,10 +268,7 @@
 
 	<c:import url="/WEB-INF/views/common/footer.jsp" charEncoding="UTF-8" />
 	<script>
-		//글 수정
-		function goCorrectionModify() {
 
-		}
 
 		//댓글 등록
 		function commentWrite() {
@@ -285,8 +282,7 @@
 			if (content == null || content.length == 0) {
 				alert("공백은 등록되지 않습니다.");
 			} else {
-				$
-						.ajax({
+				$.ajax({
 							url : "${pageContext.request.contextPath}/correction/correctionCommentWrite.correct",
 							type : "GET",
 							data : {
