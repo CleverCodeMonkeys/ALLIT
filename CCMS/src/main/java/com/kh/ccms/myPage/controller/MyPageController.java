@@ -1,6 +1,5 @@
 package com.kh.ccms.myPage.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -166,11 +165,7 @@ public class MyPageController
 		String userId = m.getId();
 		Profile pro = new Profile(null,m.getId(),name, age, email, gender,tel,address, null, null);
 		
-		System.out.println("CONTROLLER 확인 : "+ profile);
-		System.out.println("CONTROLLER 확인 : "+ userId);
-		
-		
-		int result = myPageService.saveProfile(profile,userId);
+		myPageService.saveProfile(profile,userId);
 		
 		req.setAttribute("pro", pro);
 		
@@ -197,9 +192,8 @@ public class MyPageController
 		
 		
 		pro.setMember_id(m.getId());
-				
-		System.out.println("update한 Profile : "+pro);
-		int result = myPageService.updateProfileSave(pro);
+
+		myPageService.updateProfileSave(pro);
 		
 		model.addAttribute("pro",pro);
 		
@@ -217,12 +211,10 @@ public class MyPageController
 	@RequestMapping("/member/deleteMember.do")
 	public String deleteMember(HttpServletRequest req,@SessionAttribute("m")Member m){
 		String password = req.getParameter("password");
-		System.out.println("입력한 password:  " + password);
-		System.out.println("로그인 password:  " + m.getPassword());
 		
 		/*if(m.getPassword().equals(password)){*/
 		if(bcryptPasswordEncoder.matches(password, m.getPassword())){
-			int result = myPageService.deleteMember(m.getId());
+			myPageService.deleteMember(m.getId());
 		
 			return "redirect:/member/memberLogout.do";
 		}else{
