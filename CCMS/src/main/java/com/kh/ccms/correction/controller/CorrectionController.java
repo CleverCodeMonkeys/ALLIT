@@ -92,35 +92,44 @@ public class CorrectionController
 				@RequestMapping(value ="/correction/correction.correct", method=RequestMethod.GET)
 				public String gotoCorrection(@RequestParam(value="cPage", required=false, defaultValue="1")
 				int cPage,@RequestParam(value = "sort", required=false, defaultValue="dateSort") String sort,  
-				@RequestParam(value="search", defaultValue="") String search, Model model){
+				@RequestParam(value="search", defaultValue="") String search, 
+				@RequestParam(value="serachKinds", defaultValue="title") String kinds, Model model){
 					//@RequestParam으로 페이징 버튼을 눌렀을 때 누른 페이지 값을 가져오며 처음 페이지에 도작했을 경우에는 default값 1을 준다.
 					//기본 정렬은 최신순으로 한다.
-					System.out.println("검색 눌렀을 경우 들어오는 SORT값="+sort);
-					System.out.println("검색 눌렀을 때 들어오는 search값="+search);
+					System.out.println("현재 kinds값 : "+  kinds);
 					//한 페이지에  10개 보여줄 꺼임
 					int numPerPage = 10;
 					
 					//검색, 정렬 필터에 값 집어넣기
-					CorrectionSearchFilter filter = new CorrectionSearchFilter(search, sort);
+					CorrectionSearchFilter filter = new CorrectionSearchFilter(search, sort, kinds);
 					
 					//글 총 개수 (검색어 포함)
 					int totalContents = correctionService.selectCorrectionTotalContents(filter);
 					
-					
-					if(sort.equals("dateSort") || sort.equals("commentSort")  || sort.equals("seeSort")){
-					// 글 리스트 불러오기(최신순) 위에서 쓰는거  기본은 최신순이니까
+					if(kinds.equals("title") || kinds.equals("name")){
+						if(sort.equals("dateSort") || sort.equals("commentSort")  || sort.equals("seeSort")){
+							// 글 리스트 불러오기(최신순) 위에서 쓰는거  기본은 최신순이니까
 
-						List<Map<String, String>> list = correctionService.selectCorrectionList(cPage,numPerPage,filter);
-						
-						model.addAttribute("list", list).addAttribute("numPerPage",numPerPage).addAttribute("totalContents", totalContents)
-						.addAttribute("sort",sort).addAttribute("search", search);
-						
-						System.out.println("컨트롤러 리턴 sort값 :"+sort);
-						System.out.println("컨트롤러가 리턴하는 totalContents:"+totalContents);
-						
-					  return "correction/correction";
-					} else {
-					// 헛짓 대비
+								List<Map<String, String>> list = correctionService.selectCorrectionList(cPage,numPerPage,filter);
+								
+								model.addAttribute("list", list).addAttribute("numPerPage",numPerPage).addAttribute("totalContents", totalContents)
+								.addAttribute("sort",sort).addAttribute("search", search).addAttribute("kinds", kinds);
+								
+								System.out.println("컨트롤러 리턴 sort값 :"+sort);
+								System.out.println("컨트롤러가 리턴하는 totalContents:"+totalContents);
+								
+							  return "correction/correction";
+							} else {
+							// 헛짓 대비
+								String msg = "요청하신 페이지는 없습니다";
+								String loc = "correction/correction";
+								
+								model.addAttribute("msg", msg).addAttribute(loc);
+								
+								return "common/msg";
+							}
+					}else {
+						// 헛짓 대비
 						String msg = "요청하신 페이지는 없습니다";
 						String loc = "correction/correction";
 						
@@ -128,6 +137,7 @@ public class CorrectionController
 						
 						return "common/msg";
 					}
+					
 					
 				}
 	
@@ -210,22 +220,26 @@ public class CorrectionController
 		//썸머노트 이미지 파일 
 		@RequestMapping(value ="/correction/correctionWriteImageEncoding.correct", method=RequestMethod.POST)
 		@ResponseBody
-		public String handleFileUpload(@RequestParam("file") MultipartFile[] file, HttpServletRequest req)
+		public String handleFileUpload(@RequestParam("file") MultipartFile[] file, @RequestParam("userId") String userId, HttpServletRequest req)
 		{
 			System.out.println("이미지가 들어옵니다");
+			System.out.println("userId값"+userId);
+			String saveDir = req.getSession().getServletContext().getRealPath("/resources/upload/correctionUpload")+"/"+userId;
 			
-			String saveDir = req.getSession().getServletContext().getRealPath("/resources/upload/correctionUpload");
+			File dir = new File(saveDir);
 			
-			System.out.println("이미지 저장 경로 : " + saveDir);
+			// If not
+			 if(!dir.exists()) {
+				 dir.mkdirs();			 
+			 }
 			
-			System.out.println(file[0].getOriginalFilename());
 			
-			return saveFile(file[0], saveDir, req);
+			return saveFile(file[0], saveDir, req, userId);
 			
 		}
 		
 		//썸머노트 이미지파일 변경2
-		private String saveFile(MultipartFile file, String saveDir, HttpServletRequest req){
+		private String saveFile(MultipartFile file, String saveDir, HttpServletRequest req, String userId){
 			UUID uuid = UUID.randomUUID();
 			String saveName = uuid + "_" +file.getOriginalFilename();
 			// File saveFile = ;
@@ -238,7 +252,8 @@ public class CorrectionController
 				return null;
 			}
 		
-			return getBaseUrl(req) + "/resources/upload/correctionUpload/" + saveName;
+			
+			return getBaseUrl(req) + "/resources/upload/correctionUpload/"+userId+"/"+ saveName;
 			
 		}
 		
@@ -293,7 +308,7 @@ public class CorrectionController
 			System.out.println("삭제 result값 : " + result);
 			
 			//기본 페이지로 돌아가는 셋팅.
-			CorrectionSearchFilter filter = new CorrectionSearchFilter("", "dateSort");
+			CorrectionSearchFilter filter = new CorrectionSearchFilter("", "dateSort", "title");
 			int totalContents = correctionService.selectCorrectionTotalContents(filter);
 			List<Map<String, String>> list = correctionService.selectCorrectionList(1, 10,filter);
 			

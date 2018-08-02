@@ -248,9 +248,13 @@
     	  	  for(var i = files.length-1; i>=0; i--){
     	      var data = new FormData();
     	      data.append("file",files[i]);
+    	      data.append("userId", '${m.id}');
+    	      var userId = '${m.id}';
     	      var $note = $(this);
-    	      
     	      $.ajax({
+    	        	 /* data : {data, 
+    	        	 userId : userId,
+    	         }, */
     	         data : data,
     	         type : "post",
     	         url : '${pageContext.request.contextPath}/correction/correctionWriteImageEncoding.correct', // servlet url
