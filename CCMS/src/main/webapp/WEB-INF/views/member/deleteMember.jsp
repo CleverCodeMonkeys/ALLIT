@@ -92,7 +92,7 @@ p{
 		         <label><b>비밀번호</b></label>
 		         <input class="w3-input w3-border w3-margin-bottom" type="password" placeholder="비밀번호를 입력해주세요" id= "pwd" name="password" required>
 		    
-		    	 <button class="btn w3-button w3-blue" type ="submit">회원탈퇴</button></td>     
+		    	 <button class="btn w3-button w3-red" type ="submit">회원탈퇴</button></td>     
 	        </div>
 	     
 	        
