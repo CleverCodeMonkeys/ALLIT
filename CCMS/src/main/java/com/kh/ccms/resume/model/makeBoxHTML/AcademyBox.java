@@ -11,7 +11,7 @@ public class AcademyBox
 	private static final String ACADEMY_FOOTER = "</div>";
 	
 	private static final String ACADEMY_EDU_NAME =
-			"<div class ='w3-col m4 w3-center'>" +
+			"<div class ='w3-col m3 w3-center'>" +
 	        "<label class='inp'>" +
 			"<input type='text' placeholder='&nbsp;' name = 'educationTitle' class='cInput'>" +
 	        "<span class='label'>교육명</span>" +
@@ -20,7 +20,7 @@ public class AcademyBox
 			"</div>";
 	
 	private static final String ACADEMY_ORGAN = 
-			"<div class ='w3-col m4 w3-center'>"+
+			"<div class ='w3-col m3 w3-center'>"+
 			"<label class='inp'>" +
 			"<input type='text' placeholder='&nbsp;' name = 'academyName' class='cInput'>" +
 			"<span class='label'>교육기관</span>" +
@@ -29,7 +29,7 @@ public class AcademyBox
 			"</div>";
 	
 	private static final String ACADEMY_START_DATE =
-			"<div class ='w3-col m2 w3-center'>"+
+			"<div class ='w3-col m3 w3-center'>"+
 			"<label class='inp'>"+
 			"<input type='date' placeholder='&nbsp;' name = 'startDate' class='cInput'>" +
 			"<span class='label'>시작년월</span>" +
@@ -38,7 +38,7 @@ public class AcademyBox
 			"</div>";
 	
 	private static final String ACADEMY_END_DATE = 
-			"<div class ='w3-col m2 w3-center'>"+
+			"<div class ='w3-col m3 w3-center'>"+
 			"<label class='inp'>"+
 			"<input type='date' placeholder='&nbsp;' name = 'endDate' class='cInput'>" +
 			"<span class='label'>종료년일</span>" +

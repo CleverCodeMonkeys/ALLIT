@@ -3,6 +3,7 @@ package com.kh.ccms.myPage.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.ccms.correction.model.vo.CorrectionSearchFilter;
 import com.kh.ccms.myPage.model.vo.Profile;
 
 public interface MyPageService {
@@ -12,6 +13,8 @@ public interface MyPageService {
 	int countComm(String userId);
 
 	int countSkill(String userId);
+	
+	int countCorr(String userId);
 
 	int saveProfile(Profile profile,String userId);
 
@@ -38,6 +41,10 @@ public interface MyPageService {
 			String id);
 
 	int selectSkillTotalContentsSer(String searchSki, String id);
+
+	int selectCorrectionTotalContents(String id);
+
+	List<Map<String, String>> selectCorrectionList(int cPage, int numPerPage, String id);
 
 
 	

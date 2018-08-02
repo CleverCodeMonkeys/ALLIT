@@ -23,11 +23,99 @@ cursor: pointer;
 	line-height: 1.2em;
 	font-family: penB;
 }
+
+
+.responsive-table li {
+  border-radius: 3px;
+  padding: 25px 30px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+.responsive-table .table-header {
+  /* background-color: #95A5A6; */
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.responsive-table .table-row {
+  background-color: #ffffff;
+  box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+  font-family: penB;
+  font-size: 1.1em;
+}
+.responsive-table .col-1 {
+  flex-basis: 10%;
+}
+.responsive-table .col-2 {
+  flex-basis: 30%;
+}
+.responsive-table .col-3 {
+  flex-basis: 10%;
+}
+.responsive-table .col-4 {
+  flex-basis: 10%;
+}
+
+.fa-angle-up{
+	font-size:1.1em !important;
+	color:green !important; 
+	font-weight: bold !important;
+}
+
+.fa-angle-down{
+	font-size:1.1em !important;
+	color:red !important; 
+	font-weight: bold !important;
+}
+
+.fa-angle-double-up{
+	font-size:1.1em !important;
+	color:green !important; 
+	font-weight: bold !important;
+}
+
+.tiobeNews{
+	line-height: 1.5em;
+	font-family: penB;
+}
+
+/* Create a Parallax Effect */
+.bgimg-1{
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+   background-size: inherit;
+   margin-top: 8%;
+}
+
+/* First image (Logo. Full height) */
+.bgimg-1 {
+    background-image: url('${pageContext.request.contextPath}/resources/intro/backimage/bg8.gif');
+    height: 55%;
+    padding-top: -50px !important;
+}
+
+/* Turn off parallax scrolling for tablets and phones */
+@media only screen and (max-device-width: 1024px) {
+    .bgimg-1{
+        background-attachment: scroll;
+    }
+
+}
 </style>
 <body>
 <!-- Header  -->
 <c:import url="common/header.jsp" charEncoding="UTF-8"/>
-<div class ="w3-white" style ="height:100px;"></div>
+
+<!-- First Parallax Image with Logo Text -->
+<div class="bgimg-1 w3-display-container" id="home">
+  <div class="w3-display-topmiddle" style="white-space:nowrap; font-family: penB">
+    <span class="w3-center w3-padding-large w3-amber w3-xlarge w3-wide">신입<span class="w3-hide-small"> 프로그래머</span>는 IT의 미래입니다.</span> 
+  </div>
+</div>
+
+<br><br>
 
 <div class="page">
   <h1 class="page-title">ALL IT</h1>
@@ -89,7 +177,152 @@ cursor: pointer;
 </div>
 
 <!-- Line Under Moive  -->
-<div class ="w3-row" style ="padding-left: 15%; padding-right: 15%; height: 100px;">
+<div class ="w3-row" style ="padding-left: 15%; padding-right: 15%; height: 50px;">
+</div>
+
+<!-- Git Hub Rank Language -->
+<div class = "w3-row" style ="margin-bottom: 5%;">
+	<h1 class ="w3-center" style ="font-family: vitamin; font-size: 5em;">TIOBE Rank Language</h1>
+</div>
+
+<div class = "w3-row" style ="padding-left: 15%; padding-right: 15%;">
+	<div class ="w3-col m5">
+		<h1 style ="font-family: vitamin;">TIOBE Index for August 2018</h1> <br>
+		<h3 style ="font-family: penB; color:gray;">Python is approaching the top 3 for the first time</h3>
+		
+		<p class ="tiobeNews">Programming language Python is getting very close to the top 3 of the TIOBE index. 
+		If Python surpasses C++ and becomes number 3, this will be an all time high for the scripting language 
+		of Guido van Rossum. In 2005 there was a study what programming language was taught most at US 
+		universities and Java appeared to be a clear number one with 60% of all introductory programming courses.
+		 Similar research was conducted almost 10 years later in 2014 and the outcome was different. 
+		 This time Python was a clear winner with more than 70% "market share". 
+		 This Python boost is also visible in the TIOBE index. But industry is adopting Python as well. 
+		 The Python programming language started as a successor of Perl to write build scripts and all kind of 
+		 glue software. But gradually it entered also other domains. Nowadays it is quite common to have Python
+		  running in large embedded systems. So it is very likely that Python will enter the top 3 and even might 
+		  become the new number 1 in the long run. Other interesting news is that Hack, Groovy and 
+		  Julia re-entered the top 50, whereas TypeScript lost a few places and is now at position 62.</p>
+		  <br>
+		  <p class ="tiobeNews">
+		  <b style ="color:red;">IMPORTANT NOTE. </b>SQL has been added again to the TIOBE index since February 2018. The reason for this is that SQL appears to be Turing complete. As a consequence, there is no recent history for the language and thus it might seem that the SQL language is rising very fast. This is not the case.
+		  </p>
+		  
+		  <br><br>
+		  
+		  <img src = "${pageContext.request.contextPath}/resources/intro/backimage/augRating.png"
+		  style ="width: 100%; cursor: pointer; box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);" onclick="onClick(this);">
+		  
+		  <br><br><br>
+		  
+		  <p class ="w3-right tiobeNews">CopyRight : 
+		  <a href = "https://www.tiobe.com" target="_blank" class ="w3-hover-text-indigo">https://www.tiobe.com</a></p>
+	</div>
+
+	<div class ="w3-col m7">
+		<ul class="responsive-table">
+		    <li class="table-header w3-amber" style ="font-family: vitamin; font-size: 1.2em;">
+		      <div class="col col-1">AUG 2018</div>
+		      <div class="col col-1">AUG 2017</div>
+		      <div class="col col-1">change</div>
+		      <div class="col col-2">Language name</div>
+		      <div class="col col-3">Rating</div>
+		      <div class="col col-4">Change</div>
+		    </li>
+		    <li class="table-row">
+		      <div class="col col-1">1</div>
+		      <div class="col col-1">1</div>
+		      <div class="col col-1"></div>
+		      <div class="col col-2">Java</div>
+		      <div class="col col-3">16.881%</div>
+		      <div class="col col-4">+3.92%</div>
+		    </li>
+		    
+		    <li class="table-row">
+		      <div class="col col-1">2</div>
+		      <div class="col col-1">2</div>
+		      <div class="col col-1"></div>
+		      <div class="col col-2">C</div>
+		      <div class="col col-3">14.966%</div>
+		      <div class="col col-4">+8.49%</div>
+		    </li>
+		    
+		    <li class="table-row">
+		      <div class="col col-1">3</div>
+		      <div class="col col-1">3</div>
+		      <div class="col col-1"></div>
+		      <div class="col col-2">C++</div>
+		      <div class="col col-3">7.471%</div>
+		      <div class="col col-4">+1.92%</div>
+		    </li>
+		    
+		    <li class="table-row">
+		      <div class="col col-1">4</div>
+		      <div class="col col-1">5</div>
+		      <div class="col col-1"><i class="fa fa-angle-up"></i></div>
+		      <div class="col col-2">Python</div>
+		      <div class="col col-3">6.992%</div>
+		      <div class="col col-4">+3.30%</div>
+		    </li>
+		    
+		    <li class="table-row">
+		      <div class="col col-1">5</div>
+		      <div class="col col-1">6</div>
+		      <div class="col col-1"><i class="fa fa-angle-up"></i></div>
+		      <div class="col col-2">Visual Basic .NET</div>
+		      <div class="col col-3">4.762%</div>
+		      <div class="col col-4">+2.19%</div>
+		    </li>
+		    
+		    <li class="table-row">
+		      <div class="col col-1">6</div>
+		      <div class="col col-1">4</div>
+		      <div class="col col-1"><i class="fa fa-angle-down"></i></div>
+		      <div class="col col-2">C#</div>
+		      <div class="col col-3">3.541%</div>
+		      <div class="col col-4">-0.65%</div>
+		    </li>
+		    
+		    <li class="table-row">
+		      <div class="col col-1">7</div>
+		      <div class="col col-1">7</div>
+		      <div class="col col-1"></div>
+		      <div class="col col-2">PHP</div>
+		      <div class="col col-3">2.925%</div>
+		      <div class="col col-4">+0.63%</div>
+		    </li>
+		    
+		    <li class="table-row">
+		      <div class="col col-1">8</div>
+		      <div class="col col-1">8</div>
+		      <div class="col col-1"></div>
+		      <div class="col col-2">Java Script</div>
+		      <div class="col col-3">2.411%</div>
+		      <div class="col col-4">+0.31%</div>
+		    </li>
+		    
+		    <li class="table-row">
+		      <div class="col col-1">9</div>
+		      <div class="col col-1"></div>
+		      <div class="col col-1"><i class="fa fa-angle-double-up"></i></div>
+		      <div class="col col-2">SQL</div>
+		      <div class="col col-3">16.881%</div>
+		      <div class="col col-4">+3.92%</div>
+		    </li>
+		    
+		    <li class="table-row">
+		      <div class="col col-1">10</div>
+		      <div class="col col-1">14</div>
+		      <div class="col col-1"><i class="fa fa-angle-double-up"></i></div>
+		      <div class="col col-2">Assembly language</div>
+		      <div class="col col-3">1.409%</div>
+		      <div class="col col-4">-0.40%</div>
+		    </li>   
+		  </ul>
+	</div>
+</div>
+
+<!-- Line Under Moive  -->
+<div class ="w3-row" style ="padding-left: 15%; padding-right: 15%; height: 50px;">
 </div>
 
  <div id="modal01" class="w3-modal" onclick="this.style.display='none'">
@@ -149,7 +382,6 @@ function changeArticle(data){
 	        center:true,
 	    }); 
 }); 
-
 
 
 </script>

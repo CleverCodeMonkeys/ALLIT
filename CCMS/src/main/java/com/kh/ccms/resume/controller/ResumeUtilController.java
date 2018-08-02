@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.ccms.member.model.vo.Member;
+import com.kh.ccms.myPage.model.service.MyPageService;
+import com.kh.ccms.myPage.model.vo.Profile;
 import com.kh.ccms.resume.model.service.ResumeServiceImple;
 import com.kh.ccms.resume.model.util.SaveResumeFactory;
 import com.kh.ccms.resume.model.util.TempPictureMemorize;
@@ -25,6 +27,9 @@ import com.kh.ccms.resume.model.util.UpdateResumeFactory;
 public class ResumeUtilController 
 {
 	@Autowired ResumeServiceImple service;
+	
+	@Autowired
+	MyPageService myPageService;
 	
 	@RequestMapping(value="/resume/saveResume.resume", method=RequestMethod.POST)
 	public String saveResume(HttpServletRequest req, Model model ,
@@ -96,4 +101,28 @@ public class ResumeUtilController
 		 return map;
 	}
 	
+	// My Page call
+	@ResponseBody
+	@RequestMapping(value="/resume/callProfile.resume", method=RequestMethod.POST)
+	public Map<String,Object> gotoMyProfile(Model model,@SessionAttribute("m")Member m){
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		//Defend
+		if(m == null || m.equals("")){
+			map.put("result", "fail");
+			return map;
+		}
+		
+		Profile pro = myPageService.updateProfile(m.getId());		
+		
+		if(pro == null) map.put("result", "fail");
+		else map.put("result", "success");
+		
+		/*model.addAttribute("pro",pro);*/
+		map.put("pro", pro);
+		
+		return map;	
+	}
+
 }
