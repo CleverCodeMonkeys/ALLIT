@@ -35,7 +35,10 @@ function validate1(){
 
 function backList() 
 {
-	location.href = "${pageContext.request.contextPath}/community/community.comu";
+	var answer = confirm('목록으로 돌아가시겠습니까?');
+	if(answer){
+		location.href = "${pageContext.request.contextPath}/community/community.comu";		
+	}
 }
 
 $(document).ready(function() {
@@ -43,7 +46,8 @@ $(document).ready(function() {
             height: 300,                 // set editor height
             minHeight: null,             // set minimum height of editor
             maxHeight: null,             // set maximum height of editor
-            focus: true                  // set focus to editable area after initializing summernote
+            focus: true,                 // set focus to editable area after initializing summernote
+            lang : 'ko-KR'
     });
 });
 </script>
