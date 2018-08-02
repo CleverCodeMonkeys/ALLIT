@@ -61,7 +61,7 @@
 	
 	<div class ="w3-col m3 w3-center">
 		<label class="inp">
-	            <input type="number" placeholder="&nbsp;" name = "score" 
+	            <input type="number" placeholder="&nbsp;" name = "score" step="0.1"
 	            class="cInput" value ="${resume.degreeList[0].score}">
 	            <span class="label">학점</span>
 	            <span class="border"></span>
@@ -70,7 +70,7 @@
 	
 	<div class ="w3-col m3 w3-center">
 		<label class="inp">
-	            <input type="number" placeholder="&nbsp;" name = "totalScore" 
+	            <input type="number" placeholder="&nbsp;" name = "totalScore" step="0.1"
 	            class="cInput" value ="${resume.degreeList[0].totalScore}">
 	            <span class="label">총점</span>
 	            <span class="border"></span>

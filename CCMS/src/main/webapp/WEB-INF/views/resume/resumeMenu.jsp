@@ -327,4 +327,44 @@
     		}
     	}
        	
+       	$('#cbx').on('change', function(){
+       		
+       		/* 기본 정보 가져오기 */
+       		if($("#cbx").is(":checked")){
+       			if(confirm("기본정보를 불러오시겠습니까?")){
+       				$.ajax({
+       					url : "${pageContext.request.contextPath}/resume/callProfile.resume",
+       					type : "post",
+       					success: function(data){
+       						if(data.result == 'success'){
+           						var address = data.pro.address;
+           						var birth = data.pro.birth;
+           						var gender = data.pro.gender;
+           						var language = data.pro.language;
+           						var name = data.pro.name;
+           						var tel = data.pro.tel;
+           						var email = data.pro.email;
+           						
+           						$('#address').val(address);
+           						$('#birth').val(birth);
+           						$('#pEmail').val(email);
+								$('#tel').val(tel);
+								$('#name').val(name);
+								
+           						if(gender == 'M')
+           							$('#yes-button').attr('checked', true);
+           						else
+           							$('#no-button').attr('checked', true);
+           						   
+       						}else{
+       							alert('기본정보가 없습니다.');
+       						}
+       					}, error: function(data){
+       						console.log(data + "error");
+       					}
+       				});
+       			}
+            }
+       	});
+  
        </script>

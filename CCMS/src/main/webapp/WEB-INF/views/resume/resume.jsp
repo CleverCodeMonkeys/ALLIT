@@ -122,7 +122,7 @@ textarea:focus ~ .bar:before {
    <c:import url="/WEB-INF/views/common/header.jsp" charEncoding="UTF-8"/>
    <div class ="w3-light-gray" style ="height:100px;"></div>
       
-   <form action="${pageContext.request.contextPath}/resume/saveResume.resume" method="post" enctype="multipart/form-data">
+   <form action="${pageContext.request.contextPath}/resume/saveResume.resume" method="post" enctype="multipart/form-data" onsubmit="return validate();">
    
    <!-- Distinguish New or Modify Resume -->
    <input type="hidden" value="${resume.resume.id}" name ="modifyResume"/>
@@ -167,7 +167,7 @@ textarea:focus ~ .bar:before {
             </div>
                       
             <!-- 교육 뷰 -->
-            <div id= "eduForm"> 
+            <div id= "academyForm"> 
                <div class = "w3-indigo boxTitle w3-display-container">교육 <span class="w3-right w3-amber plusBtn w3-hover-deep-orange" onclick="plusForm(id);" id="rAcademy">+</span></div>
                <div class = "w3-container w3-white boxForm" id ="eduIndexZ1">
 	              	<c:import url="/WEB-INF/views/resume/edu.jsp" charEncoding="UTF-8"/>
@@ -428,6 +428,93 @@ textarea:focus ~ .bar:before {
     	 		$(this).val($(this).val().substring(0,textMax));
     	});
        
+       /* confirm submit */
+       function validate(){
+    	   var wow = true;
+    	   
+    	   if($('#birth').val().trim().length != 6) {
+    		   alert('유효하지 않은 주민번호입니다.');
+    		   wow = false;
+    	   }
+    	   
+    	   if($('#schoolName').val().trim().length > 20){
+    		   alert('고등학교 이름이 너무 깁니다.');
+    		   wow = false;
+    	   }
+    	 	
+    	  /* Degree  */
+    	  $('input[name=universityName]').each(function(){
+    		  if($(this).val().trim().length > 30) { wow = false; alert('대학명이 깁니다');}
+    	  });
+    	  
+    	  $('input[name=major]').each(function(){
+    		  if($(this).val().trim().length > 20){ wow = false; alert('전공명이 깁니다');}
+    	  });
+    	  
+    	  /* Academy */
+    	  $('input[name=educationTitle]').each(function(){
+    		  if($(this).val().trim().length > 50) { wow = false; alert('교육명이 깁니다');}
+    	  });
+    	  
+    	  $('input[name=academyName]').each(function(){
+    		  if($(this).val().trim().length > 30) { wow = false; alert('교육기관명이 깁니다');}
+    	  });
+    	  
+    	  $('input[name=content]').each(function(){
+    		  if($(this).val().trim().length > 500) { wow = false; alert('교육내용 500자 입니다');}
+    	  });
+    	  
+    	  /* Award */
+    	  $('input[name=awardTitle]').each(function(){
+    		  if($(this).val().trim().length > 30) { wow = false; alert('수상명이 깁니다');}
+    	  });
+    	  
+    	  $('input[name=awardOrgan]').each(function(){
+    		  if($(this).val().trim().length > 20) { wow = false; alert('수상기관명이 깁니다');}
+    	  });
+    	  
+    	  $('input[name=awardContent]').each(function(){
+    		  if($(this).val().trim().length > 500) { wow = false; alert('수상내용은 500자 이내입니다');}
+    	  });
+    	  
+    	  /* Certificate */
+    	  $('input[name=certName]').each(function(){
+    		  if($(this).val().trim().length > 20) { wow = false; alert('자격증명이 깁니다');}
+    	  });
+    	  
+    	  $('input[name=certFrom]').each(function(){
+    		  if($(this).val().trim().length > 20) { wow = false; alert('자격기관명이 깁니다');}
+    	  });
+    	  
+    	  /* Language */
+    	  $('input[name=langName]').each(function(){
+    		  if($(this).val().trim().length > 20) { wow = false; alert('외국어명이 깁니다');}
+    	  });
+    	  
+    	  $('input[name=testName]').each(function(){
+    		  if($(this).val().trim().length > 20) { wow = false; alert('공인시험명이 깁니다');}
+    	  });
+    	  
+    	  $('input[name=langScore]').each(function(){
+    		  if($(this).val().trim().length > 10) { wow = false; alert('급수명이 깁니다');}
+    	  });
+    	  
+    	  /* Portpolio */
+    	  $('input[name=url]').each(function(){
+    		  if($(this).val().trim().length > 200) { wow = false; alert('URL 깁니다');}
+    	  });
+    	  
+    	  /* Introduction */
+    	  $('input[name=introdTitle]').each(function(){
+    		  if($(this).val().trim().length > 100) { wow = false; alert('자기소개 제목 100자 이내입니다');}
+    	  });
+    	  
+    	  $('input[name=introdContent]').each(function(){
+    		  if($(this).val().trim().length > 4000) { wow = false; alert('자기소개 내용은 4000자 내외입니다');}
+    	  });
+    	  
+    	  return wow;
+       }
        
        
     </script>

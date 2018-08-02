@@ -63,7 +63,7 @@ public class DegreeBox
 	 private static final String DEGREE_SCORE =
 			 "<div class ='w3-col m3 w3-center'>" +
 			 "<label class='inp'>"+
-			 "<input type='number' placeholder='&nbsp;' name = 'score' class='cInput'>" + 
+			 "<input type='number' placeholder='&nbsp;' name = 'score' class='cInput' step='0.1'>" + 
 			 "<span class='label'>학점</span>" +
 			 "<span class='border'></span>" + 
 			 "</label>" +
@@ -72,7 +72,7 @@ public class DegreeBox
 	 private static final String DEGREE_TOTAL = 
 			 "<div class ='w3-col m3 w3-center'>" +
 			 "<label class='inp'>" +
-			 "<input type='number' placeholder='&nbsp;' name = 'totalScore' class='cInput'>" +
+			 "<input type='number' placeholder='&nbsp;' name = 'totalScore' class='cInput' step='0.1'>" +
 			 "<span class='label'>총점</span>"+
 			 "<span class='border'></span>" +
 			 "</label>" +

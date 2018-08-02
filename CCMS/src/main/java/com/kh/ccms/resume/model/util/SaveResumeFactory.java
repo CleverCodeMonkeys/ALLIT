@@ -77,6 +77,7 @@ public class SaveResumeFactory
 		String salaryString = req.getParameter(ScriptResumeValue.HOPE_SALARY);
 		int salary;
 		try{
+			salaryString = salaryString.replace("-", "");
 			salary = Integer.parseInt(salaryString);}catch(Exception e){
 			salary = 0;	
 		}
@@ -310,10 +311,10 @@ public class SaveResumeFactory
 				try{
 					dArray[i] = Double.parseDouble(array[i]);
 				}catch(Exception e){
-					dArray[i] = ERROR_EXCEPTION;
+					dArray[i] = 0;
 				}
 			}else{
-				dArray[i] = ERROR_EXCEPTION;
+				dArray[i] = 0;
 			}
 		}
 		return dArray;
