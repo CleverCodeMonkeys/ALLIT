@@ -56,17 +56,32 @@
 				</choose>
 			</when>
 			<otherwise>
-				<choose>
-					<when test="filterValue == 'dateSort'">
-						 WHERE R.BOARD_TITLE LIKE '%'||#{searchValue}||'%' ORDER BY R.WRITE_DATE DESC
-					</when>
-					<when test="filterValue == 'commentSort'">
-						WHERE R.BOARD_TITLE LIKE '%'||#{searchValue}||'%' ORDER BY COMMENT_COUNT DESC, R.WRITE_DATE DESC  
-					</when>
-					<otherwise> 
-						WHERE R.BOARD_TITLE LIKE '%'||#{searchValue}||'%' ORDER BY R.SEE DESC, R.WRITE_DATE DESC
-					 </otherwise>
-				</choose>
+				<if test="searchKinds == 'title'">	
+					<choose>
+						<when test="filterValue == 'dateSort'">
+							 WHERE R.BOARD_TITLE LIKE '%'||#{searchValue}||'%' ORDER BY R.WRITE_DATE DESC
+						</when>
+						<when test="filterValue == 'commentSort'">
+							WHERE R.BOARD_TITLE LIKE '%'||#{searchValue}||'%' ORDER BY COMMENT_COUNT DESC, R.WRITE_DATE DESC  
+						</when>
+						<otherwise> 
+							WHERE R.BOARD_TITLE LIKE '%'||#{searchValue}||'%' ORDER BY R.SEE DESC, R.WRITE_DATE DESC
+						 </otherwise>
+					</choose>
+				</if>
+				<if test="searchKinds == 'name'">
+					<choose>
+						<when test="filterValue == 'dateSort'">
+							 WHERE R.ID LIKE '%'||#{searchValue}||'%' ORDER BY R.WRITE_DATE DESC
+						</when>
+						<when test="filterValue == 'commentSort'">
+							WHERE R.ID LIKE '%'||#{searchValue}||'%' ORDER BY COMMENT_COUNT DESC, R.WRITE_DATE DESC  
+						</when>
+						<otherwise> 
+							WHERE R.ID LIKE '%'||#{searchValue}||'%' ORDER BY R.SEE DESC, R.WRITE_DATE DESC
+						 </otherwise>
+					</choose>
+				</if>
 			</otherwise>
 		</choose>
 	</select>

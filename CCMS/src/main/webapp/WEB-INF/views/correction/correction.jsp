@@ -109,16 +109,25 @@
 	                            <li class="filter-name">
 	                                <a onclick="reNew('seeSort')" id="seeSort" style="font-family: penB;" class="filter-list-link">조회순</a>
 	                            </li>
-                        </ul>
-                        <div class="category-filter-search pull-right" >   
+                        </ul>  
+                         <div class="category-filter-search pull-right" >                              	 	 
                             <div class="input-group input-group-sm">
-                                <input type="text" maxlength="30" name="search" id="search" class="form-control" onkeydown="JavaScript:enterCheck();" placeholder="검색어 30자 제한" value="${search}">
+                              	
+                                <input type="text" maxlength="30" width="200px" name="search" id="search" class="form-control pull-right" onkeydown="JavaScript:enterCheck();" placeholder="검색어 30자 제한" value="${search}">
                                 
                                 <span class="input-group-btn">
-                                    <button type="button" id="searchFiled" onclick="searchGo();" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                    <button type="button" id="searchFiled" onclick="searchGo();" class="btn btn-default pull-right"><i class="fa fa-search"></i></button>
                                 </span>
                             </div>
-                        </div>                
+                        </div> 
+                        <div class ="form-group pull-right"> 	
+                        	<div class="select-group select-group-sm">
+                            	<select id="searchKinds" class="form-control" style="height: 30px; font-size: 12px;">
+                                	<option value="title">제목</option>
+                                	<option value="name">이름</option>
+                            	</select>       
+                            </div>                     	
+                        </div>                    
                     </div>
                 </form>
             </div>
@@ -230,6 +239,9 @@
 
 	$(function(){
 		var sortOpt = '${sort}';
+		var kindsOpt = '${kinds}';
+		
+		//정렬
 		if(sortOpt == 'dateSort' || sortOpt == ""){
 			$('#dateSort').css("color", "#E31D2E");
 		} else if(sortOpt == 'commentSort'){
@@ -237,6 +249,10 @@
 		} else if(sortOpt == 'seeSort'){
 			$('#seeSort').css("color", "#E31D2E");
 		} 
+		
+		//검색 기준 
+		if(kindsOpt == 'name') $("select option[value='name']").attr("selected", true);
+		
 	});
 	
 	//제목누름 VIEW로
@@ -255,7 +271,8 @@
 	//글 검색 input enter체크
 	function enterCheck(){
 		if(event.keyCode == 13){
-			searchGo();			
+			searchGo();		
+			return false;
 		}
 		return false;
 	}
@@ -264,11 +281,11 @@
 	function searchGo(){
 		var value = $('#search').val();
 		var sortOpt = '${sort}';
+		var searchKinds = $('#searchKinds option:selected').val();
+		
 		
 		value = value.trim();
 		
-		console.log("현재 페이지 sort값:"+sortOpt);
-		console.log("현재 페이지 검색 값:"+value);
 		
 		if(value.length == 0 || value == null) {
 			alert("공백은 검색이 불가능합니다.");
@@ -283,12 +300,13 @@
 				type : "GET",
 				data : {
 					sort : sortOpt,
-					search : value
+					search : value,
+					kinds : searchKinds
 				},
 				
 				success : function(data){
 					alert("검색성공");
-					location.href = '${pageContext.request.contextPath}/correction/correction.correct?sort='+sortOpt+'&search='+value;
+					location.href = '${pageContext.request.contextPath}/correction/correction.correct?sort='+sortOpt+'&search='+value+'&serachKinds='+searchKinds;
 				},
 					error : function(){
 					alert("에러발생");
