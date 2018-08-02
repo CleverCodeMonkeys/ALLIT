@@ -1,6 +1,5 @@
 package com.kh.ccms.myPage.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -157,10 +156,11 @@ public class MyPageController {
 		String address = req.getParameter("address");
 
 		String userId = m.getId();
-		Profile pro = new Profile(null, m.getId(), name, age, email, gender, tel, address, null, null);
-
-		myPageService.saveProfile(profile, userId);
-
+    
+		Profile pro = new Profile(null,m.getId(),name, age, email, gender,tel,address, null, null);
+		
+		myPageService.saveProfile(profile,userId);
+		
 		req.setAttribute("pro", pro);
 
 		return "member/myProfileResult";
@@ -183,9 +183,9 @@ public class MyPageController {
 		pro.setMember_id(m.getId());
 
 		myPageService.updateProfileSave(pro);
-
-		model.addAttribute("pro", pro);
-
+    
+		model.addAttribute("pro",pro);
+		
 		return "member/myProfileResult";
 	}
 
@@ -201,10 +201,10 @@ public class MyPageController {
 	public String deleteMember(HttpServletRequest req, @SessionAttribute("m") Member m) {
 		String password = req.getParameter("password");
 
-		/* if(m.getPassword().equals(password)){ */
-		if (bcryptPasswordEncoder.matches(password, m.getPassword())) {
+		/*if(m.getPassword().equals(password)){*/
+		if(bcryptPasswordEncoder.matches(password, m.getPassword())){
 			myPageService.deleteMember(m.getId());
-
+		
 			return "redirect:/member/memberLogout.do";
 		} else {
 			return "common/error";
