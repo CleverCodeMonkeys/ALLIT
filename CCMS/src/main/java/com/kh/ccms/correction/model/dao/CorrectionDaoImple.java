@@ -68,4 +68,10 @@ public class CorrectionDaoImple implements CorrectionDao {
 		return sqlSession.update("correction.updateCorrection", correction);
 	}
 
+	@Override
+	public List<Map<String, String>> selectResume(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("correction.selectResume", id);
+	}
+
 }
