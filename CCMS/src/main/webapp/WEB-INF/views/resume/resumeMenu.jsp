@@ -92,7 +92,7 @@
 	        		<i class="fa fa-graduation-cap"></i> 학력
 	        		</span> 
         		<i class="fa fa-check w3-right" id ="degreeCheck"></i>
-        		<input type="hidden" name="hiddenDegree" id ="hiddenDegree" value="0" />
+        		<input type="hidden" name="hiddenDegree" id ="hiddenDegree" value="1" />
         		</div>
         		
         		<div class ="w3-panel w3-large" style ="cursor: pointer;" onclick="eduF();" id ="eduMenu">
@@ -100,7 +100,7 @@
         			<i class= "fa fa-book"></i> 교육
         			</span>
         			<i class="fa fa-check w3-right" id ="eduCheck"></i>
-        			<input type="hidden" name="hiddenEdu" id = "hiddenEdu" value="0" />
+        			<input type="hidden" name="hiddenEdu" id = "hiddenEdu" value="1" />
         		</div>
         		
         		<div class ="w3-panel w3-large" style ="cursor: pointer;" onclick="certF();" id ="certMenu">
@@ -108,7 +108,7 @@
         				<i class="fa fa-drivers-license-o"></i> 자격증
         			</span>
         			<i class="fa fa-check w3-right" id ="certCheck"></i>
-        			<input type="hidden" name="hiddenCert" id= "hiddenCert" value="0" />
+        			<input type="hidden" name="hiddenCert" id= "hiddenCert" value="1" />
         		</div>
         		
         		<div class ="w3-panel w3-large" style ="cursor: pointer;" onclick="awardF();" id ="awardMenu">
@@ -116,7 +116,7 @@
         				<i class="fa fa-diamond"></i> 수상
         			</span>
         			<i class="fa fa-check w3-right" id ="awardCheck"></i>
-        			<input type="hidden" name="hiddenAward" id= "hiddenAward" value="0" />
+        			<input type="hidden" name="hiddenAward" id= "hiddenAward" value="1" />
         		</div>
         		
         		<div class ="w3-panel w3-large" style ="cursor: pointer;" onclick="langF();" id ="langMenu">
@@ -124,7 +124,7 @@
         			<i class="fa fa-globe"></i> 어학
         			</span>
         			<i class="fa fa-check w3-right" id ="langCheck"></i>
-        			<input type="hidden" name="hiddenLang" id="hiddenLang" value="0" />
+        			<input type="hidden" name="hiddenLang" id="hiddenLang" value="1" />
         		</div>
         		
         		<div class ="w3-panel w3-large" style ="cursor: pointer;" onclick="portfF();" id ="portfMenu">
@@ -132,7 +132,7 @@
         			<i class= "fa fa-server"></i> 포트폴리오
         			</span>
         			<i class="fa fa-check w3-right" id ="portfCheck"></i>
-        			<input type="hidden" name="hiddenPort" id= "hiddenPort" value="0" />
+        			<input type="hidden" name="hiddenPort" id= "hiddenPort" value="1" />
         		</div>
         		
         		<div class ="w3-panel w3-large" style ="cursor: pointer;" onclick="introdF();" id ="introdMenu">
@@ -140,7 +140,7 @@
         			<i class="fa fa-newspaper-o"></i> 자기소개서
         			</span>
         			<i class="fa fa-check w3-right" id ="introdCheck" ></i>
-        			<input type="hidden" name="hiddenIntrod" id="hiddenIntrod" value="0" />
+        			<input type="hidden" name="hiddenIntrod" id="hiddenIntrod" value="1" />
         		</div>
         		<!-- If this New or Modify  -->
         		<c:set var ="rs" value="${resume}"/>
@@ -315,7 +315,7 @@
     		var decideFlag = flag ?  "block" : "none"; 
     		var decideColor = flag ? "black" : "black";
     		var hiddenValue = flag ? 1 : 0;
-    		
+    		console.log( name + ":  : " + hiddenValue + " : : " + flag);
     		switch(name){
     			case "degree" : $('#degreeCheck').css('display', decideFlag); $('#degreeMenu').css('color', decideColor); $('#hiddenDegree').val(hiddenValue); break;
     			case "edu" : $('#eduCheck').css('display', decideFlag); $('#eduMenu').css('color', decideColor);  $('#hiddenEdu').val(hiddenValue); break;

@@ -175,9 +175,9 @@ function openLogin(evt, member) {
 	  evt.currentTarget.classList.add("w3-cyan");
 	}
 
-	function openJoin(evt, cityName) {
+	function openJoin(evt, memberjoin) {
 		  var i, x, tablinks;
-		  x = document.getElementsByClassName("memberJoin");
+		  x = document.getElementsByClassName("memberjoin");
 		  for (i = 0; i < x.length; i++) {
 		    x[i].style.display = "none";
 		  }
@@ -185,7 +185,7 @@ function openLogin(evt, member) {
 		  for (i = 0; i < x.length; i++) {
 		    tablinks[i].classList.remove("w3-cyan");
 		  }
-		  document.getElementById(cityName).style.display = "block";
+		  document.getElementById(memberjoin).style.display = "block";
 		  evt.currentTarget.classList.add("w3-cyan");
 	}
 	

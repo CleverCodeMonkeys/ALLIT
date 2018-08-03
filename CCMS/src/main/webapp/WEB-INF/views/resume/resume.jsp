@@ -167,7 +167,7 @@ textarea:focus ~ .bar:before {
             </div>
                       
             <!-- 교육 뷰 -->
-            <div id= "academyForm"> 
+            <div id= "eduForm"> 
                <div class = "w3-indigo boxTitle w3-display-container">교육 <span class="w3-right w3-amber plusBtn w3-hover-deep-orange" onclick="plusForm(id);" id="rAcademy">+</span></div>
                <div class = "w3-container w3-white boxForm" id ="eduIndexZ1">
 	              	<c:import url="/WEB-INF/views/resume/edu.jsp" charEncoding="UTF-8"/>

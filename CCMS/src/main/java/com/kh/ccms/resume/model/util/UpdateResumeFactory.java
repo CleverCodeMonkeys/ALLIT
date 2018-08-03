@@ -43,13 +43,13 @@ public class UpdateResumeFactory
 	{
 		int result = 0;
 		
-		boolean degreeValue = req.getParameter("hiddenDegree") != CHECK_T? true : false;
-		boolean eduValue = req.getParameter("hiddenEdu") != CHECK_T ? true : false;
-		boolean certValue = req.getParameter("hiddenCert") != CHECK_T? true : false;
-		boolean awardValue = req.getParameter("hiddenAward") != CHECK_T ? true : false;
-		boolean langValue = req.getParameter("hiddenLang") != CHECK_T ? true : false;
-		boolean portValue = req.getParameter("hiddenPort") != CHECK_T ? true : false;
-		boolean introdValue = req.getParameter("hiddenIntrod") != CHECK_T ? true : false;
+		boolean degreeValue = req.getParameter("hiddenDegree").equals(CHECK_T) ? true : false;
+		boolean eduValue = req.getParameter("hiddenEdu").equals(CHECK_T) ? true : false;
+		boolean certValue = req.getParameter("hiddenCert").equals(CHECK_T)? true : false;
+		boolean awardValue = req.getParameter("hiddenAward").equals(CHECK_T) ? true : false;
+		boolean langValue = req.getParameter("hiddenLang").equals(CHECK_T) ? true : false;
+		boolean portValue = req.getParameter("hiddenPort").equals(CHECK_T) ? true : false;
+		boolean introdValue = req.getParameter("hiddenIntrod").equals(CHECK_T) ? true : false;
 		
 		//For Update
 		resumeComplete = new ResumeCompleteFactory().createResumeComple(resumeId, service);
@@ -64,12 +64,25 @@ public class UpdateResumeFactory
 		updateHopeCondition();
 		
 		if(degreeValue) updateDegree();
+		else deleteAllDegree();
+		
 		if(eduValue) updateEdu();
+		else deleteAllEdu();
+		
 		if(certValue) updateCert();
+		else deleteAllCertificate();
+		
 		if(awardValue) updateAward();
+		else deleteAllAward();
+		
 		if(langValue) updateLang();
+		else deleteAllLang();
+		
 		if(introdValue) updateIntroduction();
+		else deleteAllIntrod();
+		
 		if(portValue) updatePort();
+		else deleteAllPort();
 				
 		return result;
 	}
@@ -93,7 +106,8 @@ public class UpdateResumeFactory
 						port.setPortId(resumeComplete.getPortpolioList().get(i).getPortId());
 						UpdateOrDeletePortpolio(port);
 					}else{
-						service.insertItem(port, ScriptResumeValue.INSERT, ScriptResumeValue.PORTPOLIO);
+						if(canInsertPort(port))
+							service.insertItem(port, ScriptResumeValue.INSERT, ScriptResumeValue.PORTPOLIO);
 					}
 				}
 			}
@@ -114,11 +128,23 @@ public class UpdateResumeFactory
 		
 	}
 	
+	private void deleteAllPort(){
+		int beforePortSize = resumeComplete.getPortpolioList() == null ? 0 : resumeComplete.getPortpolioList().size();
+		for(int i = 0; i < beforePortSize; i++){
+			service.deleteItem(resumeComplete.getPortpolioList().get(i).getPortId(), 
+					ScriptResumeValue.DELETE, ScriptResumeValue.PORTPOLIO);
+		}
+	}
+	
 	private void UpdateOrDeletePortpolio(Portpolio port){
 		if(port.getUrl().trim().equals(""))
 			service.deleteItem(port.getPortId(), ScriptResumeValue.DELETE, ScriptResumeValue.PORTPOLIO);
 		else
 			service.updateItem(port, ScriptResumeValue.UPDATE, ScriptResumeValue.PORTPOLIO);
+	}
+	
+	private boolean canInsertPort(Portpolio port){		
+		return port.getUrl().trim().equals("") ? false : true;
 	}
 
 	private void updateIntroduction() throws Exception
@@ -143,7 +169,7 @@ public class UpdateResumeFactory
 					if(i < beforeIntrodSize){
 						introd.setIntroId(resumeComplete.getIntroductionList().get(i).getIntroId());
 						updateOrDeleteIntroduction(introd);
-					}else service.insertItem(introd, ScriptResumeValue.INSERT, ScriptResumeValue.INTRODUCTION);
+					}else if(canInsertIntroduction(introd)) service.insertItem(introd, ScriptResumeValue.INSERT, ScriptResumeValue.INTRODUCTION);
 				}
 				
 			}
@@ -161,11 +187,22 @@ public class UpdateResumeFactory
 		}
 	}
 	
+	private void deleteAllIntrod(){
+		int beforeIntrodSize = resumeComplete.getIntroductionList() == null ? 0 : resumeComplete.getIntroductionList().size();
+		for(int i = 0; i < beforeIntrodSize; i++)
+			service.deleteItem(resumeComplete.getIntroductionList().get(i).getIntroId(), 
+					ScriptResumeValue.DELETE, ScriptResumeValue.INTRODUCTION);
+	}
+	
 	private void updateOrDeleteIntroduction(Introduction introd){
-		if(!introd.getTitle().trim().equals("") || !introd.getContent().trim().equals(""))
+		if(!(introd.getTitle().trim().equals("") && introd.getContent().trim().equals("")))
 			service.updateItem(introd, ScriptResumeValue.UPDATE, ScriptResumeValue.INTRODUCTION);
 		else 
 			service.deleteItem(introd.getIntroId(), ScriptResumeValue.DELETE, ScriptResumeValue.INTRODUCTION);
+	}
+	
+	private boolean canInsertIntroduction(Introduction introd){
+		return !(introd.getTitle().trim().equals("") && introd.getContent().trim().equals("")) ? true : false;
 	}
 
 	private void updateLang() throws Exception
@@ -200,7 +237,7 @@ public class UpdateResumeFactory
 					if(i < beforeLangSize){
 						lang.setLangId(resumeComplete.getCertiLanguageList().get(i).getLangId());
 						updateOrDeleteLanguage(lang);
-					}else service.insertItem(lang, ScriptResumeValue.INSERT, ScriptResumeValue.LANG);
+					}else if(canInsertLang(lang)) service.insertItem(lang, ScriptResumeValue.INSERT, ScriptResumeValue.LANG);
 				}
 				
 			}
@@ -221,11 +258,24 @@ public class UpdateResumeFactory
 		}
 	}
 	
+	private void deleteAllLang(){
+		int beforeLangSize = resumeComplete.getCertiLanguageList() == null ? 0 : resumeComplete.getCertiLanguageList().size();
+		for(int i = 0; i < beforeLangSize; i++){
+			service.deleteItem(resumeComplete.getCertiLanguageList().get(i).getLangId(), 
+					ScriptResumeValue.DELETE, ScriptResumeValue.LANG);
+		}
+	}
+	
 	private void updateOrDeleteLanguage(CertificateLanguage lang){
 		if(!(lang.getLanguageName().trim().equals("") && lang.getTestName().trim().equals("") &&
 				lang.getGetDate() == null && lang.getScore().trim().equals("")))
 		service.updateItem(lang, ScriptResumeValue.UPDATE, ScriptResumeValue.LANG);
 		else service.deleteItem(lang.getLangId(), ScriptResumeValue.DELETE, ScriptResumeValue.LANG);
+	}
+	
+	private boolean canInsertLang(CertificateLanguage lang){
+		return !(lang.getLanguageName().trim().equals("") && lang.getTestName().trim().equals("") &&
+				lang.getGetDate() == null && lang.getScore().trim().equals("")) ? true : false;
 	}
 
 	private void updateAward() throws Exception
@@ -259,7 +309,7 @@ public class UpdateResumeFactory
 					if(i < beforeAwardSize){
 						award.setAwardId(resumeComplete.getAwardList().get(i).getAwardId());
 						updateOrDeleteAward(award);
-					}else service.insertItem(award, ScriptResumeValue.INSERT, ScriptResumeValue.AWARD);
+					}else if(canInsertAward(award)) service.insertItem(award, ScriptResumeValue.INSERT, ScriptResumeValue.AWARD);
 				}
 			}
 			
@@ -277,11 +327,24 @@ public class UpdateResumeFactory
 		}
 	}
 	
+	private void deleteAllAward(){
+		int beforeAwardSize = resumeComplete.getAwardList() == null ? 0 : resumeComplete.getAwardList().size();
+		for(int i = 0; i < beforeAwardSize; i++){
+			service.deleteItem(resumeComplete.getAwardList().get(i).getAwardId(),
+					ScriptResumeValue.DELETE, ScriptResumeValue.AWARD);
+		}
+	}
+	
 	private void updateOrDeleteAward(Award award){
 		if(!(award.getAwardContent().trim().equals("") && award.getAwardOrganization().trim().equals("") &&
 				award.getAwardDate() == null && award.getAwardTitle().trim().equals("")))
 			service.updateItem(award, ScriptResumeValue.UPDATE, ScriptResumeValue.AWARD);
 		else service.deleteItem(award.getAwardId(), ScriptResumeValue.DELETE, ScriptResumeValue.AWARD);
+	}
+	
+	private boolean canInsertAward(Award award){
+		return !(award.getAwardContent().trim().equals("") && award.getAwardOrganization().trim().equals("") &&
+				award.getAwardDate() == null && award.getAwardTitle().trim().equals("")) ? true : false;
 	}
 
 	private void updateCert() throws Exception{
@@ -313,7 +376,7 @@ public class UpdateResumeFactory
 					if(i < beforeCertSize){
 						cert.setCertificateId(resumeComplete.getCertificateList().get(i).getCertificateId());
 						updateOrDeleteCertificate(cert);
-					}else service.insertItem(cert, ScriptResumeValue.INSERT, ScriptResumeValue.CERTIFICATE);					
+					}else if(canInsertCertificate(cert)) service.insertItem(cert, ScriptResumeValue.INSERT, ScriptResumeValue.CERTIFICATE);					
 				}				
 			}
 			
@@ -333,11 +396,24 @@ public class UpdateResumeFactory
 		}
 	}
 	
+	private void deleteAllCertificate(){
+		int beforeCertSize = resumeComplete.getCertificateList() == null ? 0 : resumeComplete.getCertificateList().size();
+		for(int i = 0 ; i < beforeCertSize; i ++){
+			service.deleteItem(resumeComplete.getCertificateList().get(i).getCertificateId(), 
+					ScriptResumeValue.DELETE, ScriptResumeValue.CERTIFICATE);
+		}
+	}
+	
 	private void updateOrDeleteCertificate(Certificate cert){
 		if(!(cert.getCertificateDate() == null && cert.getCertificateFrom().trim().equals("") 
 				&& cert.getCertificateName().trim().equals("")))
 			service.updateItem(cert, ScriptResumeValue.UPDATE, ScriptResumeValue.CERTIFICATE);
 		else service.deleteItem(cert.getCertificateId(), ScriptResumeValue.DELETE, ScriptResumeValue.CERTIFICATE);
+	}
+	
+	private boolean canInsertCertificate(Certificate cert){
+		return !(cert.getCertificateDate() == null && cert.getCertificateFrom().trim().equals("") 
+				&& cert.getCertificateName().trim().equals("")) ? true : false;
 	}
 
 	private void updateEdu() throws Exception 
@@ -377,7 +453,7 @@ public class UpdateResumeFactory
 					if(i < beforeEduSize){
 						academy.setAcademyId(resumeComplete.getAcademyList().get(i).getAcademyId());
 						updateOrDeleteEdu(academy);
-					}else service.insertItem(academy, ScriptResumeValue.INSERT, ScriptResumeValue.ACADEMY);
+					}else if(canInsertEdu(academy)) service.insertItem(academy, ScriptResumeValue.INSERT, ScriptResumeValue.ACADEMY);
 					
 				}							
 			}
@@ -398,6 +474,14 @@ public class UpdateResumeFactory
 			}
 		}
 	}
+	
+	private void deleteAllEdu(){
+		int beforeEduSize = resumeComplete.getAcademyList() == null ? 0 : resumeComplete.getAcademyList().size();
+		for(int i = 0; i < beforeEduSize; i++){
+			service.deleteItem(resumeComplete.getAcademyList().get(i).getAcademyId(), 
+					ScriptResumeValue.DELETE, ScriptResumeValue.ACADEMY);
+		}
+	}
 
 	private void updateOrDeleteEdu(Academy academy){
 		if(!(academy.getContent().trim().equals("") && academy.getAcademyName().equals("") &&
@@ -405,6 +489,12 @@ public class UpdateResumeFactory
 				academy.getEndDate() == null))
 			service.updateItem(academy, ScriptResumeValue.UPDATE, ScriptResumeValue.ACADEMY);
 		else service.deleteItem(academy.getAcademyId(), ScriptResumeValue.DELETE, ScriptResumeValue.ACADEMY);
+	}
+	
+	private boolean canInsertEdu(Academy academy){
+		return !(academy.getContent().trim().equals("") && academy.getAcademyName().equals("") &&
+				academy.getEducationTitle().equals("") && academy.getStartDate() == null && 
+				academy.getEndDate() == null) ? true : false;
 	}
 	
 	private double[] makeDoubleArray(String[] array){
@@ -472,7 +562,7 @@ public class UpdateResumeFactory
 							if (i < beforeDegreeSize){ 
 								degree.setDegreeId(resumeComplete.getDegreeList().get(i).getDegreeId());
 								updateOrDeleteDegree(degree);}
-							else service.insertItem(degree, ScriptResumeValue.INSERT, ScriptResumeValue.DEGREE);						
+							else if(canInsertDegree(degree)) service.insertItem(degree, ScriptResumeValue.INSERT, ScriptResumeValue.DEGREE);						
 						}
 					}
 					
@@ -491,12 +581,25 @@ public class UpdateResumeFactory
 				}			
 	}
 	
+	private void deleteAllDegree(){
+		int beforeDegreeSize = resumeComplete.getDegreeList() == null ? 0 : resumeComplete.getDegreeList().size();
+		for(int i = 0 ; i < beforeDegreeSize; i++)
+			service.deleteItem(resumeComplete.getDegreeList().get(i).getDegreeId(), 
+					ScriptResumeValue.DELETE, ScriptResumeValue.DEGREE);	
+	}
+	
 	private void updateOrDeleteDegree(Degree degree){
 		if(!(degree.getSchoolName().trim().equals("") && degree.getMajor().trim().equals("") && degree.getSchoolType().trim().equals("") &&
-				degree.getEnrollDate() == null || degree.getGraduDate() == null || degree.getScore() == -1 ||
-				degree.getTotalScore() == -1))
+				degree.getEnrollDate() == null && degree.getGraduDate() == null && degree.getScore() == 0 &&
+				degree.getTotalScore() == 0))
 			service.updateItem(degree, ScriptResumeValue.UPDATE, ScriptResumeValue.DEGREE);
 		else service.deleteItem(degree.getDegreeId(), ScriptResumeValue.DELETE, ScriptResumeValue.DEGREE);	
+	}
+	
+	private boolean canInsertDegree(Degree degree){
+		return !(degree.getSchoolName().trim().equals("") && degree.getMajor().trim().equals("") && degree.getSchoolType().trim().equals("") &&
+				degree.getEnrollDate() == null && degree.getGraduDate() == null && degree.getScore() == 0 &&
+				degree.getTotalScore() == 0) ? true : false;
 	}
 
 	private void updateHighSchool() {
