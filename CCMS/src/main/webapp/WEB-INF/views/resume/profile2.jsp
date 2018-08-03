@@ -159,7 +159,7 @@
 	        <label class="inp">
 	                <input type="text" id="birth" placeholder="&nbsp;" name = "birth" class="cInput" 
 	                required="required" value ="${resume.resume.birthday}">
-	                <span class="label">생년월일</span>
+	                <span class="label">생년월일[주민번호앞자리]</span>
 	                <span class="border"></span>
 	        </label>
 	    </div>
