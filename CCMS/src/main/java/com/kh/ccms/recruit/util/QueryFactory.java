@@ -143,10 +143,10 @@ public class QueryFactory {
 					
 					switch(edu.get(i)) {
 					
-					case EDU1 : query = "LAST_EDU = '대학교(4년)'"; break;
-					case EDU2 : query = "LAST_EDU = '대학교(2,3년)'"; break;
-					case EDU3 : query = "LAST_EDU = '대학원'"; break;
-					case EDU4 : query = "LAST_EDU = '고등학교'"; break;
+					case EDU1 : query = "LAST_EDU = '"+EDU1+"'"; break;
+					case EDU2 : query = "LAST_EDU = '"+EDU2+"'"; break;
+					case EDU3 : query = "LAST_EDU = '"+EDU3+"'"; break;
+					case EDU4 : query = "LAST_EDU = '"+EDU4+"'"; break;
 					
 					}
 					
@@ -154,10 +154,10 @@ public class QueryFactory {
 					
 					switch(edu.get(i)) {
 					
-					case EDU1 : query += " OR LAST_EDU = '대학교(4년)'"; break;
-					case EDU2 : query += " OR LAST_EDU = '대학교(2,3년)'"; break;
-					case EDU3 : query += " OR LAST_EDU = '대학원'"; break;
-					case EDU4 : query += " OR LAST_EDU = '고등학교'"; break;
+					case EDU1 : query += " OR LAST_EDU = '"+EDU1+"'"; break;
+					case EDU2 : query += " OR LAST_EDU = '"+EDU2+"'"; break;
+					case EDU3 : query += " OR LAST_EDU = '"+EDU3+"'"; break;
+					case EDU4 : query += " OR LAST_EDU = '"+EDU4+"'"; break;
 					
 					}
 					
