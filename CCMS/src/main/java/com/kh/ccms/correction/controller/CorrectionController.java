@@ -213,7 +213,7 @@ public class CorrectionController
 		{
 			System.out.println("이미지가 들어옵니다");
 			System.out.println("userId값"+userId);
-			String saveDir = req.getSession().getServletContext().getRealPath("/resources/upload/correctionUpload")+"/"+userId;
+			String saveDir = req.getSession().getServletContext().getRealPath("/resources/upload/correctionUpload/temp/")+userId;
 			
 			File dir = new File(saveDir);
 			
@@ -242,7 +242,7 @@ public class CorrectionController
 			}
 		
 			
-			return getBaseUrl(req) + "/resources/upload/correctionUpload/"+userId+"/"+ saveName;
+			return getBaseUrl(req) + "/resources/upload/correctionUpload/temp/"+userId+"/"+ saveName;
 			
 		}
 		

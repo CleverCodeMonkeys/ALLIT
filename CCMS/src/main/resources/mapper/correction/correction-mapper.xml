@@ -59,26 +59,26 @@
 				<if test="searchKinds == 'title'">	
 					<choose>
 						<when test="filterValue == 'dateSort'">
-							 WHERE R.BOARD_TITLE LIKE '%'||#{searchValue}||'%' ORDER BY R.WRITE_DATE DESC
+							 WHERE UPPER(R.BOARD_TITLE) LIKE UPPER('%'||#{searchValue}||'%') ORDER BY R.WRITE_DATE DESC
 						</when>
 						<when test="filterValue == 'commentSort'">
-							WHERE R.BOARD_TITLE LIKE '%'||#{searchValue}||'%' ORDER BY COMMENT_COUNT DESC, R.WRITE_DATE DESC  
+							WHERE UPPER(R.BOARD_TITLE) LIKE UPPER('%'||#{searchValue}||'%') ORDER BY COMMENT_COUNT DESC, R.WRITE_DATE DESC  
 						</when>
 						<otherwise> 
-							WHERE R.BOARD_TITLE LIKE '%'||#{searchValue}||'%' ORDER BY R.SEE DESC, R.WRITE_DATE DESC
+							WHERE UPPER(R.BOARD_TITLE) LIKE UPPER('%'||#{searchValue}||'%') ORDER BY R.SEE DESC, R.WRITE_DATE DESC
 						 </otherwise>
 					</choose>
 				</if>
 				<if test="searchKinds == 'name'">
 					<choose>
 						<when test="filterValue == 'dateSort'">
-							 WHERE R.ID LIKE '%'||#{searchValue}||'%' ORDER BY R.WRITE_DATE DESC
+							 WHERE UPPER(R.BOARD_TITLE) LIKE UPPER('%'||#{searchValue}||'%') ORDER BY R.WRITE_DATE DESC
 						</when>
 						<when test="filterValue == 'commentSort'">
-							WHERE R.ID LIKE '%'||#{searchValue}||'%' ORDER BY COMMENT_COUNT DESC, R.WRITE_DATE DESC  
+							WHERE UPPER(R.BOARD_TITLE) LIKE UPPER('%'||#{searchValue}||'%') ORDER BY COMMENT_COUNT DESC, R.WRITE_DATE DESC  
 						</when>
 						<otherwise> 
-							WHERE R.ID LIKE '%'||#{searchValue}||'%' ORDER BY R.SEE DESC, R.WRITE_DATE DESC
+							WHERE UPPER(R.BOARD_TITLE) LIKE UPPER('%'||#{searchValue}||'%') ORDER BY R.SEE DESC, R.WRITE_DATE DESC
 						 </otherwise>
 					</choose>
 				</if>
@@ -93,7 +93,7 @@
 			SELECT COUNT(*) FROM RESUME_CORRECT_BOARD
 			</when>
 			<otherwise>
-			SELECT COUNT(*) FROM RESUME_CORRECT_BOARD WHERE BOARD_TITLE LIKE '%'||#{searchValue}||'%' 
+			SELECT COUNT(*) FROM RESUME_CORRECT_BOARD WHERE UPPER(BOARD_TITLE) LIKE UPPER('%'||#{searchValue}||'%') 
 			</otherwise>		
 		</choose>
 	</select>
