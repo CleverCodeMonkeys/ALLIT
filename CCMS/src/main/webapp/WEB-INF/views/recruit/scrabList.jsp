@@ -103,7 +103,7 @@
             </div>
         </div>
 
-        <a href="#top"><img class="top_arrow" src="${pageContext.request.contextPath}/resources/common/image/up-arrow.png"></a>
+        <a class="top_arrow" href="#"><img src="${pageContext.request.contextPath}/resources/common/image/up-arrow.png"></a>
 
     </div>
 
@@ -231,6 +231,13 @@
 			});
 			
 		}
+		
+		$('.top_arrow').on('click', function() {
+			
+			$( 'html, body' ).animate( { scrollTop : 0 }, 200 );
+			return false;
+			
+		});
 		
 	</script>
 

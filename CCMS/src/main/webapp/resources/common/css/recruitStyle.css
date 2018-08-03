@@ -96,8 +96,9 @@ li {
     padding: 8px 20px;
 }
 .filter_content ul li:hover {
-    color: royalblue;
-    font-weight: bold;
+    /* color: royalblue; */
+    /* font-weight: bold; */
+    background: #eee;
 }
 .filter_content ul li:hover {
     cursor: pointer;

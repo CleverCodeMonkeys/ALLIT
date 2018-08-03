@@ -179,7 +179,7 @@
                                     </select>
                                 </div>
                                 <div class="w3-col m7">
-                                    <input class="w3-input w3-border" type="text" placeholder="결과 내 재검색" id="searchInput">
+                                    <input class="w3-input w3-border" type="text" placeholder="필터 결과 내 재검색" id="searchInput">
                                 </div>
                                 <div class="w3-col m2">
                                     <button class="w3-button w3-black" id="searchBtn">검색</button>
@@ -252,7 +252,7 @@
             </div>
         </div>
 
-        <a href="#top"><img class="top_arrow" src="${pageContext.request.contextPath}/resources/common/image/up-arrow.png"></a>
+        <a class="top_arrow" href="#"><img src="${pageContext.request.contextPath}/resources/common/image/up-arrow.png"></a>
 
     </div>
 
@@ -300,6 +300,8 @@
     		
     		gotoResumeView();
     		
+    		// gotoTop();
+    		
     		/*[END] Get Script Value */
 
     		
@@ -325,9 +327,14 @@
     	
     	// 필터에서 클릭한 노드와 같은 내용을 갖는 노드가 조건에 존재하는지 체크
     	function dupChk(content) {
-
-    		if($('.condition:contains(' + content + ')').length) return false;
-    		else return true;
+			
+    		var dChk = true;
+    		
+    		$('.conditionText').each(function() {
+				if($(this).text() == content)
+					dChk = false;		
+			});
+    		return dChk;
     		
 		}
 	
@@ -347,21 +354,32 @@
         	case 'loc' : filterName = '희망근무지역'; if(maxChk(className) > 4) maxCheck = false; break;
         	case 'edu' : filterName = '학력'; if(maxChk(className) > 4) maxCheck = false; break;
         	case 'language' : filterName = '언어'; if(maxChk(className) > 4) maxCheck = false; break;
-        	case 'salary' : filterName = '희망연봉'; if(maxChk(className) > 0) maxCheck = false; break;
-        	case 'age' : filterName = '나이'; if(maxChk(className) > 0) maxCheck = false; break;
+        	case 'salary' : filterName = '희망연봉'; if(maxChk(className) > 0) break;
+        	case 'age' : filterName = '나이'; if(maxChk(className) > 0) break;
         	case 'gender' : filterName = '성별'; break;
         	
         	}
         	
         	if(!dupCheck) {
         		
-        		$('.condition:contains(' + content + ')').remove();
+        		$('.conditionText').each(function() {
+					if($(this).text() == content)
+						$(this).parent().remove();
+				});
+        		
         		$(this).removeClass('selectedItem');
         		reloadList();
         		
         	} else if(!maxCheck) {
         		alert(filterName + '은(는) 최대 '+ maxChk(className) + '개까지 선택이 가능합니다.');
         	} else {
+        		
+        		if(className == 'salary' || className == 'age') {
+        			
+        			$(this).siblings('li').removeClass('selectedItem');
+        			$('.filter_condition').children('.'+className).remove();
+        			
+        		}
         		
         		$(this).addClass('selectedItem');
         		
@@ -440,10 +458,6 @@
         			$('#totalCount').text(data.totalContents);
 					
         			$('#list_tbody').html('');
-        			
-        			console.log(data.list);
-        			console.log(data.numPerPage);
-        			console.log(data.totalContents);
         			
         			for(var idx in data.list) {
 							
@@ -530,7 +544,7 @@
 				$(this).remove();
 				
 				$('.filter_content div ul li').each(function() {
-					console.log(text);
+
 					if($(this).text() == text) {
 						
 						$(this).removeClass('selectedItem');
@@ -572,7 +586,7 @@
 	            			success : function(data) {
 								
 	            				result = data.result;
-	            				console.log("rkwmdk : " + result);
+
 	            				if(data.result == -1) {
 	            					alert('자신의 글은 스크랩할 수 없습니다.');
 	            				} else if(data.result == 0) {
@@ -669,32 +683,7 @@
         
         $('#searchBtn').on('click', function() {
         	
-        	if($('#searchSelect option:selected').val() == 'title') {
-        		searchSelect = 'title';
-        	}
-        	else if($('#searchSelect option:selected').val() == 'name') {
-        		searchSelect = 'name';
-        		
-        	}
-        	
-        	searchInput = $('#searchInput').val();
-        	
-        	console.log('searchSelect : ' + searchSelect);
-        	console.log('searchInput : ' + searchInput);
-        	
-        	cPage = '1';
-        	
-        	location.href='filterRecruitListPage.rc?cPage=1'
-				+'&job='+job
-				+'&language='+language
-				+'&salary='+salary
-				+'&loc='+loc
-				+'&edu='+edu
-				+'&age='+age
-				+'&gender='+gender
-				+'&order='+order
-				+'&searchSelect='+searchSelect
-				+'&searchInput='+searchInput;
+        	searchFn();
         	
 		});
         
@@ -820,6 +809,46 @@
 			
 		}
 		
+		$('.top_arrow').on('click', function() {
+			
+			$( 'html, body' ).animate( { scrollTop : 0 }, 200 );
+			return false;
+			
+		});
+		
+		$("#searchInput").keyup(function(e) {
+			
+			if(e.keyCode == 13)  searchFn(); 
+			
+		});
+		
+		function searchFn() {
+			
+			if($('#searchSelect option:selected').val() == 'title') {
+        		searchSelect = 'title';
+        	}
+        	else if($('#searchSelect option:selected').val() == 'name') {
+        		searchSelect = 'name';
+        	}
+        	
+        	searchInput = $('#searchInput').val();
+        	
+        	cPage = '1';
+        	
+        	location.href='filterRecruitListPage.rc?cPage=1'
+				+'&job='+job
+				+'&language='+language
+				+'&salary='+salary
+				+'&loc='+loc
+				+'&edu='+edu
+				+'&age='+age
+				+'&gender='+gender
+				+'&order='+order
+				+'&searchSelect='+searchSelect
+				+'&searchInput='+searchInput;
+			
+		}
+			
 	</script>
 
 	<c:import url="/WEB-INF/views/common/footer.jsp" charEncoding="UTF-8"/>
