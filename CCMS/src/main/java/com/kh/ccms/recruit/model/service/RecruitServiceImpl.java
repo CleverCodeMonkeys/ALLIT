@@ -75,7 +75,16 @@ public class RecruitServiceImpl implements RecruitService {
 
 	@Override
 	public int insertScrab(Scrab scrab) {
-		return recruitDao.insertScrab(scrab);
+		
+		String writer = recruitDao.selectResumeWriter(scrab.getrId());
+		
+		int result = 0;
+		
+		if(writer.equals(scrab.getId())) result = -1;
+		else result = recruitDao.insertScrab(scrab);
+		
+		return result;
+		
 	}
 
 	@Override

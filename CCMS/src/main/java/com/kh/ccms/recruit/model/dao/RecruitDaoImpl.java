@@ -82,5 +82,10 @@ public class RecruitDaoImpl implements RecruitDao {
 	public int selectScrabTotalContents(String id) {
 		return sqlSession.selectOne("recruit.selectScrabTotalContents", id);
 	}
+
+	@Override
+	public String selectResumeWriter(int rId) {
+		return sqlSession.selectOne("recruit.selectResumeWriter", rId);
+	}
 	
 }
