@@ -255,11 +255,6 @@ public class CorrectionController
 			List<Map<String, String>> resumeList = correctionService.selectResume(id);
 			
 			
-			
-			for(int i = 0 ; i<resumeList.size(); i++){
-				System.out.println("안녕하세요.");
-			}
-			
 			return resumeList;	
 
 		}

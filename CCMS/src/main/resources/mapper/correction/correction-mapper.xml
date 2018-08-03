@@ -32,6 +32,11 @@
 		<result column="WRITER_DATE" property="commentDate"/>
 	</resultMap>
 	
+	<resultMap id="resumeHashMap" type="java.util.HashMap">
+		<result property="resumeTitle" column="INTRO_TITLE"/>
+		<result property="resumeContent" column="INTRO_CONTENT"/>
+	</resultMap>
+	
 	<select id="selectCorrectionList"  parameterType="correctionSearchFilter" resultMap="correctionHashMap">
 			 SELECT R.BOARD_ID, R.BOARD_TITLE, R.BOARD_CONTENT, R.RESUME_ID,  R.WRITE_DATE, R.SEE, R.ID,
 					(SELECT count(*) FROM RESUME_CORRECT_COMMENT C WHERE R.BOARD_ID = C.BOARD_ID) AS COMMENT_COUNT 
@@ -114,6 +119,9 @@
 		DELETE RESUME_CORRECT_BOARD WHERE BOARD_ID = #{correctionId} AND ID = #{correctionUserId}
 	</delete>
 	
+	<!-- 이력서 불러오기 -->
+	<select id="selectResume" resultMap="resumeHashMap" parameterType="string"> SELECT I.INTRO_TITLE, I.INTRO_CONTENT FROM RESUME R JOIN INTRODUCTION I USING(ID) WHERE R.MEMBER_ID = #{id} 
+	</select>
 	
 	<!-- 댓글 불러오기  -->
 	<select id="selectCorrectionComment" parameterType="_int" resultMap="correctionCommentMap">
