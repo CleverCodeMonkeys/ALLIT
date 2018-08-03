@@ -106,7 +106,7 @@ th{
             </div>
         </div>
     
- 
+ 		<c:if test="${fn:length(resume.degreeList) > 0}">
         <div class="w3-container w3-card w3-white w3-margin-bottom">
             <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-red"></i>대학교</h2>
             <hr style="border-color:tomato;">
@@ -135,8 +135,9 @@ th{
                 </table>
             </div>
         </div>
-
+		</c:if>
       	
+      	<c:if test="${fn:length(resume.academyList) > 0}">
         <div class="w3-container w3-card w3-white w3-margin-bottom">
             <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-orange"></i>교육</h2>
             <hr style="border-color:orange;">
@@ -168,7 +169,9 @@ th{
                 </table>
             </div>
         </div>
-
+		</c:if>
+		
+		<c:if test="${fn:length(resume.certificateList) > 0}">
         <div class="w3-container w3-card w3-white w3-margin-bottom">
             <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-yellow"></i>자격증</h2>
             <hr style="border-color:yellow">
@@ -190,7 +193,9 @@ th{
                 </table>
             </div>
         </div>
+        </c:if>
 
+		<c:if test="${fn:length(resume.awardList) > 0}">
         <div class="w3-container w3-card w3-white w3-margin-bottom">
             <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-green"></i>수상</h2>
             <hr style="border-color:green">
@@ -220,7 +225,9 @@ th{
                 </table>
             </div>
         </div>
+        </c:if>
 
+		<c:if test="${fn:length(resume.certiLanguageList) > 0}">
         <div class="w3-container w3-card w3-white w3-margin-bottom">
             <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-blue"></i>어학</h2>
             <hr style="border-color:blue">
@@ -243,7 +250,9 @@ th{
                 </table>
             </div>
         </div>
+        </c:if>
 
+		<c:if test="${fn:length(resume.portpolioList) > 0}">
         <div class="w3-container w3-card w3-white w3-margin-bottom">
             <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-indigo"></i>포트폴리오</h2>
             <hr style="border-color:indigo">
@@ -260,7 +269,9 @@ th{
                 </table>
             </div>
         </div>
+        </c:if>
 
+		<c:if test="${fn:length(resume.introductionList) > 0}">
         <div class="w3-container w3-card w3-white w3-margin-bottom">
             <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-purple"></i>자기소개서</h2>
             <hr style="border-color:purple">
@@ -277,7 +288,7 @@ th{
                 </table>
             </div>
         </div>
-
+		</c:if>
     <!-- End Right Column -->
     </div>
     
