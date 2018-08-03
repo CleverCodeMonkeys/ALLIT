@@ -21,8 +21,8 @@
 </head>
 <style>
     .layout-container{
-        margin-left: 25%;
-        margin-right: 25%;
+        margin-left: 15%;
+        margin-right: 15%;
     }
     .filter-name{
         list-style: none;
@@ -81,19 +81,48 @@
     .category-filter-search{
         width: 50%;
     }
+    
+    
+/* Create a Parallax Effect
+.bgimg-1{
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+   background-size: cover;
+   margin-top: 8%;
+}
+
+ First image (Logo. Full height)
+.bgimg-1 {
+   background-image: url('${pageContext.request.contextPath}/resources/intro/backimage/bg7.gif');
+   height: 55%;
+   padding-top: 40% !important;
+}
+
+ Turn off parallax scrolling for tablets and phones 
+@media only screen and (max-device-width: 1024px) {
+    .bgimg-1{
+        background-attachment: scroll;
+    }
+
+} */
 </style>
 <body>
 	<c:import url="/WEB-INF/views/common/header.jsp" charEncoding="UTF-8"/>
-	<div class ="w3-white" style ="height:100px;"></div> <!-- Spare Space -->
+	<div class ="w3-white" style ="height:100px;"></div>
 	
-
+	
+	
 	<!-- 전체를 감싸는 div -->
     <div class="layout-container w3-row">
+        <div class="content all-list w3-col m1">
+        	<a href="/ccms/correction/correctionWrite.correct" id="resume-nav-button" style="font-family: vitamin;"><i class="fa fa-pencil"></i>글쓰기</a>
+        </div>
         <!-- 메인 부분을 감싸는 div -->
         <div id="list-article" class="content all-list w3-col m10" role="main">
             <!-- 머리통 + 검색창 + 버튼 -->
             <div id="resume-nav" class="w3-bar">
-                <a href="/ccms/correction/correctionWrite.correct" id="resume-nav-button" class="btn btn-success btn-wide pull-right" style="font-family: vitamin;"><i class="fa fa-pencil"></i>새 글 쓰기</a>
+                
                 <h4 style="margin-left: 50px; font-family: vitamin;" > 이력서 첨삭</h4>
                 <form action="#" name="category-filter" id="category-filter-form">
                     <div class="category-filter-wrapper w3-row">
@@ -113,7 +142,7 @@
                          <div class="category-filter-search pull-right" >                              	 	 
                             <div class="input-group input-group-sm">
                               	
-                                <input type="text" maxlength="30" width="200px" name="search" id="search" class="form-control pull-right" onkeydown="JavaScript:enterCheck();" placeholder="검색어 30자 제한" value="${search}">
+                                <input type="text" maxlength="45" width="200px" name="search" id="search" class="form-control pull-right" onkeydown="JavaScript:enterCheck();" placeholder="검색어 45자 제한" value="${search}">
                                 
                                 <span class="input-group-btn">
                                     <button type="button" id="searchFiled" onclick="searchGo();" class="btn btn-default pull-right"><i class="fa fa-search"></i></button>
@@ -149,17 +178,15 @@
 			                                <a style="font-family: penB;">${correction.correctionTitle} </a>
 			                            </h5>
 			                        </div>
-			                        <!-- 댓글 수 조회 수 확인 --> 
-			                        <div class="list-summary-wrapper" >
-			                            <div class="list-summary-items">
-			                                <ul>
-			                                    <li class="list-summary-items-each"><i class="fa fa-comment">&nbsp;</i>${correction.correctionCommentCount} &nbsp; &nbsp;</li>
-			                                    <li class="list-summary-items-each"><i class="fa fa-eye">&nbsp;</i>${correction.correctionSee}</li>
-			                                </ul>
-			                            </div>
-			                        </div>
+			                       
 			                        <!-- 작성자 및 작성일 확인 -->
-			                        <div class="list-author-wrapper" style="display: inline;">
+			                        <div class="list-author-wrapper pull-right" style="display: inline;">
+			                        	<div class="list-summary" style="display: inline; margin-right: 25px;">
+			                        		<span class="list-summary-items-each"><i class="fa fa-comment">&nbsp;</i>${correction.correctionCommentCount} &nbsp; &nbsp;</span>
+			                        	</div>
+			                       		<div class="list-summary" style="display: inline; margin-right: 25px;">       
+		                                    <span class="list-summary-items-each" style="width: 50px;"><i class="fa fa-eye">&nbsp;</i>${correction.correctionSee}</span>
+		                                </div>
 			                            <div class="list-author-specific" style="display: inline;">
 			                                <span >${correction.correctionUserId}</span>  
 			                            </div>
@@ -179,17 +206,15 @@
 			                                <a style="font-family: penB;">${correction.correctionTitle} </a>
 			                            </h5>
 			                        </div>
-			                        <!-- 댓글 수 조회 수 확인 --> 
-			                        <div class="list-summary-wrapper" >
-			                            <div class="list-summary-items">
-			                                <ul>
-			                                    <li class="list-summary-items-each"><i class="fa fa-comment">&nbsp;</i>${correction.correctionCommentCount} &nbsp; &nbsp;</li>
-			                                    <li class="list-summary-items-each"><i class="fa fa-eye">&nbsp;</i>${correction.correctionSee}</li>
-			                                </ul>
-			                            </div>
-			                        </div>
+			         
 			                        <!-- 작성자 및 작성일 확인 -->
-			                        <div class="list-author-wrapper">
+			                        <div class="list-author-wrapper pull-right">
+		                        		<div class="list-summary" style="display: inline; margin-right: 25px;">
+			                        		<span class="list-summary-items-each"><i class="fa fa-comment">&nbsp;</i>${correction.correctionCommentCount} &nbsp; &nbsp;</span>
+			                        	</div>
+			                       		<div class="list-summary" style="display: inline; margin-right: 25px;">       
+		                                    <span class="list-summary-items-each" style="width: 50px;"><i class="fa fa-eye">&nbsp;</i>${correction.correctionSee}</span>
+		                                </div>
 			                            <div class="list-author-specific" style="display: inline;">
 			                                <span >${correction.correctionUserId}</span>  
 			                            </div>
@@ -236,6 +261,9 @@
            <%= com.kh.ccms.correction.pageUtil.Paging.getPageBar(totalContents, cPage, numPerPage, "correction.correct", sortValue, search) %>
            </div>
         </div>
+        <%-- <div class="content all-list pull-right w3-col m1" role="main" style="margin-left: 5px;">
+        	<img alt="kh" src="${pageContext.request.contextPath}/resources/intro/backimage/kh.jpg" style="width: 400%; height: 580px;">
+        </div> --%>
     </div>
 	<c:import url="/WEB-INF/views/common/footer.jsp" charEncoding="UTF-8"/>
 	<script>
