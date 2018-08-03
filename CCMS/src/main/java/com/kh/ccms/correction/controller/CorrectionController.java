@@ -41,62 +41,18 @@ public class CorrectionController
 	CorrectionCommentService correctionCommentService;
 	
 	
-	/*	//header에서 눌렀을 경우 실행되면서 리턴값 전송
-		@RequestMapping(value ="/correction/correction.correct", method=RequestMethod.POST)
-		public ModelAndView gotoCorrection(@RequestParam(value="cPage", required=false, defaultValue="1")
-		int cPage,@RequestParam(value = "sort", required=false, defaultValue="dateSort") String sort,  
-		@RequestParam(value="search", defaultValue="") String search, ModelAndView mv){
-			//@RequestParam으로 페이징 버튼을 눌렀을 때 누른 페이지 값을 가져오며 처음 페이지에 도작했을 경우에는 default값 1을 준다.
-			//기본 정렬은 최신순으로 한다.
-			System.out.println("검색 눌렀을 경우 들어오는 SORT값="+sort);
-			System.out.println("검색 눌렀을 때 들어오는 search값="+search);
-			//한 페이지에  10개 보여줄 꺼임
-			int numPerPage = 10;
-			
-			//검색, 정렬 필터에 값 집어넣기
-			CorrectionSearchFilter filter = new CorrectionSearchFilter(search, sort);
-			
-			//글 총 개수 (검색어 포함)
-			int totalContents = correctionService.selectCorrectionTotalContents(filter);
-			
-			
-			if(sort.equals("dateSort") || sort.equals("commentSort")  || sort.equals("seeSort")){
-			// 글 리스트 불러오기(최신순) 위에서 쓰는거  기본은 최신순이니까
-
-				List<Map<String, String>> list = correctionService.selectCorrectionList(cPage,numPerPage,filter);
-				
-				mv.setViewName("correction/correction");
-				mv.addObject("list", list).addObject("numPerPage",numPerPage).addObject("totalContents", totalContents)
-				.addObject("sort",sort).addObject("search", search);
-				
-				
-				
-				System.out.println("컨트롤러 리턴 sort값 :"+sort);
-				System.out.println("컨트롤러가 리턴하는 totalContents:"+totalContents);
-				
-			  return mv;
-			} else {
-			// 헛짓 대비
-				String msg = "요청하신 페이지는 없습니다";
-				String loc = "correction/correction";
-				
-				
-				mv.setViewName("common/msg");
-				mv.addObject("msg", msg).addObject("loc", loc);
-				
-				return mv;
-			}
-			
-		}*/
+	
 		
 		//header에서 눌렀을 경우 실행되면서 리턴값 전송
 				@RequestMapping(value ="/correction/correction.correct", method=RequestMethod.GET)
 				public String gotoCorrection(@RequestParam(value="cPage", required=false, defaultValue="1")
-				int cPage,@RequestParam(value = "sort", required=false, defaultValue="dateSort") String sort,  
+				int cPage,@RequestParam(value = "sort", required=false, defaultValue=CorrectionSearchFilter.DATE_SORT) String sort,  
 				@RequestParam(value="search", defaultValue="") String search, 
-				@RequestParam(value="serachKinds", defaultValue="title") String kinds, Model model){
+				@RequestParam(value="serachKinds", defaultValue=CorrectionSearchFilter.TITLE_KIND) String kinds, Model model){
 					//@RequestParam으로 페이징 버튼을 눌렀을 때 누른 페이지 값을 가져오며 처음 페이지에 도작했을 경우에는 default값 1을 준다.
 					//기본 정렬은 최신순으로 한다.
+					
+					
 					System.out.println("현재 kinds값 : "+  kinds);
 					//한 페이지에  10개 보여줄 꺼임
 					int numPerPage = 10;
@@ -107,8 +63,8 @@ public class CorrectionController
 					//글 총 개수 (검색어 포함)
 					int totalContents = correctionService.selectCorrectionTotalContents(filter);
 					
-					if(kinds.equals("title") || kinds.equals("name")){
-						if(sort.equals("dateSort") || sort.equals("commentSort")  || sort.equals("seeSort")){
+					if(kinds.equals(CorrectionSearchFilter.TITLE_KIND) || kinds.equals(CorrectionSearchFilter.NAME_KIND)){
+						if(sort.equals(CorrectionSearchFilter.DATE_SORT) || sort.equals(CorrectionSearchFilter.COMMENT_SORT)  || sort.equals(CorrectionSearchFilter.SEE_SORT)){
 							// 글 리스트 불러오기(최신순) 위에서 쓰는거  기본은 최신순이니까
 
 								List<Map<String, String>> list = correctionService.selectCorrectionList(cPage,numPerPage,filter);
