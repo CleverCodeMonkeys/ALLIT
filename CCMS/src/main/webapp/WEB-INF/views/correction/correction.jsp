@@ -124,7 +124,7 @@
                         	<div class="select-group select-group-sm">
                             	<select id="searchKinds" class="form-control" style="height: 30px; font-size: 12px;">
                                 	<option value="title">제목</option>
-                                	<option value="name">이름</option>
+                                	<option value="name">아이디</option>
                             	</select>       
                             </div>                     	
                         </div>                    
