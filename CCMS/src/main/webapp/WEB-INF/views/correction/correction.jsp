@@ -97,7 +97,7 @@
                 <h4 style="margin-left: 50px; font-family: vitamin;" > 이력서 첨삭</h4>
                 <form action="#" name="category-filter" id="category-filter-form">
                     <div class="category-filter-wrapper w3-row">
-                        <ul class="filter-list pull-left">                        	
+                        <ul class="filter-list pull-left" style="cursor: pointer;">                        	
 	                            <li class="filter-name">
 	                                <a onclick="reNew('dateSort')" id="dateSort" style="font-family: penB;" class="filter-list-link active">최신순</a>
 	                            </li>
@@ -136,15 +136,17 @@
             <!-- 게시판 view -->
             <c:if test="${!empty list}">
            	 	<div id="resume-edit">
-           	 		<ul id="list-group">
+           	 		<ul id="list-group" style="cursor: pointer;" >
             			<c:forEach items="${list}" var="correction">
-
-            			     <c:if test="${correction.correctionCommentCount gt 0}">      		                
-			                    <li id="list-group-li" class="w3-panel w3-border w3-border-gray w3-leftbar" style="border-left-color: #71A4D9 !important; font-family: penB;">
+							 
+            			     <c:if test="${correction.correctionCommentCount gt 0}">
+            			           		                
+			                    <li onclick="goView('${correction.correctionId}')" id="list-group-li" class="w3-panel w3-border w3-border-gray w3-leftbar" style="border-left-color: #71A4D9 !important; font-family: penB;">
+			           					
 			                        <!-- title -->		             
 			                        <div class="list-title-wrapper">
 			                            <h5>
-			                                <a id="${correction.correctionId}"  onclick="goView(id)" style="font-family: penB;">${correction.correctionTitle} </a>
+			                                <a style="font-family: penB;">${correction.correctionTitle} </a>
 			                            </h5>
 			                        </div>
 			                        <!-- 댓글 수 조회 수 확인 --> 
@@ -169,11 +171,12 @@
 			                    </li>	
 			              </c:if>
 			              <c:if test="${correction.correctionCommentCount le 0}">
-			              		<li id="list-group-li" class="w3-panel w3-border w3-border-gray w3-leftbar" style="font-family: penB;">
+			              		<li onclick="goView('${correction.correctionId}')"  id="list-group-li" class="w3-panel w3-border w3-border-gray w3-leftbar" style="font-family: penB;">
+			              		
 			                        <!-- title -->		             
 			                        <div class="list-title-wrapper">
 			                            <h5>
-			                                <a id="${correction.correctionId}" onclick="goView(id)" style="font-family: penB;">${correction.correctionTitle} </a>
+			                                <a style="font-family: penB;">${correction.correctionTitle} </a>
 			                            </h5>
 			                        </div>
 			                        <!-- 댓글 수 조회 수 확인 --> 
@@ -257,6 +260,7 @@
 	
 	//제목누름 VIEW로
 	function goView(id) {
+		console.log(id);
 		location.href = '${pageContext.request.contextPath}/correction/correctionView.correct?no='+id;
 	} 
 	
@@ -290,6 +294,7 @@
 		if(value.length == 0 || value == null) {
 			alert("공백은 검색이 불가능합니다.");
 			$('#search').val("");
+			
 			return false;
 		}
 		else {
