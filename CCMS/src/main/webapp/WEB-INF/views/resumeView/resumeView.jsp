@@ -56,7 +56,7 @@ th{
         		<img src="${pageContext.request.contextPath}/resources/images/log/monkeyLogo.jpg" style="width:100%" alt="Avatar">	
         	</c:if>
         	<c:if test="${resume.resume.photo ne monkeyLogo.jpg}">
-            	<img src="${pageContext.request.contextPath}/resources/uploadFiles/picture/${m.id}/${resume.resume.photo}" style="width:100%" alt="Avatar">
+            	<img src="${pageContext.request.contextPath}/resources/uploadFiles/picture/${resume.resume.memberId}/${resume.resume.photo}" style="width:100%" alt="Avatar">
             </c:if>
         </div>
         <div class="w3-container">

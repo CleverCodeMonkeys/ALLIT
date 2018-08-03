@@ -338,7 +338,6 @@ cursor: pointer;
 
 <script>
 function onClick(element) {
-	console.log(element + " 이거 맞아?");
   document.getElementById("img01").src = element.src;
   document.getElementById("modal01").style.display = "block";
 }

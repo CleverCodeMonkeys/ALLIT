@@ -41,13 +41,13 @@ public class SaveResumeFactory
 	{
 		int result = 0;
 		
-		boolean degreeValue = req.getParameter("hiddenDegree") != CHECK_T? true : false;
-		boolean eduValue = req.getParameter("hiddenEdu") != CHECK_T ? true : false;
-		boolean  certValue = req.getParameter("hiddenCert") != CHECK_T? true : false;
-		boolean awardValue = req.getParameter("hiddenAward") != CHECK_T ? true : false;
-		boolean langValue = req.getParameter("hiddenLang") != CHECK_T ? true : false;
-		boolean portValue = req.getParameter("hiddenPort") != CHECK_T ? true : false;
-		boolean introdValue = req.getParameter("hiddenIntrod") != CHECK_T ? true : false;
+		boolean degreeValue = req.getParameter("hiddenDegree").equals(CHECK_T) ? true : false;
+		boolean eduValue = req.getParameter("hiddenEdu").equals(CHECK_T) ? true : false;
+		boolean certValue = req.getParameter("hiddenCert").equals(CHECK_T)? true : false;
+		boolean awardValue = req.getParameter("hiddenAward").equals(CHECK_T) ? true : false;
+		boolean langValue = req.getParameter("hiddenLang").equals(CHECK_T) ? true : false;
+		boolean portValue = req.getParameter("hiddenPort").equals(CHECK_T) ? true : false;
+		boolean introdValue = req.getParameter("hiddenIntrod").equals(CHECK_T) ? true : false;
 		
 		
 		// insert Resume and Hope Condition
