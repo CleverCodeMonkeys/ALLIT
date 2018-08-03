@@ -298,6 +298,8 @@
     		ConditionChk(rcAge);
     		ConditionChk(rcGender);
     		
+    		gotoResumeView();
+    		
     		/*[END] Get Script Value */
 
     		
@@ -505,6 +507,7 @@
         			}
         			
         			scrabBtnListner();
+        			gotoResumeView();
         			
         			$('.pageBar').remove();
         			
@@ -551,6 +554,7 @@
             	
             	var id = '${m.id}';
             	var rId = $(this).siblings('input').val();
+            	var $thisObj = $(this);
             	
             	if(id == '') {
             		alert('로그인을 해주세요.');
@@ -567,10 +571,15 @@
 	            			type : "POST",
 	            			success : function(data) {
 								
-	            				if(data.result == 1) {
-	            					alert('스크랩되었습니다.');
-	            				} else {
+	            				result = data.result;
+	            				console.log("rkwmdk : " + result);
+	            				if(data.result == -1) {
+	            					alert('자신의 글은 스크랩할 수 없습니다.');
+	            				} else if(data.result == 0) {
 	            					alert('스크랩 실패 했습니다.');
+	            				} else {
+	            					alert('스크랩되었습니다.');
+	            					$thisObj.attr('src', '${pageContext.request.contextPath}/resources/common/image/star_selected.png');
 	            				}
 	            				
 							} ,
@@ -579,8 +588,6 @@
 							}
 	            			
 	            		});
-	            		
-	            		$(this).attr('src', '${pageContext.request.contextPath}/resources/common/image/star_selected.png');	
 	            		
 	            	} else {
 	            		
@@ -798,6 +805,18 @@
         	} else {
         		location.href="scrabList.rc";
         	}
+			
+		}
+		
+		function gotoResumeView() {
+			
+			$('.resume_view_title').on('click', function() {
+				
+				var rId = $(this).parent().parent().siblings('.user_info').children('.w3-row').children('.m2').children('input').val();
+				
+				location.href = "${pageContext.request.contextPath}/resume/resumeView.resume?resumeId="+rId;
+				
+			});
 			
 		}
 		

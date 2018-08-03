@@ -116,6 +116,7 @@
     		getPageBar('${totalContents}', cPage, '${numPerPage}', "/recruit/scrabList.rc");
 			
     		scrabBtnListner();
+    		gotoResumeView();
 
 		});
         
@@ -217,6 +218,18 @@
         
         function returnFalse2() {
 			return false;
+		}
+        
+		function gotoResumeView() {
+			
+			$('.resume_view_title').on('click', function() {
+				
+				var rId = $(this).parent().parent().siblings('.user_info').children('.w3-row').children('.m2').children('input').val();
+				
+				location.href = "${pageContext.request.contextPath}/resume/resumeView.resume?resumeId="+rId;
+				
+			});
+			
 		}
 		
 	</script>
