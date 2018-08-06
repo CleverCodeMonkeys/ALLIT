@@ -35,7 +35,6 @@
 
 .table{
 	margin-left: 30%;
-	margin-top: 2%;
 	
 }
 
@@ -52,7 +51,7 @@
 
 	<div class="w3-amber w3-center"
 		style="padding-top: 1%; padding-bottom: 1%; margin-left: 15%; margin-right: 15%;">
-		<h1 style="font-family: vitamin;">${m.id}님의 공간</h1>
+		<h1 style="font-family: vitamin;">${m.id}님의 프로필 저장</h1>
 	</div>
 
 	<div class="w3-row"
@@ -62,7 +61,7 @@
 				charEncoding="UTF-8" />
 		</div>
 
-		<div class="w3-col m10 w3-white" style="margin-top: 30px; font-family: penB;">
+		<div class="w3-col m10 w3-white" style="margin-top: 100px; font-family: penB;">
 		
 			
 			<table class="table" id="tbl-profile">

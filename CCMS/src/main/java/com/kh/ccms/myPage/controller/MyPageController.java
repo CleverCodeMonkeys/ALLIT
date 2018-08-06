@@ -20,6 +20,7 @@ import com.kh.ccms.correction.model.service.CorrectionService;
 import com.kh.ccms.member.model.vo.Member;
 import com.kh.ccms.myPage.model.service.MyPageService;
 import com.kh.ccms.myPage.model.vo.Profile;
+import com.kh.ccms.recruit.model.service.RecruitService;
 import com.kh.ccms.resumeList.model.service.ResumeListService;
 import com.kh.ccms.skill.model.service.SkillService;
 
@@ -41,6 +42,8 @@ public class MyPageController {
 	@Autowired
 	CorrectionService correctionService;
 	
+	@Autowired
+	RecruitService recruitService;
 
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
@@ -51,11 +54,16 @@ public class MyPageController {
 		int totalComm = myPageService.countComm(m.getId());
 		int totalSkill = myPageService.countSkill(m.getId());
 		int totalCorr = myPageService.countCorr(m.getId());
+		int totalScrab= recruitService.selectScrabTotalContents(m.getId());
 
+		System.out.println("totalCorr : " + totalCorr);
+		System.out.println("totalScrab : " + totalScrab);
+		System.out.println("여기왔냐고");
 		model.addAttribute("totalResume", totalResume)
 			 .addAttribute("totalComm", totalComm)
 			 .addAttribute("totalSkill", totalSkill)
 			 .addAttribute("totalCorr",totalCorr)
+			 .addAttribute("totalScrab",totalScrab)
 			 .addAttribute("page", "home");
 
 		String msg = (m != null) ? "member/myPage" : "redirect:/";

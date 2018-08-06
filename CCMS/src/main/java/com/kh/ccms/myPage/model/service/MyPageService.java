@@ -46,6 +46,8 @@ public interface MyPageService {
 
 	List<Map<String, String>> selectCorrectionList(int cPage, int numPerPage, String id);
 
+	
+
 
 	
 
