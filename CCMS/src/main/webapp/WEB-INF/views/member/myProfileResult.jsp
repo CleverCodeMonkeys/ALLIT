@@ -70,7 +70,7 @@
 				<td>${pro.name}</td>
 			</tr>
 			<tr>
-				<th scope="col">나이</th>
+				<th scope="col">생년월일</th>
 				<td>${pro.birth}</td>
 			</tr>
 			<tr>

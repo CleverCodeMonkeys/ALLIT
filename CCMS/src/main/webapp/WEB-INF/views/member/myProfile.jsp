@@ -80,8 +80,7 @@
 
 					<div class="w3-row prof">
 						<label>생년월일 : </label> <br /> <input type="text" id="birth"
-							placeholder="&nbsp;" name="birth" class="cInput"
-							required="required">
+							placeholder="주민번호 앞자리 6자리" name="birth" class="cInput" required="required">
 					</div>
 
 					<div class="w3-row prof">
