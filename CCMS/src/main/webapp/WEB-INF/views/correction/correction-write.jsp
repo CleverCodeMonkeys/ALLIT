@@ -317,16 +317,7 @@
     	   $('#resumeValue').empty();
     	  	var resumeContent= $("input[name='resume']:checked").val();
     	 	  console.log(resumeContent);
-    	   /* $("input[name='resume']:checked").each(function(){
-    		   if($(this).is(":checked"))
-    			  	resumeContent +="|"+ ($(this).val());
-    	   }); */
-    	   /* var splitResume = resumeContent.split("|");
-
-    	   for (var i=1; i<splitResume.length; i++){
-    		  console.log(splitResume[i]);
-    		  $('.note-editable').append(splitResume[i]);
-    	   } */
+    	  
 
     	 	$('#resumeValue').prepend(resumeContent);
     	   
@@ -399,8 +390,7 @@
     	  
     	  if(cancle == true) location.href = '${pageContext.request.contextPath}/correction/correction.correct';
     	  else{}
-    		 
-    	  
+ 			
        }
     </script>
 	<c:import url="/WEB-INF/views/common/footer.jsp" charEncoding="UTF-8"/>

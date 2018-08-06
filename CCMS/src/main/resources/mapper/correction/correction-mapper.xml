@@ -105,6 +105,9 @@
 	
 	<!-- 글 insert -->
 	<insert id="insertCorrection" parameterType="correction">
+		<selectKey keyProperty="correctionId" resultType="_int" order="AFTER">
+			SELECT RESUME_CORRECT_SEQ.CURRVAL FROM DUAL
+		</selectKey>
 		INSERT INTO RESUME_CORRECT_BOARD VALUES(RESUME_CORRECT_SEQ.NEXTVAL , #{correctionTitle},  #{correctionResumeId}, SYSDATE, default, #{correctionUserId}, #{correctionContent})
 	</insert>
 	
