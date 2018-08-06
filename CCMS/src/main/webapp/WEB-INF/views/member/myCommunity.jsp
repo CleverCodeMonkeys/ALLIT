@@ -99,7 +99,7 @@ td{
 	                        <th scope="col" class="w3-center">조회수</th>
 	                    </tr>
 	                    <c:forEach items="${list}" var="co">
-	                    <tr id="${co.board_id}">
+	                    <tr id="${co.board_id}" style ="cursor: pointer;" class ="w3-hover-amber">
 	                        <td class="w3-center">${co.board_id}</td>
 	                        <td>${co.title}</td>
 	                        <td class="w3-center">${co.writer}</td>

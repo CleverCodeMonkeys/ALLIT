@@ -81,7 +81,7 @@ function validate1(){
 	                        <th scope="col" class="w3-center">조회수</th>
 	                    </tr>
 	                    <c:forEach items="${list}" var="ko">
-	                    <tr id="${ko.board_id}">
+	                    <tr id="${ko.board_id}" style ="cursor: pointer;" class ="w3-hover-amber">
 	                        <td class="w3-center">${ko.board_id}</td>
 	                        <td class="w3-center">${ko.type}</td>
 	                        <td>${ko.title}</td>

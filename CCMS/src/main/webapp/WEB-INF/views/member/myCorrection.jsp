@@ -129,7 +129,7 @@
             <!-- 게시판 view -->
             <c:if test="${!empty list}">
            	 	<div id="resume-edit">
-           	 		<ul id="list-group">
+           	 		<ul id="list-group" style="cursor: pointer;">
             			<c:forEach items="${list}" var="correction">
 
             			     <c:if test="${correction.correctionCommentCount gt 0}">      		                
@@ -161,11 +161,11 @@
 			                    </li>	
 			              </c:if>
 			              <c:if test="${correction.correctionCommentCount le 0}">
-			              		<li id="list-group-li" class="w3-panel w3-border w3-border-gray w3-leftbar" style="font-family: penB;">
+			              		<li id="list-group-li" class="w3-panel w3-border w3-border-gray w3-leftbar" onclick="goView('${correction.correctionId}')"  style="font-family: penB;">
 			                        <!-- title -->		             
 			                        <div class="list-title-wrapper">
 			                            <h5>
-			                                <a id="${correction.correctionId}" onclick="goView(id)" style="font-family: penB;">${correction.correctionTitle} </a>
+			                                <a id="${correction.correctionId}" style="font-family: penB;">${correction.correctionTitle} </a>
 			                            </h5>
 			                        </div>
 			                        <!-- 댓글 수 조회 수 확인 --> 
