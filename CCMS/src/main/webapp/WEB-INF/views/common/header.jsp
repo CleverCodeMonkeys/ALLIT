@@ -40,7 +40,7 @@ text-decoration: none !important;
     <a href="${pageContext.request.contextPath}/resumeList/resumeList.resume" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">이력서</a>
     <a href="${pageContext.request.contextPath}/correction/correction.correct" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">이력서첨삭</a>
     <a href="${pageContext.request.contextPath}/community/community.comu" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">커뮤니티</a>
-    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">정보마당</a>
+    <!-- <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">정보마당</a> -->
     <c:if test="${empty m}">
    		<a class="w3-bar-item w3-right w3-button w3-hide-small w3-padding-large w3-hover-white" onclick="document.getElementById('join').style.display='block'">회원가입</a>
     	<a class="w3-bar-item w3-right w3-button w3-hide-small w3-padding-large w3-hover-white" onclick="document.getElementById('login').style.display='block'">로그인</a>
@@ -58,11 +58,10 @@ text-decoration: none !important;
   </div>
 
   <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large padding_line">
-    <a href="#" class="w3-bar-item w3-button w3-padding-large">인재채용</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large">이력서</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large">이력서첨삭</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large">커뮤니티</a>
-    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">정보마당</a>
+   <a href="${pageContext.request.contextPath}/recruit/recruit.rc" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">인재채용</a>
+    <a href="${pageContext.request.contextPath}/resumeList/resumeList.resume" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">이력서</a>
+    <a href="${pageContext.request.contextPath}/correction/correction.correct" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">이력서첨삭</a>
+    <a href="${pageContext.request.contextPath}/community/community.comu" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">커뮤니티</a>
     <c:if test="${empty m}">
     	<a class="w3-bar-item w3-button w3-padding-large" onclick="document.getElementById('join').style.display='block'">회원가입</a>
     	<a class="w3-bar-item w3-button w3-padding-large" onclick="document.getElementById('login').style.display='block'">로그인</a>

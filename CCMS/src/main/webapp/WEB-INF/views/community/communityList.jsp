@@ -56,13 +56,14 @@ function validate1(){
 }
 </style>
 </head>
-<body>
+<body style ="font-family: penB">
 	<c:import url="/WEB-INF/views/common/header.jsp" charEncoding="UTF-8"/>
+
 	<div class="w3-container" style="padding-left: 15%; padding-right: 15%; padding-top: 4%;">
         <div class="w3-row">
         	<div class ="w3-col m2 w3-center w3-white tab_font">
         		<div class="w3-col">
-	        		<button class="w3-button w3-white" type="button" onclick="freeboard();">자유게시판</button><br /><br />
+	        		<button class="w3-button w3-white w3-text-blue" type="button" onclick="freeboard();">자유게시판</button><br /><br />
 	        		<button class="w3-button w3-white" type="button" onclick="skillboard();">기술게시판</button>
         		</div>
         	</div>
@@ -90,7 +91,7 @@ function validate1(){
 	                        <th scope="col" class="w3-center">조회수</th>
 	                    </tr>
 	                    <c:forEach items="${list}" var="co">
-	                    <tr id="${co.board_id}">
+	                    <tr id="${co.board_id}" style ="cursor: pointer;" class ="w3-hover-amber">
 	                        <td class="w3-center">${co.board_id}</td>
 	                        <td>${co.title}</td>
 	                        <td class="w3-center">${co.writer}</td>

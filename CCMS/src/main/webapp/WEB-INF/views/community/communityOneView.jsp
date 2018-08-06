@@ -28,13 +28,13 @@
 }
 </style>
 </head>
-<body>
+<body style ="font-family: penB">
 	<c:import url="/WEB-INF/views/common/header.jsp" charEncoding="UTF-8"/>
 <div class="w3-container" style="padding-left: 15%; padding-right: 15%; padding-top: 4%;">
 	<div class="w3-row">
 		<div class ="w3-col m2 w3-center w3-white tab_font">
        		<div class="w3-col">
-        		<button class="w3-button w3-white" type="button" onclick="freeboard();">자유게시판</button><br /><br />
+        		<button class="w3-button w3-white w3-text-blue" type="button" onclick="freeboard();">자유게시판</button><br /><br />
         		<button class="w3-button w3-white" type="button" onclick="skillboard();">기술게시판</button>
        		</div>
        	</div>
@@ -68,15 +68,15 @@
 			</table>
 			<c:if test="${m.id eq community.writer }">
 				<div class="w3-bar">
-					<button class="w3-button w3-right" type="button" id="deleteComu" name="deleteComu">삭제하기</button>
-					<button class="w3-button w3-right" type="button" id="updateForm" name="updateForm">수정하기</button>
+					<button class="w3-button w3-right w3-pink" type="button" id="deleteComu" name="deleteComu">삭제하기</button>
+					<button class="w3-button w3-right w3-teal" type="button" id="updateForm" name="updateForm">수정하기</button>
 				</div>
 			</c:if>
 			<div class="w3-container" style="padding-top: 1%; padding-bottom: 5%;" id="content">${community.content}</div>
 			<div class="w3-container" style="padding-top: 20%; padding-bottom: 10%;">
-				<div class="w3-col" id="${comment.board_id}">
+				<div class="w3-col" id="${comment.board_id}" style ="">
 					<c:forEach items="${list}" var="comment">
-						<div class="w3-col">
+						<div class="w3-col" style ="padding-top: 1%; border-top: 2px dashed gray;">
 							<c:if test="${ !empty list }">
 								<div class="w3-col s2">
 									${comment.writer_id}
@@ -87,14 +87,14 @@
 							</c:if>
 							<c:if test="${ comment.writer_id eq m.id }">
 								<div class="w3-col s8 w3-left">
-					         		<button class="w3-tiny w3-hover-black w3-gray w3-border" type="button" onclick="updateComBtn(this)">수정</button>
-					         		<button class="w3-tiny w3-hover-black w3-gray w3-border" type="button" onclick="deleteComment(${comment.comment_id}, ${community.board_id})">삭제</button>
+					         		<button class="w3-teal w3-border" type="button" onclick="updateComBtn(this)" style ="cursor: pointer;">수정</button>
+					         		<button class="w3-pink w3-border" type="button" onclick="deleteComment(${comment.comment_id}, ${community.board_id})" style ="cursor: pointer;">삭제</button>
 								</div>
 							</c:if>
 							<div class="w3-col"><p style="word-break:break-all;">${comment.comment_content}</p></div>
 							<input type="hidden" name="comment_id" value="${comment.comment_id}"/>
 							<textarea cols="105" rows="10" name="comment_content" style="display: none;">${comment.comment_content}</textarea>
-							<button class="w3-button w3-hover-red w3-right" type="button" style="display: none;" onclick="updateComment(this);">확인</button>
+							<button class="w3-button w3-hover-red w3-right w3-amber" type="button" style="display: none;" onclick="updateComment(this);">확인</button>							
 						</div>
 					</c:forEach>
 					<form action="${pageContext.request.contextPath}/community/commentInsert.comm">	
