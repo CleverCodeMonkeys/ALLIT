@@ -56,7 +56,7 @@
 
 	<div class="w3-amber w3-center"
 		style="padding-top: 0.7%; padding-bottom: 0.7%; margin-left: 15%; margin-right: 15%;">
-		<h1 style="font-family: vitamin;">${m.id}님의공간</h1>
+		<h1 style="font-family: vitamin;">${m.id}님의 기본 프로필</h1>
 	</div>
 
 	<div class="w3-row"
@@ -68,45 +68,7 @@
 		<c:if test="${empty pro.id}">
 			<form id="proForm">
 				<div class="w3-col m10 w3-white"
-					style="margin-top: 30px; font-family: penB;">
-
-
-					<%-- <div class="w3-col m2 w3-display-container w3-center"
-				style="margin-left: 20%; margin-top: 5%;">
-				<img id="profileImg"
-					src="${pageContext.request.contextPath}/resources/images/logo/test.jpg"
-					onclick="photoModal();" style="width: 70%; height: 140px;">
-				<input type="hidden" name="photo" value="test.jpg">
-
-			</div>
-
-			<div id="photoModal" class="w3-modal">
-					<div class="w3-modal-content  w3-animate-top w3-card-4"
-						style="width: 430px;">
-						<header class="w3-container w3-amber">
-							<span
-								onclick="document.getElementById('photoModal').style.display='none'"
-								class="w3-button w3-display-topright">&times;</span>
-							<h2 style="font-family: whiteCloud">사진등록</h2>
-						</header>
-						<div class="w3-container"
-							style="margin-top: 2%; margin-bottom: 2%;">
-							<!-- 사진 등록하기 -->
-							<div class="w3-row">
-								<img id="modalPhoto" style="width: 400px; height: 400px;" />
-							</div>
-							<input type="file" id="input-file" />
-						</div>
-						<footer class="w3-teal" style="font-family: penB">
-							<button type="button" class="w3-pink w3-btn w3-right"
-								style="width: 50%; padding-top: 1%; padding-bottom: 1%;"
-								onclick="cancelPhoto();">취소</button>
-							<button type="button" class="w3-light-green w3-btn"
-								style="width: 50%; padding-top: 1%; padding-bottom: 1%;"
-								onclick="savePhoto();">등록</button>
-						</footer>
-					</div>
-			</div> --%>
+					style="margin-top: 80px; font-family: penB;">
 
 
 					<div class="w3-row prof">
@@ -159,7 +121,7 @@
 		<c:if test="${!empty pro.id}">
 			<form id="proForm">
 				<div class="w3-col m10 w3-white"
-					style="margin-top: 30px; font-family: penB;">
+					style="margin-top: 80px; font-family: penB;">
 
 					<div class="w3-row prof">
 						<label>이름 : </label><br /> <input type="text" id="name"

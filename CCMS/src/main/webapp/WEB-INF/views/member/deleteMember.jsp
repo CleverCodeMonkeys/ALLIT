@@ -41,7 +41,7 @@
 
 .btn{
 	font-size: 15px;
-	margin-left: 75%;
+	margin-left: 170%;
 
 }
 
@@ -71,19 +71,8 @@ p{
 			<c:import url="/WEB-INF/views/member/myPageMenu.jsp" charEncoding="UTF-8" />
 		</div>
 		
-		<!-- <div class="w3-container">
-		  <div id="delMem" class="w3-modal">
-		    <div class="w3-modal-content">
-		      <div class="w3-container">
-		        <span onclick="document.getElementById('delMem').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-		        <p>회원 탈퇴하시겠습니까?</p>
-		        <p>한 번 탈퇴하시면 모든 정보는 삭제되며 되돌릴 수 없습니다.</p>
-		      </div>
-		    </div>
-		  </div>
-		</div> -->
 		
-		<div class=" w3-row w3-col m10 w3-white" style="margin-top: 30px; font-family: penB;">
+		<div class=" w3-row w3-col m5 w3-white" style="margin-top: 10%; margin-left: 20%;font-family: penB;">
 		
 		<p>회원 탈퇴하시겠습니까?<br>
 		      한 번 탈퇴하시면 모든 정보는 삭제되며 되돌릴 수 없습니다.</p>
