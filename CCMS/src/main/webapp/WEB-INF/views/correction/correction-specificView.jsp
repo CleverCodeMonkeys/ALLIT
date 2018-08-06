@@ -166,7 +166,11 @@
 								${correction.correctionDate}</div>
 						</div>
 						<div class="panel-title" style="font-family: penB">${correction.correctionTitle}</div>
-						<div id="mainContent" style="font-family: penB" class="panel-maintext">${correction.correctionContent}</div>
+						<div id="mainContent" style="font-family: penB" class="panel-maintext">
+						
+								${correction.correctionContent}
+						
+						</div>
 					</div>
 				</form>
 				<c:if test="${!empty commentList}">

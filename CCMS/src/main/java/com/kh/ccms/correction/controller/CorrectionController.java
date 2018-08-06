@@ -3,13 +3,18 @@ package com.kh.ccms.correction.controller;
 
 
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.handler;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +32,8 @@ import com.kh.ccms.correction.model.service.CorrectionService;
 import com.kh.ccms.correction.model.vo.Correction;
 import com.kh.ccms.correction.model.vo.CorrectionComment;
 import com.kh.ccms.correction.model.vo.CorrectionSearchFilter;
+import com.kh.ccms.correction.realSavePicture.PictureHandler;
+import com.kh.ccms.correction.realSavePicture.PictureSave;
 
 
 
@@ -49,11 +56,18 @@ public class CorrectionController
 				int cPage,@RequestParam(value = "sort", required=false, defaultValue=CorrectionSearchFilter.DATE_SORT) String sort,  
 				@RequestParam(value="search", defaultValue="") String search, 
 				@RequestParam(value="serachKinds", defaultValue=CorrectionSearchFilter.TITLE_KIND) String kinds, Model model){
+					
+					//Initialize singleton pictureHandler 저장 초기화
+					PictureHandler handler = PictureHandler.getInstance();
+					if(handler.getRealSaveName() != null){		
+					handler.setRealSaveName(new ArrayList<String>());
+					}
+					
 					//@RequestParam으로 페이징 버튼을 눌렀을 때 누른 페이지 값을 가져오며 처음 페이지에 도작했을 경우에는 default값 1을 준다.
 					//기본 정렬은 최신순으로 한다.
 					
 					
-					System.out.println("현재 kinds값 : "+  kinds);
+					
 					//한 페이지에  10개 보여줄 꺼임
 					int numPerPage = 10;
 					
@@ -72,8 +86,7 @@ public class CorrectionController
 								model.addAttribute("list", list).addAttribute("numPerPage",numPerPage).addAttribute("totalContents", totalContents)
 								.addAttribute("sort",sort).addAttribute("search", search).addAttribute("kinds", kinds);
 								
-								System.out.println("컨트롤러 리턴 sort값 :"+sort);
-								System.out.println("컨트롤러가 리턴하는 totalContents:"+totalContents);
+								
 								
 							  return "correction/correction";
 							} else {
@@ -104,10 +117,31 @@ public class CorrectionController
 			// 글 객체
 			Correction correction = correctionService.selectCorrectionOne(correctionId);
 			
+			
+			Pattern pattern = Pattern.compile("/temp/");
+			Matcher matcher = pattern.matcher(correction.getCorrectionContent());
+			String rContent = matcher.replaceAll("/");
+			correction.setCorrectionContent(rContent);
+			
+			String corContent = correction.getCorrectionContent();
+			
+			if(corContent.contains("/rTemp/")){
+				String rrContent = corContent.replaceAll("/rTemp/", "/"+correctionId+"/");
+				correction.setCorrectionContent(rrContent);
+				System.out.println(correction.getCorrectionContent());
+			}
+			
+			
+			
+			
+			
+			
+		
 			// 댓글 객체
 			List<Map<String,String>> commentList = correctionCommentService.selectCommentList(correctionId);
 			int commentCount = correctionCommentService.selectCommentCount(correctionId);
 			
+			 
 			
 			
 			model.addAttribute("correction", correction).addAttribute("commentList", commentList)
@@ -134,18 +168,36 @@ public class CorrectionController
 		public ModelAndView insertCorrection(@RequestParam(value="content") String content, 
 				@RequestParam(value="title") String title, @RequestParam(value = "writeId") String id,
 				@RequestParam(value="resumeId", required=false, defaultValue="0") int resumeId, 
-				Correction correction, ModelAndView mv){
-			
+				Correction correction, HttpServletRequest req,ModelAndView mv){
+				
+				System.out.println("insert할 떄의 content값:"+content);
+				
+				/*Pattern pattern = Pattern.compile("/temp/");
+				Matcher matcher = pattern.matcher(content);
+				
+				String realContent = matcher.replaceAll("/");*/
+				
 				correction = new Correction.CorrectionBuilder().setCorrectionContent(content).setCorrectionTitle(title)
 						.setCorrectionUserId(id).setCorrectionResumeId(resumeId).build();
-				System.out.println(content+title);
-			
 				
+				
+				
+				
+	
 			int result = correctionService.insertCorrection(correction);
+			int cId = correction.getCorrectionId();
+			
+			PictureHandler handler = PictureHandler.getInstance();
+			
+			PictureSave pSave = new PictureSave();
+			pSave.saveRealDate(content, req, id, cId, handler);
+			
 			
 			
 			
 			if(result > 0) {
+				
+				
 				mv.setViewName("redirect:/correction/correction.correct");
 	
 				return mv;
@@ -167,9 +219,8 @@ public class CorrectionController
 		@ResponseBody
 		public String handleFileUpload(@RequestParam("file") MultipartFile[] file, @RequestParam("userId") String userId, HttpServletRequest req)
 		{
-			System.out.println("이미지가 들어옵니다");
-			System.out.println("userId값"+userId);
-			String saveDir = req.getSession().getServletContext().getRealPath("/resources/upload/correctionUpload/temp/")+userId;
+			
+			String saveDir = req.getSession().getServletContext().getRealPath("/resources/upload/correctionUpload/temp/")+userId+"/rTemp";
 			
 			File dir = new File(saveDir);
 			
@@ -187,18 +238,23 @@ public class CorrectionController
 		private String saveFile(MultipartFile file, String saveDir, HttpServletRequest req, String userId){
 			UUID uuid = UUID.randomUUID();
 			String saveName = uuid + "_" +file.getOriginalFilename();
-			// File saveFile = ;
+			String tempDir = saveDir + '\\' + saveName;
 			
+			PictureHandler handler = PictureHandler.getInstance();
+			handler.getRealSaveName().add(saveName);
+		
+			
+
 			try {
-				file.transferTo(new File(saveDir + '\\' + saveName));
+				file.transferTo(new File(tempDir));
 			} catch (IllegalStateException | IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 				return "/correction/correctionWrite.correct";
 			}
 		
 			
-			return getBaseUrl(req) + "/resources/upload/correctionUpload/temp/"+userId+"/"+ saveName;
+			return getBaseUrl(req) + "/resources/upload/correctionUpload/temp/"+userId+"/rTemp/"+ saveName;
 			
 		}
 		
@@ -207,7 +263,7 @@ public class CorrectionController
 		@ResponseBody
 		public List<Map<String, String>> resumeModal(@RequestParam(value="id") String id, Model model){
 			
-			System.out.println("현재 이력서 부르는 id값 :" + id);
+			
 			List<Map<String, String>> resumeList = correctionService.selectResume(id);
 			
 			
@@ -238,12 +294,22 @@ public class CorrectionController
 		public String modifyCorrection(@RequestParam(value="content") String content, 
 				@RequestParam(value="title") String title, @RequestParam(value = "userId") String userId,
 				@RequestParam(value="resumeId", required=false, defaultValue="0") int resumeId, 
-				@RequestParam(value="cId") int cId, Correction correction, Model model){
-					
+				@RequestParam(value="cId") int cId, Correction correction, HttpServletRequest req, Model model){
+						
+			
 			correction = new Correction.CorrectionBuilder().setCorrectionTitle(title).setCorrectionContent(content)
 					.setCorrectionResumeId(resumeId).setCorrectionId(cId).setCorrectionUserId(userId).build();
 			
+			
+		
+			
+			
 			int result = correctionService.updateCorrection(correction);
+			
+			PictureHandler handler = PictureHandler.getInstance();
+			
+			PictureSave pSave = new PictureSave();
+			pSave.saveRealDate(content, req, userId, cId, handler);
 			
 			if(result > 0){
 				
@@ -271,7 +337,7 @@ public class CorrectionController
 			
 			int result = correctionService.deleteCorrection(correction);
 			
-			System.out.println("삭제 result값 : " + result);
+			
 			
 			//기본 페이지로 돌아가는 셋팅.
 			CorrectionSearchFilter filter = new CorrectionSearchFilter("", "dateSort", "title");
@@ -324,8 +390,7 @@ public class CorrectionController
 		//댓글 delete하기
 		@RequestMapping(value="/correction/correctionCommentDelete.correct", method=RequestMethod.POST)
 		public String deleteCorrectionComment(@RequestParam("commentId") int commentId, @RequestParam("correctionId") int correctionId){
-			System.out.println("commentId :" + commentId);
-			System.out.println("correctionId:" + correctionId);
+			
 			int result = correctionCommentService.deleteComment(commentId);
 			
 			if(result > 0) return "redirect:/"+"correction/correctionView.correct?no=" + correctionId;
