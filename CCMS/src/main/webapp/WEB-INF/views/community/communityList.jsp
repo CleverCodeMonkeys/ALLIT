@@ -58,6 +58,10 @@ function validate1(){
 </head>
 <body style ="font-family: penB">
 	<c:import url="/WEB-INF/views/common/header.jsp" charEncoding="UTF-8"/>
+	
+	<div class = "w3-row w3-center" style ="margin-top: 3%; margin-bottom: -3%;">
+		<img src= "${pageContext.request.contextPath}/resources/intro/backimage/source.gif" style ="width: 25%;"/>
+	</div>
 
 	<div class="w3-container" style="padding-left: 15%; padding-right: 15%; padding-top: 4%;">
         <div class="w3-row">
