@@ -171,7 +171,7 @@
 
                                 <div class="nav" role="navigation">
                                     <fieldset id="buttons-fieldset" class="buttons">
-                                        <a href="#" class="btn btn-default " onclick="cancle('${cId}')">취소</a>                                      
+                                        <a href="#" class="btn btn-default " onclick="cancle('${m.id}', '${cId}')">취소</a>                                      
                                         <input type="submit" class="enroll btn btn-success pull-right" value="등록">
                                     </fieldset>
                                 </div>
@@ -285,7 +285,7 @@
 			else return true;
   	   }
        
-       //취소 버튼
+      /*  //취소 버튼
        function cancle(cId){
     	  var cancle = confirm("정말로 취소하시겠습니까?");
     	  
@@ -297,8 +297,34 @@
     	  }
     		 
     	  
-       }
+       } */
        
+     //취소 버튼
+       function cancle(id, cId){
+    	  var cancle = confirm("정말로 취소하시겠습니까?");
+    	  var id = id;
+    	  
+    	  if(cancle == true) {
+   		  	$.ajax({
+   		  		data : { id : id,
+   		  				cId : cId,
+   		  			},
+   		  		type : "POST",
+   		  		url : "${pageContext.request.contextPath}/correction/correctionCancle.correct?",
+	   		  	success: function(){
+	   		  		location.href = '${pageContext.request.contextPath}/correction/correctionView.correct?no='+cId;
+			      }, 
+			      error : function() {
+			         alert('오류');
+			      }
+   		  	})
+    	  } else{
+    		  return false;
+    	  }
+    	
+    	 
+ 			
+       }
        //모달 창 띠우기
        function resumeModal(userId){
      	   var id = userId;
