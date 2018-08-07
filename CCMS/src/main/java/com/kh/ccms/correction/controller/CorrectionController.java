@@ -381,6 +381,7 @@ public class CorrectionController
 		
 		//댓글  insert 하기 
 		@RequestMapping(value="/correction/correctionCommentWrite.correct", method=RequestMethod.GET)
+		@ResponseBody
 		public String insertCorrectionComment(@RequestParam(value = "reviewUserId") String id, 
 				@RequestParam(value = "reviewContent") String content,
 				@RequestParam(value = "correctionId") int correctionId, 
@@ -394,7 +395,7 @@ public class CorrectionController
 				
 				int result = correctionCommentService.insertComment(comment);
 				
-				if(result > 0) return "redirect:/"+"correction/correctionView.correct?no=" + correctionId;
+				if(result > 0) return "correction/correctionView.correct?no=" + correctionId;
 				else return "common/error"; 
 			
 			
@@ -403,6 +404,7 @@ public class CorrectionController
 		
 		//댓글 수정 하기 
 				@RequestMapping(value="/correction/correctionCommentUpdate.correct", method=RequestMethod.GET)
+				@ResponseBody
 				public String updateCorrectionComment(@RequestParam("commentId") int commentId, @RequestParam("updateContent") String updateContent, 
 						@RequestParam("correctionId") int correctionId,CorrectionComment comment){
 					
@@ -411,17 +413,18 @@ public class CorrectionController
 					
 					int result = correctionCommentService.updateComment(comment);
 					
-					if(result > 0) return "redirect:/"+"correction/correctionView.correct?no=" + correctionId;
+					if(result > 0) return "correction/correctionView.correct?no=" + correctionId;
 					else return "common/error"; 
 				}
 		
 		//댓글 delete하기
 		@RequestMapping(value="/correction/correctionCommentDelete.correct", method=RequestMethod.POST)
+		@ResponseBody
 		public String deleteCorrectionComment(@RequestParam("commentId") int commentId, @RequestParam("correctionId") int correctionId){
 			
 			int result = correctionCommentService.deleteComment(commentId);
 			
-			if(result > 0) return "redirect:/"+"correction/correctionView.correct?no=" + correctionId;
+			if(result > 0) return "correction/correctionView.correct?no=" + correctionId;
 			else return "common/error"; 
 		}
 		
