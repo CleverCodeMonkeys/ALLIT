@@ -20,7 +20,7 @@ public class CorrectionServiceImple implements CorrectionService {
 
 	@Override
 	public int selectCorrectionTotalContents(CorrectionSearchFilter filter) {
-		// TODO Auto-generated method stub
+		
 		return correctionDao.selectCorrectionTotalContents(filter);
 	}
 
@@ -33,33 +33,39 @@ public class CorrectionServiceImple implements CorrectionService {
 
 	@Override
 	public List<Map<String, String>> selectCorrectionList(int cPage, int numPerPage, CorrectionSearchFilter filter) {
-		// TODO Auto-generated method stub
+		
 		
 		return correctionDao.selectCorrectionList(cPage, numPerPage, filter);
 	}
 
 	@Override
 	public int insertCorrection(Correction correction) {
-		// TODO Auto-generated method stub
+		
 		return correctionDao.insertCorrection(correction);
 	}
 
 	@Override
 	public int deleteCorrection(Correction correction) {
-		// TODO Auto-generated method stub
+		
 		return correctionDao.deleteCorrection(correction);
 	}
 
 	@Override
 	public int updateCorrection(Correction correction) {
-		// TODO Auto-generated method stub
+		
 		return correctionDao.updateCorrection(correction);
 	}
 
 	@Override
 	public List<Map<String, String>> selectResume(String id) {
-		// TODO Auto-generated method stub
+		
 		return correctionDao.selectResume(id);
+	}
+
+	@Override
+	public int updateRealPathContent(Correction correction) {
+		
+		return correctionDao.updateRealPathContent(correction);
 	}
 
 }

@@ -111,6 +111,11 @@
 		INSERT INTO RESUME_CORRECT_BOARD VALUES(RESUME_CORRECT_SEQ.NEXTVAL , #{correctionTitle},  #{correctionResumeId}, SYSDATE, default, #{correctionUserId}, #{correctionContent})
 	</insert>
 	
+	<!-- 글 1차  insert후 이미지 정상경로로 바꾸기  -->
+	<update id="updateRealPathContent" parameterType="correction">
+		UPDATE RESUME_CORRECT_BOARD SET BOARD_CONTENT=#{correctionContent} WHERE BOARD_ID = #{correctionId} 
+	</update>
+	
 	<!-- 글 update -->
 	<update id="updateCorrection" parameterType="correction">
 		UPDATE RESUME_CORRECT_BOARD SET BOARD_TITLE = #{correctionTitle}, BOARD_CONTENT= #{correctionContent}, WRITE_DATE = SYSDATE WHERE BOARD_ID= #{correctionId}

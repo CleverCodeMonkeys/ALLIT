@@ -74,4 +74,10 @@ public class CorrectionDaoImple implements CorrectionDao {
 		return sqlSession.selectList("correction.selectResume", id);
 	}
 
+	@Override
+	public int updateRealPathContent(Correction correction) {
+		
+		return sqlSession.update("correction.updateRealPathContent", correction);
+	}
+
 }

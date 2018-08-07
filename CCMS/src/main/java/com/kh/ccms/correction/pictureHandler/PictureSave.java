@@ -1,4 +1,4 @@
-package com.kh.ccms.correction.realSavePicture;
+package com.kh.ccms.correction.pictureHandler;
 
 import java.io.File;
 
@@ -53,7 +53,7 @@ public class PictureSave {
 	}
 	
 
-	public void deleteData(HttpServletRequest req, int cId, String userId){
+	/*public void deleteData(HttpServletRequest req, int cId, String userId){
 		// 삭제할 폴더 path
 		String path = req.getSession().getServletContext().getRealPath("/resources/upload/correctionUpload/")+userId+"/"+cId;
 		
@@ -64,5 +64,5 @@ public class PictureSave {
 		if(deleteFile.length>0){
 			
 		}
-	}
+	}*/
 }
