@@ -87,5 +87,11 @@ public class RecruitDaoImpl implements RecruitDao {
 	public String selectResumeWriter(int rId) {
 		return sqlSession.selectOne("recruit.selectResumeWriter", rId);
 	}
+
+	@Override
+	public int deleteFromUser(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("recruit.deleteFromUser", id);
+	}
 	
 }

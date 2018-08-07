@@ -127,6 +127,10 @@
 		DELETE RESUME_CORRECT_BOARD WHERE BOARD_ID = #{correctionId} AND ID = #{correctionUserId}
 	</delete>
 	
+	<delete id ="deleteFromUser" parameterType="string">
+	    DELETE RESUME_CORRECT_BOARD WHERE ID = #{id}
+	</delete>
+	
 	<!-- 이력서 불러오기 -->
 	<select id="selectResume" resultMap="resumeHashMap" parameterType="string"> SELECT I.INTRO_TITLE, I.INTRO_CONTENT FROM RESUME R JOIN INTRODUCTION I USING(ID) WHERE R.MEMBER_ID = #{id} 
 	</select>

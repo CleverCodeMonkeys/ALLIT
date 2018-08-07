@@ -37,6 +37,10 @@
 		DELETE FROM RESUME WHERE ID = #{id}
 	</delete>
 	
+	<delete id="deleteFromUser" parameterType="string">
+		DELETE FROM RESUME WHERE MEMBER_ID = #{id}
+	</delete>
+	
 	<update id="displayResume" parameterType="resume">
 		UPDATE RESUME SET DISPLAY= #{display}
 		WHERE ID= #{id}

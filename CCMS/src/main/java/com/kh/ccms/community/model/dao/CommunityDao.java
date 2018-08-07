@@ -22,6 +22,9 @@ public interface CommunityDao {
 	int communityUpdateEnd(Community community);
 
 	int communityDelete(int board_id);
+	
+	// add delete from member
+	int communityDeleteFromUser(String id);
 
 	List<Map<String, String>> selectCommunitySearch(int cPage, int numPerPage, String community, String searchSelect);
 

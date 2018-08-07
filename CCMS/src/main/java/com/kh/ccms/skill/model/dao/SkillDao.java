@@ -20,6 +20,9 @@ public interface SkillDao {
 	int skillUpdateEnd(Skill skill);
 
 	int skillDelete(int board_id);
+	
+	//add delete
+	int skillDeleteFromUser(String id);
 
 	List<Map<String, String>> selectSkillSearch(int cPage, int numPerPage, String searchSki, String searchSelect);
 

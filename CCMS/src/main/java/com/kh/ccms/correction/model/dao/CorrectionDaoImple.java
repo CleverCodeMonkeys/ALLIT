@@ -80,4 +80,10 @@ public class CorrectionDaoImple implements CorrectionDao {
 		return sqlSession.update("correction.updateRealPathContent", correction);
 	}
 
+	@Override
+	public int deleteCorrectionFromUser(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("correction.deleteFromUser", id);
+	}
+
 }

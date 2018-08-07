@@ -17,4 +17,6 @@ public interface CorrectionDao {
 	int updateCorrection(Correction correction);
 	List<Map<String, String>> selectResume(String id);
 	int updateRealPathContent(Correction correction);
+	//delete From User
+	int deleteCorrectionFromUser(String id);
 }

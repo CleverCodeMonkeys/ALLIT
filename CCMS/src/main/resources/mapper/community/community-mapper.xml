@@ -44,6 +44,10 @@
 		DELETE FROM COMU_BOARD WHERE BOARD_ID = #{board_id}
 	</delete>
 	
+	<delete id="communityDeleteUser" parameterType="string">
+		DELETE FROM COMU_BOARD WHERE WRITER = #{id}
+	</delete>
+	
 	<select id="selectCommunitySearch" parameterType="map" resultMap="communityMap">
 		SELECT * FROM COMU_BOARD
 		WHERE 

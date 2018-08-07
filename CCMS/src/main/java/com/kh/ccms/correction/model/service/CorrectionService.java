@@ -25,5 +25,7 @@ public interface CorrectionService {
 	
 	int updateRealPathContent(Correction correction);
 	
+	//delete From User
+	int deleteCorrectionFromUser(String id);
 	
 }

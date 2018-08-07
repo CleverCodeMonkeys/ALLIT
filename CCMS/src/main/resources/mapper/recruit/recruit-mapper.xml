@@ -183,6 +183,10 @@
 		FROM RESUME
 		WHERE ID = #{rId}
 	</select>
+	
+	<delete id="deleteFromUser" parameterType="string">
+		DELETE FROM SCRAB WHERE MEMBER_ID = #{id}
+	</delete>
 
 </mapper>
 

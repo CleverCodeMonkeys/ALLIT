@@ -45,6 +45,10 @@
 		DELETE FROM SKI_BOARD WHERE BOARD_ID = #{board_id}
 	</delete>
 	
+	<delete id ="deleteFromUser" parameterType="string">
+		DELETE FROM SKI_BOARD WHERE WRITER = #{id}
+	</delete>
+	
 	<select id="selectSkillSearch" parameterType="map" resultMap="skillMap">
 		SELECT * FROM SKI_BOARD
 		WHERE 

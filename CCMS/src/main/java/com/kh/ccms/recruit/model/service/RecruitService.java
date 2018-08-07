@@ -25,4 +25,5 @@ public interface RecruitService {
 
 	int selectScrabTotalContents(String id);
 
+	int deleteFromUser(String id);
 }

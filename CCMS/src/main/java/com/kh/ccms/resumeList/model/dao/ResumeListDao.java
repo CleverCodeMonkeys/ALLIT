@@ -17,4 +17,6 @@ public interface ResumeListDao {
 	List<Resume> filterResume(String memberId,String chk);
 
 	Resume selectOneResume(int id);
+
+	int deleteFromUser(String id);
 }
