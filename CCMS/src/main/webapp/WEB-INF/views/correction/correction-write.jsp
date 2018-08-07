@@ -376,6 +376,10 @@
        function saveForm(){
 			var title = $('#title-textarea').val();
 			var content = $('#summernote').val();
+			title.replace(/&nbsp;/gi, "");
+			title.replace(/(^\s*)|(\s*$)/g, "");
+			content.replace(/&nbsp;/gi, "");
+			content.replace(/(^\s*)|(\s*$)/g, "");
 			
 			if(title == null || title.length == 0 || content == null || content.length == 0){
 				alert("공백값은 등록되지 않습니다");
