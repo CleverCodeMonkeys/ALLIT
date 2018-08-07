@@ -442,6 +442,13 @@ textarea:focus ~ .bar:before {
     		   wow = false;
     	   }
     	   
+    	   regNumber = /^[0-9]*$/;
+    	       	   
+    	   if(!regNumber.test($('#birth').val().trim())) {
+    	       alert('주민번호 숫자만 입력해주세요.');
+    	       return;
+    	   }
+    	   
     	   if($('#schoolName').val().trim().length > 20){
     		   alert('고등학교 이름이 너무 깁니다.');
     		   wow = false;
