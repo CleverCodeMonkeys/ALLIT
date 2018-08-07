@@ -231,7 +231,7 @@ td{
 		function rDelete(id){
 			id = id.substring( 1, id.length ); 
 			
-			if(confirm('정말 지울꺼니?')){
+			if(confirm('정말 지우시겠습니까?')){
 				location.href= "${pageContext.request.contextPath}/resumeList/deleteResume.resume?id="+id;	
 			}
 		}

@@ -135,7 +135,7 @@
             			<c:forEach items="${list}" var="correction">
 
             			     <c:if test="${correction.correctionCommentCount gt 0}">      		                
-			                    <li id="list-group-li" class="w3-panel w3-border w3-border-gray w3-leftbar" style="border-left-color: #71A4D9 !important; font-family: penB;">
+			                    <li id="list-group-li" class="w3-panel w3-border w3-border-gray w3-leftbar" style="border-left-color: rgb(255,193,7) !important; font-family: penB;">
 			                        <!-- title -->		             
 			                        <div class="list-title-wrapper">
 			                            <h5>

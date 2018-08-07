@@ -359,13 +359,13 @@ public class CorrectionController
 		
 		//글 작성 취소시 temp 파일 삭제 
 		@RequestMapping(value="/correction/correctionCancle.correct", method=RequestMethod.POST)
-		public String deleteTempFile(@RequestParam(value = "id") String id, HttpServletRequest req, Model model){
+		public String deleteTempFile(@RequestParam(value = "id") String id, @RequestParam(value = "cId", required=false) int cId, HttpServletRequest req, Model model){
 			
 			//이미 temp파일 경로
 			String TempImagePath = req.getSession().getServletContext().getRealPath("/resources/upload/correctionUpload/temp")+"/"+id+"/"+"rTemp";
-			System.out.println("temp경로 : " + TempImagePath);
+			
 			PictureDelete.deleteAllFiles(TempImagePath);
-			System.out.println("temp파일은 삭제합니다");
+			
 			
 			//기본 페이지로 돌아가는 셋팅.
 			CorrectionSearchFilter filter = new CorrectionSearchFilter("", "dateSort", "title");
