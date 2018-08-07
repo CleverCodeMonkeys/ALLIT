@@ -109,9 +109,12 @@
 </style>
 <body>
 	<c:import url="/WEB-INF/views/common/header.jsp" charEncoding="UTF-8"/>
-	<div class ="w3-white" style ="height:100px;"></div>
+	<div class ="w3-white" style ="height:70px;"></div>
 	
-	
+	<div class ="w3-display-container" style ="width: 70%; margin-left: 15%; margin-right: 15%; background: rgb(254,219,91); margin-bottom: 1%;">
+	<h1 style="font-family: vitamin; color:black;" class="w3-display-middle">${m.id} 이력서 첨삭</h1>
+	<img src="${pageContext.request.contextPath}/resources/images/common/working.gif" style ="width: 20%;"/>	
+	</div>
 	
 	<!-- 전체를 감싸는 div -->
     <div class="layout-container w3-row">
