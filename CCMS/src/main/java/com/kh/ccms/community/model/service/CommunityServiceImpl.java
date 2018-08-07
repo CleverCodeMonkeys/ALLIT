@@ -107,6 +107,12 @@ public class CommunityServiceImpl implements CommunityService
 		return communityDao.selectCommentCount(board_id);
 	}
 
+	@Override
+	public int communityDeleteFromUser(String id) {
+		// TODO Auto-generated method stub
+		return communityDao.communityDeleteFromUser(id);
+	}
+
 	
 
 }	

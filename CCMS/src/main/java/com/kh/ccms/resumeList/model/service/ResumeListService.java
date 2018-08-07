@@ -19,5 +19,7 @@ public interface ResumeListService {
 
 	Resume selectOneResume(int id);
 
+	int deleteFromUser(String id);
+
 
 }

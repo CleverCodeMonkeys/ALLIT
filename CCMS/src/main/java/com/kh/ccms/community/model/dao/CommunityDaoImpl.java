@@ -103,6 +103,12 @@ public class CommunityDaoImpl implements CommunityDao
 		return sqlSession.selectOne("community.selectCommentCount", board_id);
 	}
 
+	@Override
+	public int communityDeleteFromUser(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("community.communityDeleteUser", id);
+	}
+
 	
 
 }

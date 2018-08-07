@@ -102,6 +102,12 @@ public class RecruitServiceImpl implements RecruitService {
 		return recruitDao.selectScrabTotalContents(id);
 	}
 
+	@Override
+	public int deleteFromUser(String id) {
+		// TODO Auto-generated method stub
+		return recruitDao.deleteFromUser(id);
+	}
+
 }
 
 

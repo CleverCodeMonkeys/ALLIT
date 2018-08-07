@@ -95,4 +95,10 @@ public class SkillServiceImpl implements SkillService
 		return skillDao.skillUpdateForm(board_id);
 	}
 
+	@Override
+	public int skillDeleteFromUser(String id) {
+		// TODO Auto-generated method stub
+		return skillDao.skillDeleteFromUser(id);
+	}
+
 }	

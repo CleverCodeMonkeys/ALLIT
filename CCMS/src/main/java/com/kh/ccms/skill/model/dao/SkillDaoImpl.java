@@ -92,4 +92,10 @@ public class SkillDaoImpl implements SkillDao
 		return sqlSession.selectOne("skill.skillUpdateForm", board_id);
 	}
 
+	@Override
+	public int skillDeleteFromUser(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("skill.deleteFromUser" , id);
+	}
+
 }

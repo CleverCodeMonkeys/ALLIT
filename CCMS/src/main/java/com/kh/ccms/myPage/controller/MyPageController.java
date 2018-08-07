@@ -19,6 +19,7 @@ import com.kh.ccms.community.model.service.CommunityService;
 import com.kh.ccms.correction.model.service.CorrectionService;
 import com.kh.ccms.member.model.vo.Member;
 import com.kh.ccms.myPage.model.service.MyPageService;
+import com.kh.ccms.myPage.model.util.PercadeDelete;
 import com.kh.ccms.myPage.model.vo.Profile;
 import com.kh.ccms.recruit.model.service.RecruitService;
 import com.kh.ccms.resumeList.model.service.ResumeListService;
@@ -208,16 +209,21 @@ public class MyPageController {
 	@RequestMapping("/member/deleteMember.do")
 	public String deleteMember(HttpServletRequest req, @SessionAttribute("m") Member m) {
 		String password = req.getParameter("password");
-
+		String msg = "";
 		/*if(m.getPassword().equals(password)){*/
 		if(bcryptPasswordEncoder.matches(password, m.getPassword())){
 			myPageService.deleteMember(m.getId());
 		
-			return "redirect:/member/memberLogout.do";
+			// 1. ALL DB DELETE & 2. ALL FILE DELETE
+			PercadeDelete percade = new PercadeDelete();			
+			percade.excutePercade(communityService, skillService, correctionService, recruitService, resumeListService, m , req);
+			
+			msg = "redirect:/member/memberLogout.do";
 		} else {
-			return "common/error";
+			msg = "common/error";
 		}
 
+		return msg;
 	}
 	
 	@RequestMapping("/member/myCorr.do")

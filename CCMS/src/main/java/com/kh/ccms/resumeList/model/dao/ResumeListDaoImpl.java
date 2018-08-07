@@ -50,8 +50,14 @@ public class ResumeListDaoImpl implements ResumeListDao {
 
 	@Override
 	public Resume selectOneResume(int id) {
-		// TODO Auto-generated method stub
+	
 		return sqlSession.selectOne("resumeList.selectOneResume", id);
+	}
+
+	@Override
+	public int deleteFromUser(String id) {
+		
+		return sqlSession.delete("resumeList.deleteFromUser",id);
 	}
 
 

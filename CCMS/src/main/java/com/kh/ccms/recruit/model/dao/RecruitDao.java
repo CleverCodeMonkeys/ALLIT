@@ -25,5 +25,6 @@ public interface RecruitDao {
 	int selectScrabTotalContents(String id);
 
 	String selectResumeWriter(int rId);
-
+	
+	int deleteFromUser(String id);
 }

@@ -49,8 +49,14 @@ public class ResumeListServiceImpl implements ResumeListService {
 
 	@Override
 	public Resume selectOneResume(int id) {
-		// TODO Auto-generated method stub
+	
 		return resumeListDao.selectOneResume(id);
+	}
+
+	@Override
+	public int deleteFromUser(String id) {
+		
+		return resumeListDao.deleteFromUser(id);
 	}
 
 

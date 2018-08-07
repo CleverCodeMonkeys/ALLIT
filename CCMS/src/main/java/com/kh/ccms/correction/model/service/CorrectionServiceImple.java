@@ -68,4 +68,10 @@ public class CorrectionServiceImple implements CorrectionService {
 		return correctionDao.updateRealPathContent(correction);
 	}
 
+	@Override
+	public int deleteCorrectionFromUser(String id) {
+		// TODO Auto-generated method stub
+		return correctionDao.deleteCorrectionFromUser(id);
+	}
+
 }
