@@ -212,7 +212,7 @@
 												</c:if>
 											</div>
 
-											<fieldset id="contentForm" class="form">
+											<fieldset id="contentForm" class="form" style="overflow:hidden; word-wrap:break-word;">
 												<article id="contentFormContent"
 													class="review-update-content" id="${commentList.commentId}">
 													${commentList.commentContent}</article>
