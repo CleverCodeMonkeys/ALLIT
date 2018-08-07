@@ -60,10 +60,11 @@ p{
 	<c:import url="/WEB-INF/views/common/header.jsp" charEncoding="UTF-8" />
 	<div class="w3-white" style="height: 100px;"></div>
 	<!-- Spare Space -->
-	<div class ="w3-amber w3-center" style ="padding-top: 0.7%; padding-bottom: 0.7%; margin-left: 15%; margin-right: 15%;">
+	<!-- <div class ="w3-amber w3-center" style ="padding-top: 0.7%; padding-bottom: 0.7%; margin-left: 15%; margin-right: 15%;">
 		<h1 style="font-family: vitamin;">회원 탈퇴</h1>
-	</div>
+	</div> -->
 	
+	<c:import url="mypageBanner.jsp" charEncoding="UTF-8"/>
 
 	<div class="w3-row"
 		style="padding-left: 15%; padding-right: 15%; margin-bottom: 1%; margin-top: 1%;">
