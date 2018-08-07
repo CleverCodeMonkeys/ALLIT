@@ -295,6 +295,7 @@ $('#userId').on('keyup', function(){
 		data : {userId : userId},
 		dataType : "json",
 		success : function(data){
+			var REG_alphanumeric = /^[A-Za-z0-9]*$/;  			
 			if(data.isUsable == true){ // viewName을 활용한 방식
 				$(".guide.error").hide();
 				$(".guide.ok").show();
@@ -304,6 +305,12 @@ $('#userId').on('keyup', function(){
 				$(".guide.ok").hide();
 				$("#idDuplicateCheck").val(0);
 			}
+			
+			if(!REG_alphanumeric.test(userId) {
+				$(".guide.error").show();
+				$(".guide.ok").hide();
+				$("#idDuplicateCheck").val(0);    	 
+	    	 }
 			
 		}, error : function(error, msg){
 			alert("error : " + error + " msg : " + msg);
