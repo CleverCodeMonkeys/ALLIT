@@ -295,11 +295,11 @@
 								correctionId : coId
 							},
 
-							success : function(data) {
+							success : function() {
 								alert("성공");
 								location.reload();
 							},
-							error : function(data) {
+							error : function() {
 								alert("에러발생");
 							}
 
@@ -404,10 +404,7 @@
 
 		}
 
-		//글 수정
-		function modifyCorrection(cId, cTitle, cContent, userId) {
-
-		}
+		
 
 		//글 삭제 
 		function deleteCorrection(cId, userId) {
