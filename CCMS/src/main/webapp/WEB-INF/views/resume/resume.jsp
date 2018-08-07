@@ -432,6 +432,11 @@ textarea:focus ~ .bar:before {
        function validate(){
     	   var wow = true;
     	   
+    	   if($('#title').val().trim().length > 30){
+    		   alert('제목이 30자가 넘습니다');
+    		   wow = false;
+    	   }
+    	   
     	   if($('#birth').val().trim().length != 6) {
     		   alert('유효하지 않은 주민번호입니다.');
     		   wow = false;
