@@ -68,7 +68,7 @@
 		</div>
 
 		<c:if test="${empty pro.id}">
-			<form id="proForm">
+			<form id="proForm" onsubmit="validate();">
 				<div class="w3-col m10 w3-white"
 					style="margin-top: 80px; font-family: penB;">
 
@@ -76,42 +76,42 @@
 					<div class="w3-row prof">
 						<label>이름 : </label><br /> <input type="text" id="name"
 							placeholder="&nbsp;" name="name" class="cInput"
-							required="required">
+							required>
 
 					</div>
 
 					<div class="w3-row prof">
 						<label>생년월일 : </label> <br /> <input type="text" id="birth"
-							placeholder="주민번호 앞자리 6자리" name="birth" class="cInput" required="required">
+							placeholder="주민번호 앞자리 6자리" name="birth" class="cInput" required>
 					</div>
 
 					<div class="w3-row prof">
 						<label>이메일 : </label><br /> <input type="email" id="pEmail"
-							placeholder="&nbsp;" name="email" class="cInput">
+							placeholder="&nbsp;" name="email" class="cInput" required>
 					</div>
 
 					<div class="w3-row prof">
 						<label>성별 : </label>&nbsp;&nbsp; <input type="radio" id="gender"
 							placeholder="&nbsp;" name="gender" value="M" class="cInput"
-							required="required">남&nbsp;&nbsp; <input type="radio"
+							required checked="checked">남&nbsp;&nbsp; <input type="radio"
 							id="gender" placeholder="&nbsp;" name="gender" value="F"
-							class="cInput" required="required">여
+							class="cInput" required>여
 					</div>
 
 					<div class="w3-row prof">
 						<label>전화번호 : </label><br /> <input type="tel" id="tel"
 							placeholder="&nbsp;" name="tel" class="cInput"
-							required="required">
+							required>
 					</div>
 
 					<div class="w3-row prof">
 						<label>주소 : </label><br /> <input type="text" id="address"
 							placeholder="&nbsp;" name="address" class="cInput"
-							required="required">
+							required>
 					</div>
 
 					<button type="button" id="saveBtn" class="w3-button w3-blue"
-						onclick="saveProfile();">등록하기</button>
+						onclick="validate();">등록하기</button>
 
 				</div>
 
@@ -127,37 +127,37 @@
 					<div class="w3-row prof">
 						<label>이름 : </label><br /> <input type="text" id="name"
 							value="${pro.name}" name="name" class="cInput"
-							required="required">
+							required>
 
 					</div>
 
 					<div class="w3-row prof">
 						<label>생년월일 : </label> <br /> <input type="text" id="birth"
 							value="${pro.birth}" name="birth" class="cInput"
-							required="required">
+							required>
 					</div>
 
 					<div class="w3-row prof">
 						<label>이메일 : </label><br /> <input type="email" id="pEmail"
-							value="${pro.email }" name="email" class="cInput">
+							value="${pro.email }" name="email" class="cInput"  required>
 					</div>
 
 					<div class="w3-row prof">
 						<label>성별 : </label>&nbsp;&nbsp; <input type="radio" id="gender"
-							name="gender" value="M" class="cInput" required="required">남&nbsp;&nbsp;
+							name="gender" value="M" class="cInput" required="required" checked="checked">남&nbsp;&nbsp;
 						<input type="radio" id="gender" name="gender" value="F"
-							class="cInput" required="required">여
+							class="cInput" required>여
 					</div>
 
 					<div class="w3-row prof">
 						<label>전화번호 : </label><br /> <input type="tel" id="tel"
-							value="${pro.tel }" name="tel" class="cInput" required="required">
+							value="${pro.tel }" name="tel" class="cInput" required>
 					</div>
 
 					<div class="w3-row prof">
 						<label>주소 : </label><br /> <input type="text" id="address"
 							value="${pro.address }" name="address" class="cInput"
-							required="required">
+							required>
 					</div>
 
 					<button type="button" id="updateBtn" class="w3-button w3-pink"
@@ -176,6 +176,16 @@
 	<c:import url="/WEB-INF/views/common/footer.jsp" charEncoding="UTF-8" />
 
 	<script>
+		
+		$(function() {
+			
+			$("input:radio[name=gender][value="
+					+ '<c:out value="${ pro.gender }"/>' + "]").attr(
+			"checked", "checked");
+			
+		});
+		
+	
 		function saveProfile() {
 			$('#proForm').attr("action",
 					"${pageContext.request.contextPath}/member/saveProfile.do");
@@ -183,27 +193,7 @@
 			$('#proForm').submit();
 		}
 
-		/* 	$('#input-file').on('change', function(ev) {
-
-				if (window.FileReader) {
-					if (!$(this)[0].files[0].type.match(/image\//)) {
-						alert('이미지 파일만 가능합니다');
-						$(this).val('');
-						return false;
-					} else {
-						var reader = new FileReader();
-						reader.onload = function(e) {
-							var src = e.target.result;
-							$('#modalPhoto').attr('src', src);
-						}
-						reader.readAsDataURL($(this)[0].files[0]);
-						console.log('여기까지 왔습니다');
-					}
-				}
-			}); 
-
-			
-		 */
+		
 		function updateProfile() {
 			$('#proForm')
 					.attr("action",
@@ -212,10 +202,59 @@
 			$('#proForm').submit();
 		}
 
-		$(
-				"input:radio[name=gender][value="
-						+ '<c:out value="${ pro.gender }"/>' + "]").attr(
-				"checked", "checked");
+		var nameChk = false;
+		var birthChk = false;
+		var emailChk = false;
+		var genderChk = false;
+		var telChk = false;
+		var addressChk = false;
+		
+		function validate() {
+			
+			var issue = '';
+			if($('#name').val().trim() != '' && $('#name').val().trim().length < 11) {
+				nameChk = true;
+				issue = '이름';
+			}
+			if($('#birth').val().trim() != '' && $('#birth').val().trim().length < 15) {
+				birthChk = true;
+				issue = '생일';
+			}
+			if($('#email').val().trim() != '' && $('#email').val().trim().length < 30) {
+				emailChk = true;
+				issue = '이메일';
+			}
+			
+			if($('#tel').val().trim() != '' && $('#tel').val().trim().length < 15) {
+				telChk = true;
+				issue = '번호';
+			}
+			if($('#address').val().trim() != '' && $('#address').val().trim().length < 100) {
+				addressChk = true;
+				issue = '주소';
+			}
+			
+			if(nameChk&&birthChk&&emailChk&&telChk&&addressChk) {
+				saveProfile();
+			}else {
+				alert(issue + '값을 확인해주세요');
+			}
+			
+		}		
+		
 	</script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
