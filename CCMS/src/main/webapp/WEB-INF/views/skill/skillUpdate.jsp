@@ -64,13 +64,7 @@ $(document).ready(function() {
 				<div class="w3-col"><h5>제목</h5></div>
 	        </div>
 	        <div class="w3-col s1">
-	        	<select name="type" style="height: 40px; width: 80px;">
-                    <option value="java">java</option>
-                    <option value="c/c#">c/c#</option>
-                    <option value="oracle">oracle</option>
-                    <option value="spring">spring</option>
-                    <option value="etc">etc</option>
-                </select>
+	        	<h5>${skill.type}</h5>
 	        </div>
 	        <div class="w3-col s9 w3-center">
 	            <input class="w3-input w3-border w3-hover-border-red" type="text" id="title" name="title" value="${skill.title}">
