@@ -171,7 +171,7 @@
 
                                 <div class="nav" role="navigation">
                                     <fieldset id="buttons-fieldset" class="buttons">
-                                        <a href="#" class="btn btn-default " onclick="cancle()">취소</a>                                      
+                                        <a href="#" class="btn btn-default " onclick="cancle('${m.id}')">취소</a>                                      
                                         <input type="submit" class="enroll btn btn-success pull-right" value="등록">
                                     </fieldset>
                                 </div>
@@ -385,11 +385,28 @@
   	   }
        
        //취소 버튼
-       function cancle(){
+       function cancle(id){
     	  var cancle = confirm("정말로 취소하시겠습니까?");
+    	  /* location.href = '${pageContext.request.contextPath}/correction/correction.correct'; */
+    	  var id = id;
     	  
-    	  if(cancle == true) location.href = '${pageContext.request.contextPath}/correction/correction.correct';
-    	  else{}
+    	  if(cancle == true) {
+   		  	$.ajax({
+   		  		data : { id : id},
+   		  		type : "POST",
+   		  		url : "${pageContext.request.contextPath}/correction/correctionCancle.correct?",
+	   		  	success: function(){
+	   		  		location.href = '${pageContext.request.contextPath}/correction/correction.correct?';
+			      }, 
+			      error : function() {
+			         alert('오류');
+			      }
+   		  	})
+    	  } else{
+    		  return false;
+    	  }
+    	
+    	 
  			
        }
     </script>

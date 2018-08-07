@@ -1,4 +1,4 @@
-package com.kh.ccms.correction.realSavePicture;
+package com.kh.ccms.correction.pictureHandler;
 
 import java.util.ArrayList;
 import java.util.List;
