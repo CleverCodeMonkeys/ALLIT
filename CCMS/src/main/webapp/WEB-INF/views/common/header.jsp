@@ -306,7 +306,7 @@ $('#userId').on('keyup', function(){
 				$("#idDuplicateCheck").val(0);
 			}
 			
-			if(!REG_alphanumeric.test(userId) {
+			if(!REG_alphanumeric.test(userId)){
 				$(".guide.error").show();
 				$(".guide.ok").hide();
 				$("#idDuplicateCheck").val(0);    	 
