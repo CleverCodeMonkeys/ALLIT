@@ -18,7 +18,12 @@
 </head>
 <body>
 	<c:import url="/WEB-INF/views/common/header.jsp" charEncoding="UTF-8"/>
-	<div class ="w3-white" style ="height:100px;" id="top"></div> <!-- Spare Space -->
+	<div class ="w3-white" style ="height:70px;" id="top"></div> <!-- Spare Space -->
+	
+	<div class ="w3-display-container w3-right w3-center" style ="width: 65%; margin-left: 17%; margin-right: 17%; background: rgb(250,231,145); margin-bottom: 1%;">
+	<h1 style="font-family: vitamin; color:black;" class="w3-display-middle">인재검색</h1>
+	<img src="${pageContext.request.contextPath}/resources/images/common/search.gif" style ="width: 20%;" class="w3-right"/>	
+	</div>
 	
     <div class="wrap" id="wrap">
         <div class="w3-row">

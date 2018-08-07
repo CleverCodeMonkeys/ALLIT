@@ -18,7 +18,12 @@
 </head>
 <body>
 	<c:import url="/WEB-INF/views/common/header.jsp" charEncoding="UTF-8"/>
-	<div class ="w3-white" style ="height:100px;" id="top"></div> <!-- Spare Space -->
+	<div class ="w3-white" style ="height:70px;" id="top"></div> <!-- Spare Space -->
+	
+	<div class ="w3-display-container w3-right w3-center" style ="width: 65%; margin-left: 17%; margin-right: 17%; background: rgb(250,231,145); margin-bottom: 1%;">
+	<h1 style="font-family: vitamin; color:black;" class="w3-display-middle">인재검색</h1>
+	<img src="${pageContext.request.contextPath}/resources/images/common/search.gif" style ="width: 20%;" class="w3-right"/>	
+	</div>
 	
     <div class="wrap" id="wrap">
         <div class="w3-row">
@@ -169,6 +174,7 @@
                         <div class="list_search_area w3-row">
                             <div class="w3-col m2">
                                 <h3 style="font-family: vitamin;">총 <span id="totalCount" style="font-family: vitamin;">${totalContents}${how}</span>명</h3>
+                                <img src="${pageContext.request.contextPath}/resources/images/common/magGlass.gif" style ="width: 20%; float:left;"/>
                             </div>
                             <div class="w3-col m5"></div>
                              <div class="list_search_area_right w3-col m5 w3-row" style="float: right;">
