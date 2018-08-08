@@ -169,7 +169,7 @@
     	var introdFlag = true; //8
     	
     	$(function(){
-    			if('${resume}' == "") return;
+    			if('${resume.resume.id}' == "") return;
     		
     			degreeFlag = '${resume.degreeList.size()}' > 0 ? true : false;
     			eduFlag = '${resume.academyList.size()}' > 0 ? true : false;

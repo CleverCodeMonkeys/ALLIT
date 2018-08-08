@@ -13,6 +13,7 @@
   	<a href="${pageContext.request.contextPath}/recruit/scrabList.rc?page=myPage" id="scrabBtn" class="w3-bar-item w3-button w3-hover-text-amber w3-hover-white" style ="text-decoration: none;">내 스크랩 인재</a> <br><br><br><br>
 
   	<a href="${pageContext.request.contextPath}/member/myProfile.do" id="myProfileBtn" class="w3-bar-item w3-button w3-hover-text-amber w3-hover-white" style ="text-decoration: none;">내 정보</a><br><br>
+  	<a href="${pageContext.request.contextPath}/member/updatePwdForm.join" id="" class="w3-bar-item w3-button w3-hover-text-amber w3-hover-white" style ="text-decoration: none;">비밀번호 변경</a><br><br>
   	<a href="${pageContext.request.contextPath}/member/gotoDelete.do" id="delMemBtn" class="w3-bar-item w3-button w3-hover-text-amber w3-hover-white" style ="text-decoration: none;">회원탈퇴</a> <br><br>
   	
 
