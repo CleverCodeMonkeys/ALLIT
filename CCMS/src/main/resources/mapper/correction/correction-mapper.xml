@@ -93,7 +93,12 @@
 			SELECT COUNT(*) FROM RESUME_CORRECT_BOARD
 			</when>
 			<otherwise>
-			SELECT COUNT(*) FROM RESUME_CORRECT_BOARD WHERE UPPER(BOARD_TITLE) LIKE UPPER('%'||#{searchValue}||'%') 
+				<if test="searchKinds == 'title'">
+				SELECT COUNT(*) FROM RESUME_CORRECT_BOARD WHERE UPPER(BOARD_TITLE) LIKE UPPER('%'||#{searchValue}||'%')
+				</if>
+				<if test="searchKinds == 'name'">
+				SELECT COUNT(*) FROM RESUME_CORRECT_BOARD WHERE UPPER(ID) LIKE UPPER('%'||#{searchValue}||'%')
+				</if> 
 			</otherwise>		
 		</choose>
 	</select>
