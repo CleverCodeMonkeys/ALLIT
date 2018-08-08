@@ -275,13 +275,13 @@ textarea:focus ~ .bar:before {
     // Start
     $(function(){
     	/* Setting Index [START]*/
-  		if(introValue != ""){introBoxCount = ++introValue;}
-  		if(degreeValue != ""){degreeBoxCount =++degreeValue;}
-  		if(academyValue != "") {academyBoxCount = ++academyValue;}
-  		if(awardValue != "") {awardBoxCount = ++awardValue;}
-  		if(certValue != ""){certBoxCount = ++certValue;}	
-  		if(langValue != "") {langBoxCount = ++langValue;}
-  		if(portValue != ""){portBoxCount = ++portValue;}
+  		if(introValue != ""){introBoxCount = introValue++;}
+  		if(degreeValue != ""){degreeBoxCount =degreeValue++;}
+  		if(academyValue != "") {academyBoxCount = academyValue++;}
+  		if(awardValue != "") {awardBoxCount = awardValue++;}
+  		if(certValue != ""){certBoxCount = certValue++;}	
+  		if(langValue != "") {langBoxCount = langValue++;}
+  		if(portValue != ""){portBoxCount = portValue++;}
   		/* Setting Index [END]*/
     });
 
