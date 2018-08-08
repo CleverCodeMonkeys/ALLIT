@@ -9,7 +9,7 @@ public class PictureDelete {
 		
 		//폴더 안의 파일 배열로 가져온다
 		File[] delFile = file.listFiles();
-		
+		if(delFile != null)
 		if(delFile.length>0){
 			for(int i=0; i < delFile.length; i++){
 				if(delFile[i].isFile()){

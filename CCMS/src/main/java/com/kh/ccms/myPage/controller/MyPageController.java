@@ -212,11 +212,12 @@ public class MyPageController {
 		String msg = "";
 		/*if(m.getPassword().equals(password)){*/
 		if(bcryptPasswordEncoder.matches(password, m.getPassword())){
-			myPageService.deleteMember(m.getId());
-		
+					
 			// 1. ALL DB DELETE & 2. ALL FILE DELETE
 			PercadeDelete percade = new PercadeDelete();			
 			percade.excutePercade(communityService, skillService, correctionService, recruitService, resumeListService, m , req);
+			
+			myPageService.deleteMember(m.getId());
 			
 			msg = "redirect:/member/memberLogout.do";
 		} else {
