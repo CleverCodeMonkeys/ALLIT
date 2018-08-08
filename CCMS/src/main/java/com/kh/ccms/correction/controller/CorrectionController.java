@@ -158,7 +158,7 @@ public class CorrectionController
 
 				
 	
-			int result = correctionService.insertCorrection(correction);
+			correctionService.insertCorrection(correction);
 			int cId = correction.getCorrectionId();
 			
 			
