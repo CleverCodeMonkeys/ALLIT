@@ -68,7 +68,7 @@
 		</div>
 
 		<c:if test="${empty pro.id}">
-			<form id="proForm" onsubmit="validate();">
+			<form id="proForm" onsubmit="return validate();">
 				<div class="w3-col m10 w3-white"
 					style="margin-top: 80px; font-family: penB;">
 
@@ -110,8 +110,8 @@
 							required>
 					</div>
 
-					<button type="button" id="saveBtn" class="w3-button w3-blue"
-						onclick="validate();">등록하기</button>
+					<button  id="saveBtn" class="w3-button w3-blue"
+						>등록하기</button>
 
 				</div>
 
@@ -202,34 +202,35 @@
 			$('#proForm').submit();
 		}
 
-		var nameChk = false;
+		
+		 var nameChk = false;
 		var birthChk = false;
 		var emailChk = false;
 		var genderChk = false;
 		var telChk = false;
 		var addressChk = false;
 		
-		function validate() {
+		 function validate() {
 			
 			var issue = '';
-			if($('#name').val().trim() != '' && $('#name').val().trim().length < 11) {
+			if($('#name').val().trim() != '' || $('#name').val().trim().length < 11) {
 				nameChk = true;
 				issue = '이름';
 			}
-			if($('#birth').val().trim() != '' && $('#birth').val().trim().length < 15) {
+			if($('#birth').val().trim() != '' || $('#birth').val().trim().length < 15) {
 				birthChk = true;
 				issue = '생일';
 			}
-			if($('#email').val().trim() != '' && $('#email').val().trim().length < 30) {
+			if($('#email').val().trim() != '' || $('#email').val().trim().length < 30) {
 				emailChk = true;
 				issue = '이메일';
 			}
 			
-			if($('#tel').val().trim() != '' && $('#tel').val().trim().length < 15) {
+			if($('#tel').val().trim() != '' || $('#tel').val().trim().length < 15) {
 				telChk = true;
 				issue = '번호';
 			}
-			if($('#address').val().trim() != '' && $('#address').val().trim().length < 100) {
+			if($('#address').val().trim() != '' || $('#address').val().trim().length < 100) {
 				addressChk = true;
 				issue = '주소';
 			}
@@ -240,8 +241,9 @@
 				alert(issue + '값을 확인해주세요');
 			}
 			
-		}		
-		
+			return !addressChk;
+		} 		
+		 
 	</script>
 </body>
 </html>
