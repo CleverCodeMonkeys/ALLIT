@@ -72,13 +72,13 @@
 				<if test="searchKinds == 'name'">
 					<choose>
 						<when test="filterValue == 'dateSort'">
-							 WHERE UPPER(R.BOARD_ID) LIKE UPPER('%'||#{searchValue}||'%') ORDER BY R.WRITE_DATE DESC
+							 WHERE UPPER(R.ID) LIKE UPPER('%'||#{searchValue}||'%') ORDER BY R.WRITE_DATE DESC
 						</when>
 						<when test="filterValue == 'commentSort'">
-							WHERE UPPER(R.BOARD_ID) LIKE UPPER('%'||#{searchValue}||'%') ORDER BY COMMENT_COUNT DESC, R.WRITE_DATE DESC  
+							WHERE UPPER(R.ID) LIKE UPPER('%'||#{searchValue}||'%') ORDER BY COMMENT_COUNT DESC, R.WRITE_DATE DESC  
 						</when>
 						<otherwise> 
-							WHERE UPPER(R.BOARD_ID) LIKE UPPER('%'||#{searchValue}||'%') ORDER BY R.SEE DESC, R.WRITE_DATE DESC
+							WHERE UPPER(R.ID) LIKE UPPER('%'||#{searchValue}||'%') ORDER BY R.SEE DESC, R.WRITE_DATE DESC
 						 </otherwise>
 					</choose>
 				</if>
