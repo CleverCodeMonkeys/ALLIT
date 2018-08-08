@@ -9,6 +9,8 @@ public class CorrectionSearchFilter {
 	public static final String TITLE_KIND = "title";
 	public static final String NAME_KIND = "name";
 	
+	
+	
 	private String searchValue;
 	private String searchKinds;
 	private String filterValue;

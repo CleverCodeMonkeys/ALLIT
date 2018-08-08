@@ -67,8 +67,6 @@ public class CorrectionController
 					//@RequestParam으로 페이징 버튼을 눌렀을 때 누른 페이지 값을 가져오며 처음 페이지에 도작했을 경우에는 default값 1을 준다.
 					//기본 정렬은 최신순으로 한다.
 					
-					
-					
 					//한 페이지에  10개 보여줄 꺼임
 					int numPerPage = 10;
 					
@@ -77,6 +75,8 @@ public class CorrectionController
 					
 					//글 총 개수 (검색어 포함)
 					int totalContents = correctionService.selectCorrectionTotalContents(filter);
+					
+				
 					
 					if(kinds.equals(CorrectionSearchFilter.TITLE_KIND) || kinds.equals(CorrectionSearchFilter.NAME_KIND)){
 						if(sort.equals(CorrectionSearchFilter.DATE_SORT) || sort.equals(CorrectionSearchFilter.COMMENT_SORT)  || sort.equals(CorrectionSearchFilter.SEE_SORT)){

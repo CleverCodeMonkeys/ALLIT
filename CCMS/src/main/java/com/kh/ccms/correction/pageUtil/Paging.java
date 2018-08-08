@@ -2,7 +2,7 @@ package com.kh.ccms.correction.pageUtil;
 
 public class Paging {
 	
-	public static String getPageBar(int totalContents, int cPage, int numPerPage, String url, String sort, String search){
+	public static String getPageBar(int totalContents, int cPage, int numPerPage, String url, String sort, String search, String kinds){
 		String pageBar = "";
 		int pageBarSize = 5;
 		cPage = cPage == 0 ? 1 : cPage;
@@ -78,14 +78,10 @@ public class Paging {
 		pageBar += "</script>";*/
 		
 		
-		System.out.println("페이징에 들어오는 url값:"+url);
-		System.out.println("페이징에 들어오는 totalContents값:"+totalContents);
-		System.out.println("페이징에 들어오는 sort값:"+sort);
-		System.out.println("페이징에 들어오는 search값:"+search);
-		System.out.println("여기까지 한바뀌---------------------------");
+		
 		pageBar += "<script>";
 		pageBar += "function fn_paging(cPage,numPerPage){";
-		pageBar +=  "location.href='"+url+"?sort="+sort+"&search="+search+"&cPage='+cPage;";
+		pageBar +=  "location.href='"+url+"?sort="+sort+"&search="+search+"&serachKinds="+kinds+"&cPage='+cPage;";
 		pageBar += "}";
 		pageBar += "</script>";
 		

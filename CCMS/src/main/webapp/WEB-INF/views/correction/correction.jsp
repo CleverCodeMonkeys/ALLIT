@@ -184,10 +184,10 @@
 			                       
 			                        <!-- 작성자 및 작성일 확인 -->
 			                        <div class="list-author-wrapper pull-right" style="display: inline;">
-			                        	<div class="list-summary" style="display: inline; margin-right: 25px;">
+			                        	<div class="list-summary" style="display: inline; margin-right: 40px;">
 			                        		<span class="list-summary-items-each"><i class="fa fa-comment">&nbsp;</i>${correction.correctionCommentCount} &nbsp; &nbsp;</span>
 			                        	</div>
-			                       		<div class="list-summary" style="display: inline; margin-right: 25px;">       
+			                       		<div class="list-summary" style="display: inline; margin-right: 40px;">       
 		                                    <span class="list-summary-items-each" style="width: 50px;"><i class="fa fa-eye">&nbsp;</i>${correction.correctionSee}</span>
 		                                </div>
 			                            <div class="list-author-specific" style="display: inline;">
@@ -212,10 +212,10 @@
 			         
 			                        <!-- 작성자 및 작성일 확인 -->
 			                        <div class="list-author-wrapper pull-right">
-		                        		<div class="list-summary" style="display: inline; margin-right: 25px;">
+		                        		<div class="list-summary" style="display: inline; margin-right: 40px;">
 			                        		<span class="list-summary-items-each"><i class="fa fa-comment">&nbsp;</i>${correction.correctionCommentCount} &nbsp; &nbsp;</span>
 			                        	</div>
-			                       		<div class="list-summary" style="display: inline; margin-right: 25px;">       
+			                       		<div class="list-summary" style="display: inline; margin-right: 40px;">       
 		                                    <span class="list-summary-items-each" style="width: 50px;"><i class="fa fa-eye">&nbsp;</i>${correction.correctionSee}</span>
 		                                </div>
 			                            <div class="list-author-specific" style="display: inline;">
@@ -244,7 +244,7 @@
            		
            		String sortValue = String.valueOf(request.getAttribute("sort"));
            		String search = String.valueOf(request.getAttribute("search"));
-           		
+           		String kinds = String.valueOf(request.getAttribute("kinds"));
            		//기본  cPage는 1이다
            		//view에서 누르는 페이지를 저장
            		String cPageTemp = request.getParameter("cPage");
@@ -261,7 +261,7 @@
             
            <div class="text-center">
            
-           <%= com.kh.ccms.correction.pageUtil.Paging.getPageBar(totalContents, cPage, numPerPage, "correction.correct", sortValue, search) %>
+           <%= com.kh.ccms.correction.pageUtil.Paging.getPageBar(totalContents, cPage, numPerPage, "correction.correct", sortValue, search, kinds) %>
            </div>
         </div>
         <%-- <div class="content all-list pull-right w3-col m1" role="main" style="margin-left: 5px;">
